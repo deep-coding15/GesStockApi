@@ -1,8 +1,11 @@
-package com.deep_coding15.GesStockApi.produit;
+package com.deep_coding15.GesStockApi.catalogue.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
+import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
 
 import java.util.List;
 

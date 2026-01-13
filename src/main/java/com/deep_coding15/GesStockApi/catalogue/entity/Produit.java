@@ -1,12 +1,19 @@
-package com.deep_coding15.GesStockApi.produit;
+package com.deep_coding15.GesStockApi.catalogue.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.deep_coding15.GesStockApi.common.BaseEntity;
+
 @Entity
-@Table(name = "produit")
-public class Produit {
+@Table(
+    name = "produit",
+    uniqueConstraints = @UniqueConstraint(columnNames = "reference")
+)
+public class Produit extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,25 +28,16 @@ public class Produit {
     @Column(length = 255)
     private String description;
 
-    @Column(nullable = false)
+    @Positive
+    @Column(name = "prix_unitaire", nullable = false, precision = 38, scale = 2)
     private BigDecimal prixUnitaire;
 
     @Column(nullable = false)
     private Boolean actif = true;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
-    }
-
-    @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    @ManyToOne(optional = true) //todo: A mettre a false car chaque produit doit avoir une categorie. Ici a true juste pour les tests
+    @JoinColumn(name = "categorie_id")
+    private Categorie categorie;
 
     /* *********************************************** */
     /* *********************GETTERS******************* */

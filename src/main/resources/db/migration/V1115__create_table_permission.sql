@@ -1,0 +1,8 @@
+CREATE TABLE permission (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    code_permission VARCHAR(50) NOT NULL UNIQUE,
+    module VARCHAR(50),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

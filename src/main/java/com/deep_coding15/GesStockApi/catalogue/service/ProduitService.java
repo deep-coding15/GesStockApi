@@ -1,4 +1,7 @@
-package com.deep_coding15.GesStockApi.produit;
+package com.deep_coding15.GesStockApi.catalogue.service;
+
+import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
+import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
