@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.controller;
+package com.deep_coding15.GesStockApi.common;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

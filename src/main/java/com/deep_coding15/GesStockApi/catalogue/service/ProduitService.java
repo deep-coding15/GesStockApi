@@ -30,6 +30,6 @@ public class ProduitService {
 
     public Produit trouverParId(Long id) {
         return produitRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produit introuvable"));
+                .orElseThrow(() -> new IllegalArgumentException("Produit introuvable."));
     }
 }

@@ -17,7 +17,7 @@ public class Role extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String code;
+    private String code; //ADMIN, USER, CAISSIER
 
     @Column(nullable = false, length = 100)
     private String libelle;

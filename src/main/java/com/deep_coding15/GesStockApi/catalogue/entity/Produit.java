@@ -35,6 +35,11 @@ public class Produit extends BaseEntity {
     @Column(nullable = false)
     private Boolean actif = true;
 
+    /*
+    * Fonctionnalité obtenue :
+    * Associer un produit à une catégorie
+    * Lister les produits par catégorie
+    * */
     @ManyToOne(optional = true) //todo: A mettre a false car chaque produit doit avoir une categorie. Ici a true juste pour les tests
     @JoinColumn(name = "categorie_id")
     private Categorie categorie;

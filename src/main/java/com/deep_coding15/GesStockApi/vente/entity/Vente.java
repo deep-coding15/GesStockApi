@@ -1,12 +1,14 @@
 package com.deep_coding15.GesStockApi.vente.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.math.BigDecimal;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.vente.enums.StatutVente;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Positive;
 
@@ -44,5 +47,7 @@ public class Vente extends BaseEntity{
     @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
+    @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL)
+    private List<VenteLigne> lignes;
     //getters / setters
 }

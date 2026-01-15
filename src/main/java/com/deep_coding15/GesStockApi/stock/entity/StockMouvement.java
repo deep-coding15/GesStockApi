@@ -20,17 +20,17 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "stock_mouvement")
-public class StockMouvement extends BaseEntity{
+public class StockMouvement extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "produir_id")
+    @JoinColumn(name = "produit_id")
     private Produit produit;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_mouvement", nullable = false, length = 20) 
+    @Column(name = "type_mouvement", nullable = false, length = 20)
     private TypeMouvementStock typeMouvement;
 
     @Column(nullable = false)
@@ -45,6 +45,10 @@ public class StockMouvement extends BaseEntity{
 
     @Column(length = 255)
     private String commentaire;
+
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
 
     // getters / setters
 }
