@@ -19,17 +19,28 @@ public class ProduitController {
         this.produitService = produitService;
     }
 
+    /** 
+     * @param produit
+     * @return ResponseEntity<Produit>
+     */
     @PostMapping
     public ResponseEntity<Produit> creerProduit(@RequestBody Produit produit) {
         Produit produitCree = produitService.creerProduit(produit);
         return new ResponseEntity<>(produitCree, HttpStatus.CREATED);
     }
 
+    /** 
+     * @return ResponseEntity<List<Produit>>
+     */
     @GetMapping
     public ResponseEntity<List<Produit>> listerProduits() {
         return ResponseEntity.ok(produitService.listerProduits());
     }
 
+    /** 
+     * @param id
+     * @return ResponseEntity<Produit>
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Produit> getProduit(@PathVariable Long id) {
         return ResponseEntity.ok(produitService.trouverParId(id));

@@ -16,6 +16,10 @@ public class CategorieService {
         this.categorieRepository = categorieRepository;
     }
 
+    /** 
+     * @param categorie
+     * @return Categorie
+     */
     public Categorie creerCategorie(Categorie categorie) {
         
         if(this.categorieRepository.existsByCode(categorie.getCode())) {
@@ -25,10 +29,17 @@ public class CategorieService {
         return categorieRepository.save(categorie);
     }
 
+    /** 
+     * @return List<Categorie>
+     */
     public List<Categorie> listerCategories() {
         return this.categorieRepository.findAll();
     }
 
+    /** 
+     * @param id
+     * @return Categorie
+     */
     public Categorie trouverParId(Long id) {
         return this.categorieRepository.findById(id)
                         .orElseThrow(() -> new IllegalArgumentException("Catégorie introuvable."));
