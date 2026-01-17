@@ -23,4 +23,9 @@ public class Role extends BaseEntity{
     private String libelle;
     
     // Getters / Setters
+    public String getCode() {
+        return this.code;
+    }
+
+    public void setCode(String code) { this.code = code; }
 }

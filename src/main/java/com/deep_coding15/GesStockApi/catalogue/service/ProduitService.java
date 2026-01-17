@@ -32,4 +32,9 @@ public class ProduitService {
         return produitRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produit introuvable."));
     }
+
+    public boolean referenceValide(String ref) {
+        return ref != null && !ref.isBlank();
+    }
+
 }

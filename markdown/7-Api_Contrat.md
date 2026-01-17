@@ -1,4 +1,6 @@
 # API CONTRACT – MVP Gestion de Stock & Vente
+# methodName_expectedBehavior_condition
+createRole_shouldFail_whenCodeAlreadyExists
 
 ## Conventions générales
 

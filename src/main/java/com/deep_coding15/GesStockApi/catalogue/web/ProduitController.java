@@ -10,7 +10,7 @@ import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/produits")
+@RequestMapping("/api/v1/produits")
 public class ProduitController {
 
     private final ProduitService produitService;
