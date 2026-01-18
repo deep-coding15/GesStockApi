@@ -6,12 +6,23 @@ public class RoleCreateRequestDTO {
     @NotBlank
     public String code;
 
+    @NotBlank
+    public String libelle;
+    
     //Getters / Setters
     public void setCode(String code) {
         this.code = code;
     }
+    
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
 
     public String getCode() {
         return this.code;
+    }
+    
+    public String getLibelle() {
+        return this.libelle;
     }
 }

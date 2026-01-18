@@ -30,6 +30,11 @@ public class Role extends BaseEntity{
         return this.code;
     }
 
+    public String getLibelle() {
+        return this.libelle;
+    }
+
     public void setId(Long id) { this.id = id; }
     public void setCode(String code) { this.code = code; }
+    public void setLibelle(String libelle) { this.libelle = libelle; }
 }
