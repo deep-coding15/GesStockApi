@@ -1,4 +1,6 @@
-package com.deep_coding15.GesStockApi.produit;
+package com.deep_coding15.GesStockApi.catalogue.repository;
+
+import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-1. Structure recommandée pour TON projet (MVP → scalable)
+1. Structure recommandée pour le projet (MVP → scalable)
 
 com.deep_coding15.gesstockapi
 │
