@@ -19,14 +19,21 @@ createRole_shouldFail_whenCodeAlreadyExists
 
 ```json
 {
-  "nom": "ADMIN"
+  "code": "ADMIN",
+  "libelle": "***", //optionnel
 }
 ```
 
 ### Lister les rôles
 
 **GET** `/roles`
-
+```json
+{
+  "id": 1,
+  "code": "ADMIN",
+  "libelle": "***", //optionnel
+}
+```
 ---
 
 ## 2. Utilisateurs
@@ -38,6 +45,7 @@ createRole_shouldFail_whenCodeAlreadyExists
 ```json
 {
   "username": "caissier1",
+  "email": "caissier1@email.com",
   "password": "123456",
   "roleId": 2
 }
@@ -47,6 +55,14 @@ createRole_shouldFail_whenCodeAlreadyExists
 
 **GET** `/utilisateurs`
 
+```json
+{
+  "id": 1,
+  "username": "caissier1",
+  "email": "caissier1@email.com",
+  "roleId": 2
+}
+```
 ---
 
 ## 3. Catégories
