@@ -2,12 +2,15 @@ package com.deep_coding15.GesStockApi.security.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
 
+@Service
 public class UtilisateurService {
     private UtilisateurRepository utilisateurRepository;
 
@@ -26,7 +29,21 @@ public class UtilisateurService {
         return utilisateurRepository.save(utilisateur);
     }
 
-    public Utilisateur findByEmail(String email) {
+    public Utilisateur getUtilisateurById(Long id) {
+        
+        if(id < 0)
+            throw new IllegalArgumentException("L'Id n'est pas valide.");
+
+        Utilisateur utilisateur = utilisateurRepository
+                .findById(id).orElseThrow(
+                    () -> new EntityNotFoundException(
+                        "Utilisateur", 
+                        "id", id.toString()));
+
+        return utilisateur;
+    }
+    
+    public Utilisateur getUtilisateurByEmail(String email) {
         
         if(email == null || email.isEmpty() || email.isBlank())
             throw new IllegalArgumentException("L'email n'est pas valide.");
@@ -40,7 +57,7 @@ public class UtilisateurService {
         return utilisateur;
     }
     
-    public Utilisateur findByUsername(String username) {
+    public Utilisateur getUtilisateurByUsername(String username) {
         
         if(username == null || username.isEmpty() || username.isBlank())
             throw new IllegalArgumentException("L'username n'est pas valide.");

@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.security;
+package com.deep_coding15.GesStockApi.security.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.repository.RoleRepository;
-import com.deep_coding15.GesStockApi.security.service.RoleService;
 
 @ExtendWith(MockitoExtension.class)
 // Indique à JUnit d’activer Mockito pour cette classe de test

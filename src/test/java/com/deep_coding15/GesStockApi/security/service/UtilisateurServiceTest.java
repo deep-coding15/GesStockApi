@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.security;
+package com.deep_coding15.GesStockApi.security.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -99,7 +99,7 @@ public class UtilisateurServiceTest {
             .thenReturn(Optional.of(utilisateur));
 
         // WHEN
-        Utilisateur utilisateurResult = utilisateurService.findByEmail(email);
+        Utilisateur utilisateurResult = utilisateurService.getUtilisateurByEmail(email);
         
         // THEN        
         assertNotNull(utilisateurResult);
@@ -120,7 +120,7 @@ public class UtilisateurServiceTest {
         // WHEN + THEN
         assertThrows(
             EntityNotFoundException.class, 
-            () -> utilisateurService.findByEmail(email)
+            () -> utilisateurService.getUtilisateurByEmail(email)
         );
 
         verify(utilisateurRepository).findByEmail(email);
@@ -139,7 +139,7 @@ public class UtilisateurServiceTest {
             .thenReturn(Optional.of(utilisateur));
 
         // WHEN
-        Utilisateur utilisateurResult = utilisateurService.findByUsername(username);
+        Utilisateur utilisateurResult = utilisateurService.getUtilisateurByUsername(username);
         
         // THEN        
         assertNotNull(utilisateurResult);
@@ -160,7 +160,7 @@ public class UtilisateurServiceTest {
         // WHEN + THEN
         assertThrows(
             EntityNotFoundException.class, 
-            () -> utilisateurService.findByUsername(username)
+            () -> utilisateurService.getUtilisateurByUsername(username)
         );
 
         verify(utilisateurRepository).findByUsername(username);
