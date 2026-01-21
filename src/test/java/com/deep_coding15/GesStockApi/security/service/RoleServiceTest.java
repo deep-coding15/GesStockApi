@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.repository.RoleRepository;
 
@@ -52,7 +53,7 @@ class RoleServiceTest {
         ).thenReturn(true);
 
         // Vérifie que l’appel à createRole déclenche une exception
-        // de type IllegalArgumentException
+        // de type EntityAlreadyExistsException
         assertThrows(
             EntityAlreadyExistsException.class,
             // Appel réel de la méthode métier testée
@@ -77,7 +78,7 @@ class RoleServiceTest {
 
         // WHEN + THEN : l'appel doit lever une exception
         assertThrows(
-            IllegalArgumentException.class, 
+            EntityIllegalArgumentException.class, 
             () -> roleService.getRoleByCode(code)
         );
     }

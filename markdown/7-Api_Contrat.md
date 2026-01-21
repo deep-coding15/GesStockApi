@@ -94,9 +94,10 @@ createRole_shouldFail_whenCodeAlreadyExists
 ```json
 {
   "reference": "PRD001",
-  "designation": "Clavier",
-  "prix": 120,
-  "categorieId": 1
+  "nom": "Clavier",
+  "description": "Clavier",
+  "prix_unitaire": 120,
+  "categorie_id": 1
 }
 ```
 

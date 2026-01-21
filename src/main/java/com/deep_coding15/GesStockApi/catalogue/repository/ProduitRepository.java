@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
+    Optional<Produit> findByDescription(String description);
+    Optional<Produit> findByNom(String nom);
     Optional<Produit> findByReference(String reference);
 
     boolean existsByReference(String reference);

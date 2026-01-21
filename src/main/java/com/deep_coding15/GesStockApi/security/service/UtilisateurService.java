@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
@@ -32,7 +33,7 @@ public class UtilisateurService {
     public Utilisateur getUtilisateurById(Long id) {
         
         if(id < 0)
-            throw new IllegalArgumentException("L'Id n'est pas valide.");
+            throw new EntityIllegalArgumentException("Utilisateur", "id", id.toString());
 
         Utilisateur utilisateur = utilisateurRepository
                 .findById(id).orElseThrow(
@@ -46,7 +47,7 @@ public class UtilisateurService {
     public Utilisateur getUtilisateurByEmail(String email) {
         
         if(email == null || email.isEmpty() || email.isBlank())
-            throw new IllegalArgumentException("L'email n'est pas valide.");
+            throw new EntityIllegalArgumentException("utilisateur", "email", email);
 
         Utilisateur utilisateur = utilisateurRepository
                 .findByEmail(email).orElseThrow(
@@ -60,7 +61,7 @@ public class UtilisateurService {
     public Utilisateur getUtilisateurByUsername(String username) {
         
         if(username == null || username.isEmpty() || username.isBlank())
-            throw new IllegalArgumentException("L'username n'est pas valide.");
+            throw new EntityIllegalArgumentException("Utilisateur", "username", username);
 
         Utilisateur utilisateur = utilisateurRepository
                 .findByUsername(username).orElseThrow(
