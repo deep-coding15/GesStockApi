@@ -35,7 +35,7 @@ public class ProduitServiceTest {
 
         // WHEN + THEN
         assertThrows(IllegalArgumentException.class, 
-            () -> produitService.creerProduit(produit));
+            () -> produitService.createProduit(produit));
         
         verify(produitRepository, never()).save(any());
     }

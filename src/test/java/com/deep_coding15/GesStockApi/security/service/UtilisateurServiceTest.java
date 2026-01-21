@@ -29,7 +29,6 @@ import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
-import com.deep_coding15.GesStockApi.security.service.UtilisateurService;
 
 @ExtendWith(MockitoExtension.class)
 public class UtilisateurServiceTest {
