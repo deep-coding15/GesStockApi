@@ -71,6 +71,61 @@ public final class Utils {
 
     /*
      * =====================================================
+     * NUMBER
+     * =====================================================
+     */
+
+    /**
+     * Vérifie si un BigDecimal est nul ou inférieur à zéro.
+     * Utile pour les prix unitaires.
+     */
+    public static boolean isNegative(BigDecimal value) {
+        return value == null || value.compareTo(BigDecimal.ZERO) < 0;
+    }
+
+    /**
+     * Vérifie si un Integer est nul ou inférieur à zéro.
+     * Utile pour les quantités en stock.
+     */
+    public static boolean isNegative(Integer value) {
+        return value == null || value < 0;
+    }
+    
+    /**
+     * Vérifie si un Long est nul ou inférieur à zéro.
+     * Utile pour les ids.
+     */
+    public static boolean isNegative(Long value) {
+        return value == null || value < 0;
+    }
+
+    /**
+     * Vérifie si un nombre est strictement positif ( > 0 ).
+     * Utile pour valider qu'une vente comporte au moins 1 article.
+     */
+    public static boolean isPositive(Integer value) {
+        return value != null && value > 0;
+    }
+    
+    /**
+     * Vérifie si un Long est strictement positif ( > 0 ).
+     */
+    public static boolean isPositive(Long value) {
+        return value != null && value > 0;
+    }
+
+    /**
+     * Compare deux BigDecimal et retourne le plus grand.
+     * Si l'un est nul, retourne l'autre.
+     */
+    public static BigDecimal max(BigDecimal v1, BigDecimal v2) {
+        if (v1 == null) return v2;
+        if (v2 == null) return v1;
+        return v1.compareTo(v2) >= 0 ? v1 : v2;
+    }
+
+    /*
+     * =====================================================
      * COLLECTIONS
      * =====================================================
      */

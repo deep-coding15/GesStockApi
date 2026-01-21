@@ -46,12 +46,34 @@ public class ProduitService {
         return produitRepository.findAll();
     }
 
+    public List<Produit> getProduitsByCategorie(Long categorieId){
+        if(Utils.isNegative(categorieId))
+            throw new EntityIllegalArgumentException(
+        "Produit", "categorieId", 
+        categorieId);
+
+        List<Produit> produitsParCategorie = produitRepository.findByCategorieId(categorieId);
+
+        return produitsParCategorie;
+    }
+    
+    public List<Produit> getProduitsByCategorie(String code){
+        if(Utils.isStringUseless(code))
+            throw new EntityIllegalArgumentException(
+        "Produit", "categorie : code", 
+        code);
+
+        List<Produit> produitsParCategorie = produitRepository.findByCategorieCode(code);
+
+        return produitsParCategorie;
+    }
+
     /** 
      * @param id
      * @return Produit
      */
     public Produit getProduitById(Long id) {
-        if(id < 0)
+        if(Utils.isNegative(id))
             throw new EntityIllegalArgumentException(
         "Produit", "id", 
         "L'id n'est pas valide");
