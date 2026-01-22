@@ -23,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
+
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 

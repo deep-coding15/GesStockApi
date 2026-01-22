@@ -21,7 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
-import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.repository.StockRepository;
 

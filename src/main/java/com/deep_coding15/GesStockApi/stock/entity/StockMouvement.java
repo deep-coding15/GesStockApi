@@ -17,8 +17,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "stock_mouvement")
 public class StockMouvement extends BaseEntity {
     @Id
@@ -34,7 +38,7 @@ public class StockMouvement extends BaseEntity {
     private TypeMouvementStock typeMouvement;
 
     @Column(nullable = false)
-    private int quantite;
+    private Integer quantite;
 
     @Column(name = "date_mouvement", nullable = false)
     private LocalDateTime dateMouvement;
