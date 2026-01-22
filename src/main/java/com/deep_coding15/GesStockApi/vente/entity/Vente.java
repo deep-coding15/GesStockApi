@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
-import com.deep_coding15.GesStockApi.vente.enums.StatutVente;
+import com.deep_coding15.GesStockApi.vente.enums.StatutVenteEnum;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -41,7 +41,7 @@ public class Vente extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
-    private StatutVente statut;
+    private StatutVenteEnum statut;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "utilisateur_id")

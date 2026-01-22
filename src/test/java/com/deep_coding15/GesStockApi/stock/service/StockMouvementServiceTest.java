@@ -29,7 +29,7 @@ import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
 
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
-import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStock;
+import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
 import com.deep_coding15.GesStockApi.stock.repository.StockMouvementRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +51,7 @@ public class StockMouvementServiceTest {
         StockMouvement sm = new StockMouvement();
 
         sm.setQuantite(10);
-        sm.setTypeMouvement(TypeMouvementStock.ENTREE);
+        sm.setTypeMouvement(TypeMouvementStockEnum.ENTREE);
 
         Utilisateur user = new Utilisateur();
         user.setId(1L);

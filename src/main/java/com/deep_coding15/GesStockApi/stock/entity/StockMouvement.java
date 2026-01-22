@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
-import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStock;
+import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +35,7 @@ public class StockMouvement extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_mouvement", nullable = false, length = 20)
-    private TypeMouvementStock typeMouvement;
+    private TypeMouvementStockEnum typeMouvement;
 
     @Column(nullable = false)
     private Integer quantite;
