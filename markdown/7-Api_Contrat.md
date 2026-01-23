@@ -140,7 +140,9 @@ createRole_shouldFail_whenCodeAlreadyExists
 {
   "produitId": 1,
   "quantite": 10,
-  "type": "ENTREE"
+  "type_mouvement": ["ENTREE", "SORTIE", "REAJUSTEMENT"],
+  "utilisateur_id": 1,
+  "comment": "commentaire"
 }
 ```
 

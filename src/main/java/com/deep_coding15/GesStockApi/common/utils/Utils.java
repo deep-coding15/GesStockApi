@@ -2,6 +2,10 @@ package com.deep_coding15.GesStockApi.common.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import java.util.Collection;
 import java.util.UUID;
 
@@ -23,7 +27,8 @@ import java.util.UUID;
  * <p>
  * Utilisation typique :
  * validation des entrées, sécurisation contre les null,
- * formatage monétaire, génération d'identifiants.
+ * formatage monétaire, génération d'identifiants
+ * et aussi comparaison des dates et datetimes.
  * </p>
  */
 public final class Utils {
@@ -302,5 +307,51 @@ public final class Utils {
         } catch (IllegalArgumentException ex) {
             return false;
         }
+    }
+
+    /*
+     * =====================================================
+     * DATE / DATETIME
+     * =====================================================
+     */
+
+    /**
+     * Vérifie si la première date est strictement après la deuxième (Date sans heure)
+     */
+    public static boolean isDateAfter(LocalDate dateToCheck, LocalDate referenceDate) {
+        if (dateToCheck == null || referenceDate == null) {
+            return false;
+        }
+        return dateToCheck.isAfter(referenceDate);
+    }
+    
+    /**
+     * Vérifie si la première date est strictement avant la deuxième (Date sans heure)
+     */
+    public static boolean isDateBefore(LocalDate dateToCheck, LocalDate referenceDate) {
+        if (dateToCheck == null || referenceDate == null) {
+            return false;
+        }
+        return dateToCheck.isBefore(referenceDate);
+    }
+
+    /**
+     * Vérifie si la première date est après la deuxième (Date avec heure)
+     */
+    public static boolean isDateTimeAfter(LocalDateTime dateTimeToCheck, LocalDateTime referenceDateTime) {
+        if (dateTimeToCheck == null || referenceDateTime == null) {
+            return false;
+        }
+        return dateTimeToCheck.isAfter(referenceDateTime);
+    }
+    
+    /**
+     * Vérifie si la première date est avant la deuxième (Date avec heure)
+     */
+    public static boolean isDateTimeBefore(LocalDateTime dateTimeToCheck, LocalDateTime referenceDateTime) {
+        if (dateTimeToCheck == null || referenceDateTime == null) {
+            return false;
+        }
+        return dateTimeToCheck.isBefore(referenceDateTime);
     }
 }
