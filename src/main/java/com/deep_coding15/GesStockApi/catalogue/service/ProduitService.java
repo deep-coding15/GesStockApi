@@ -19,7 +19,7 @@ public class ProduitService {
      * @param produit
      * @return Produit
      */
-    public Produit creerProduit(Produit produit) {
+    public Produit createProduit(Produit produit) {
 
         if (produitRepository.existsByReference(produit.getReference())) {
             throw new IllegalArgumentException("Un produit avec cette référence existe déjà");
@@ -31,7 +31,7 @@ public class ProduitService {
     /** 
      * @return List<Produit>
      */
-    public List<Produit> listerProduits() {
+    public List<Produit> getProduits() {
         return produitRepository.findAll();
     }
 
@@ -39,7 +39,7 @@ public class ProduitService {
      * @param id
      * @return Produit
      */
-    public Produit trouverParId(Long id) {
+    public Produit findProduitById(Long id) {
         return produitRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produit introuvable."));
     }
@@ -48,7 +48,7 @@ public class ProduitService {
      * @param ref
      * @return boolean
      */
-    public boolean referenceValide(String ref) {
+    public boolean isReferenceValide(String ref) {
         return ref != null && !ref.isBlank();
     }
 

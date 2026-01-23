@@ -74,7 +74,8 @@ createRole_shouldFail_whenCodeAlreadyExists
 ```json
 {
   "code": "CAT_INFO",
-  "designation": "Informatique"
+  "libelle": "Informatique",
+  "description": "Description de la catégorie Informatique"
 }
 ```
 
