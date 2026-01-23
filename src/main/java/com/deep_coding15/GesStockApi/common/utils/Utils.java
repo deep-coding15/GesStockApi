@@ -117,7 +117,7 @@ public final class Utils {
      * Utile pour les quantités en stock.
      */
     public static boolean isNegativeOrNull(Long value) {
-        return value == null || value < 0;
+        return value == null || value <= 0;
     }
     
     

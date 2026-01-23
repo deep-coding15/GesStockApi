@@ -85,7 +85,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<Set<RoleResponseDTO>> getRoles() {
         try {
             Set<Role> rolesTrouves = roleService.getRoles();

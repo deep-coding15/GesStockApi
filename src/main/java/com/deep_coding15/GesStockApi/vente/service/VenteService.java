@@ -1,6 +1,5 @@
 package com.deep_coding15.GesStockApi.vente.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,16 +18,13 @@ import com.deep_coding15.GesStockApi.vente.repository.VenteRepository;
 @Service
 public class VenteService {
 
-    private ProduitRepository produitRepository;
     private VenteRepository venteRepository;
     private UtilisateurRepository utilisateurRepository;
 
     public VenteService(
-        ProduitRepository produitRepository,
         VenteRepository venteRepository,
         UtilisateurRepository utilisateurRepository
     ) {
-        this.produitRepository     = produitRepository;
         this.venteRepository       = venteRepository;
         this.utilisateurRepository = utilisateurRepository;
     }
