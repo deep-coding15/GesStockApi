@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.deep_coding15.GesStockApi.catalogue.dto.ProduitCreateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.ProduitPatchRequestDTO;
 import com.deep_coding15.GesStockApi.catalogue.dto.ProduitResponseDTO;
 import com.deep_coding15.GesStockApi.catalogue.dto.ProduitUpdateRequestDTO;
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
@@ -54,6 +55,22 @@ public class ProduitMapper {
         produit.setNom(dto.getNom());
         produit.setDescription(dto.getDescription());
         produit.setPrixUnitaire(BigDecimal.valueOf(dto.getPrix()));
+        produit.setCategorie(categorie);
+
+        return produit;
+    }
+    
+    public Produit toEntity(ProduitPatchRequestDTO dto) {
+
+        Categorie categorie = new Categorie();
+        categorie.setId(dto.getCategorieId());
+
+        Produit produit = new Produit();
+        produit.setId(Long.valueOf(dto.getId()));
+        produit.setReference(dto.getReference());
+        produit.setNom(dto.getNom());
+        produit.setDescription(dto.getDescription());
+        produit.setPrixUnitaire(dto.getPrix());
         produit.setCategorie(categorie);
 
         return produit;

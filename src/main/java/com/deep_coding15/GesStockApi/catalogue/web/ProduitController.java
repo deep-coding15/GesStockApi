@@ -118,8 +118,9 @@ public class ProduitController {
             @PathVariable Long id,
             @RequestBody ProduitPatchRequestDTO dto) {
 
+        Produit produit = produitMapper.toEntity(dto);
         return ResponseEntity.ok(
-                produitService.patchProduit(id, dto));
+                produitService.patchProduit(id, produit));
     }
 
     /* ===================== DELETE ===================== */

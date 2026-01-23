@@ -5,8 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategorieCreateRequestDTO {
+public class CategoriePatchRequestDTO {
+    public Long id;
     public String Code;
     public String Libelle;
     public String Description;
+    public boolean actif;
 }

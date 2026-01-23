@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategorieCreateRequestDTO {
+public class CategorieUpdateRequestDTO {
+    public Long Id;
     public String Code;
     public String Libelle;
     public String Description;

@@ -8,8 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProduitPatchRequestDTO {
-
+    private Long id;
     private String nom;
+    private String reference;
     private String description;
     private BigDecimal prix;
     private Long categorieId;

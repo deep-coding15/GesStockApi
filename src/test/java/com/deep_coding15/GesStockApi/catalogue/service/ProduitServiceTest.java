@@ -24,7 +24,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitPatchRequestDTO;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
 
@@ -174,7 +173,7 @@ public class ProduitServiceTest {
         produit.setId(1L);
         produit.setNom("Ancien nom");
 
-        ProduitPatchRequestDTO dto = new ProduitPatchRequestDTO();
+        Produit dto = new Produit();
         dto.setNom("Nouveau nom");
 
         when(produitRepository.findById(1L))

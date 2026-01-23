@@ -136,6 +136,8 @@ public class ProduitService {
                         "Produit", "description", description));
     }
 
+    ////////////////////////////////////////////////////////
+
     public Produit updateProduit(Long id, Produit produit) {
 
         if (Utils.isNegativeOrNull(id)) {
@@ -157,35 +159,37 @@ public class ProduitService {
         return produitRepository.save(produitExistant);
     }
 
-    public Produit patchProduit(Long id, ProduitPatchRequestDTO dto) {
+    ///////////////////////////////////////////////////////////
+    public Produit patchProduit(Long id, Produit produit) {
 
         if (Utils.isNegativeOrNull(id)) {
             throw new EntityIllegalArgumentException("Produit", "id", id.toString());
         }
 
-        Produit produit = produitRepository.findById(id)
+        Produit produitExistant = produitRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Produit", "id", id.toString()));
 
-        if (dto.getNom() != null)
-            produit.setNom(dto.getNom());
+        if (produit.getNom() != null)
+            produitExistant.setNom(produit.getNom());
 
-        if (dto.getDescription() != null)
-            produit.setDescription(dto.getDescription());
+        if (produit.getDescription() != null)
+            produitExistant.setDescription(produit.getDescription());
 
-        if (dto.getPrix() != null)
-            produit.setPrixUnitaire(dto.getPrix());
+        if (produit.getPrixUnitaire() != null)
+            produitExistant.setPrixUnitaire(produit.getPrixUnitaire());
 
-        if (dto.getCategorieId() != null) {
-            Categorie categorie = categorieRepository.findById(dto.getCategorieId())
+        if (produit.getCategorie() != null) {
+            Categorie categorie = categorieRepository.findById(produit.getCategorie().getId())
                     .orElseThrow(() -> new EntityNotFoundException(
-                            "Categorie", "id", dto.getCategorieId().toString()));
-            produit.setCategorie(categorie);
+                            "Categorie", "id", produit.getCategorie().getId().toString()));
+            produitExistant.setCategorie(categorie);
         }
 
-        return produitRepository.save(produit);
+        return produitRepository.save(produitExistant);
     }
 
+    ///////////////////////////////////////////////////////////
     public boolean deleteProduit(Long id) {
 
         if (Utils.isNegativeOrNull(id)) {
