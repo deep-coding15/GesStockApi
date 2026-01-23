@@ -16,7 +16,7 @@ import jakarta.persistence.GenerationType;
 public class Utilisateur extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false, unique =  true, length =  50)
     private String username;
@@ -35,5 +35,18 @@ public class Utilisateur extends BaseEntity{
     private Role role;
 
     // getters / setters
+    public Long getId() {return id;}
+    public String getUsername() {return username;}
+    public String getEmail() {return email;}
+    public String getMotDePasse() {return motDePasse;}
+    public boolean getActif() {return actif;}
+    public Role getRole() {return role;}
+
+    public void setId(Long id) {this.id = id;}
+    public void setUsername(String username) {this.username = username;}
+    public void setEmail(String email) {this.email = email;}
+    public void setMotDePasse(String motDePasse) {this.motDePasse = motDePasse;}
+    public void setActif(boolean actif) {this.actif = actif;}
+    public void setRole(Role role) {this.role = role;}
 }
 

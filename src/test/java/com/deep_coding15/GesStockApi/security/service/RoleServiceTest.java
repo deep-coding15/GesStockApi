@@ -1,10 +1,9 @@
-package com.deep_coding15.GesStockApi.security;
+package com.deep_coding15.GesStockApi.security.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,9 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.repository.RoleRepository;
-import com.deep_coding15.GesStockApi.security.service.RoleService;
 
 @ExtendWith(MockitoExtension.class)
 // Indique à JUnit d’activer Mockito pour cette classe de test
@@ -55,7 +54,7 @@ class RoleServiceTest {
         // Vérifie que l’appel à createRole déclenche une exception
         // de type IllegalArgumentException
         assertThrows(
-            IllegalArgumentException.class,
+            EntityAlreadyExistsException.class,
             // Appel réel de la méthode métier testée
             () -> roleService.createRole(role)
         );

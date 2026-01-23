@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.repository.RoleRepository;
 
@@ -20,7 +21,9 @@ public class RoleService {
     public Role createRole(Role role) {
 
         if (roleRepository.existsByCode(role.getCode())) {
-            throw new IllegalArgumentException("Un code avec cette référence existe déjà.");
+            throw new EntityAlreadyExistsException(
+                "Role", "code", 
+                role.getCode());
         }
 
         return roleRepository.save(role);
@@ -33,14 +36,6 @@ public class RoleService {
 
         return roleRepository.getReferenceById(id);
     }
-
-    /* public Role getRoleByCode(String code) {
-        if (code == null) {
-            throw new IllegalArgumentException("Il faut un code pour chercher le rôle.");
-        }
-
-        return roleRepository.findByCode(code);
-    } */
 
     public Role getRoleByCode(String code) {
 
