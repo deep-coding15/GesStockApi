@@ -15,7 +15,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(
     name = "vente_ligne",
@@ -35,7 +39,7 @@ public class VenteLigne extends BaseEntity{
     private Produit produit;
 
     @Column(nullable = false)
-    private int quantite;
+    private Integer quantite;
 
     @Positive
     @Column(name = "prix_unitaire", nullable = false, precision = 38, scale = 2)

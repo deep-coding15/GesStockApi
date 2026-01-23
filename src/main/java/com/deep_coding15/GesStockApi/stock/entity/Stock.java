@@ -2,20 +2,25 @@ package com.deep_coding15.GesStockApi.stock.entity;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Setter
+@Getter
 public class Stock extends BaseEntity {
-    @Id
+    @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

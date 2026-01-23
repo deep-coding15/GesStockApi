@@ -1,10 +1,11 @@
-package com.deep_coding15.GesStockApi.security;
+package com.deep_coding15.GesStockApi.security.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.any;
+
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,15 +13,20 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.repository.RoleRepository;
-import com.deep_coding15.GesStockApi.security.service.RoleService;
 
 @ExtendWith(MockitoExtension.class)
 // Indique à JUnit d’activer Mockito pour cette classe de test
@@ -53,9 +59,9 @@ class RoleServiceTest {
         ).thenReturn(true);
 
         // Vérifie que l’appel à createRole déclenche une exception
-        // de type IllegalArgumentException
+        // de type EntityAlreadyExistsException
         assertThrows(
-            IllegalArgumentException.class,
+            EntityAlreadyExistsException.class,
             // Appel réel de la méthode métier testée
             () -> roleService.createRole(role)
         );
@@ -78,7 +84,7 @@ class RoleServiceTest {
 
         // WHEN + THEN : l'appel doit lever une exception
         assertThrows(
-            IllegalArgumentException.class, 
+            EntityIllegalArgumentException.class, 
             () -> roleService.getRoleByCode(code)
         );
     }

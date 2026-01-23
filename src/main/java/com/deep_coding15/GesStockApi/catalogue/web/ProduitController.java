@@ -25,7 +25,7 @@ public class ProduitController {
      */
     @PostMapping
     public ResponseEntity<Produit> creerProduit(@RequestBody Produit produit) {
-        Produit produitCree = produitService.creerProduit(produit);
+        Produit produitCree = produitService.createProduit(produit);
         return new ResponseEntity<>(produitCree, HttpStatus.CREATED);
     }
 
@@ -34,7 +34,7 @@ public class ProduitController {
      */
     @GetMapping
     public ResponseEntity<List<Produit>> listerProduits() {
-        return ResponseEntity.ok(produitService.listerProduits());
+        return ResponseEntity.ok(produitService.getProduits());
     }
 
     /** 
@@ -43,6 +43,6 @@ public class ProduitController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Produit> getProduit(@PathVariable Long id) {
-        return ResponseEntity.ok(produitService.trouverParId(id));
+        return ResponseEntity.ok(produitService.getProduitById(id));
     }
 }
