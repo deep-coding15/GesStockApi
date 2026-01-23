@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
+import com.deep_coding15.GesStockApi.common.utils.Utils;
 
 @Service
 public class CategorieService {
@@ -46,8 +48,8 @@ public class CategorieService {
      */
     public Categorie getCategorieById(Long id) {
 
-        if (id < 0)
-            throw new IllegalArgumentException("L'Id n'est pas valide.");
+        if (Utils.isNegative(id))
+            throw new EntityIllegalArgumentException("Categorie", "id", id.toString());
 
         Categorie categorie = categorieRepository
                 .findById(id).orElseThrow(
@@ -60,8 +62,8 @@ public class CategorieService {
 
     public Categorie getCategorieByCode(String code) {
         
-        if(code == null || code.isEmpty() || code.isBlank())
-            throw new IllegalArgumentException("L'email n'est pas valide.");
+        if(Utils.isStringUseless(code))
+            throw new EntityIllegalArgumentException("Categorie", "code", code);
 
         Categorie categorie = categorieRepository
                 .findByCode(code).orElseThrow(() -> new EntityNotFoundException(
@@ -73,8 +75,8 @@ public class CategorieService {
 
     public Categorie getCatgorieByLibelle(String libelle) {
         
-        if(libelle == null || libelle.isEmpty() || libelle.isBlank())
-            throw new IllegalArgumentException("L'username n'est pas valide.");
+        if(Utils.isStringUseless(libelle))
+            throw new EntityIllegalArgumentException("Categorie", "libelle", libelle);
 
         Categorie categorie = categorieRepository
                 .findByLibelle(libelle).orElseThrow(
