@@ -92,6 +92,23 @@ public final class Utils {
     }
     
     /**
+     * Vérifie si un Integer est nul, inférieur ou égale à zéro.
+     * Utile pour les prix unitaires.
+     */
+    public static boolean isNegativeOrNull(Integer value) {
+        return value == null || value <= 0;
+    }
+
+    /**
+     * Vérifie si un Long est nul ou inférieur o à zéro.
+     * Utile pour les quantités en stock.
+     */
+    public static boolean isNegativeOrNull(Long value) {
+        return value == null || value <= 0;
+    }
+    
+    
+    /**
      * Vérifie si un Long est nul ou inférieur à zéro.
      * Utile pour les ids.
      */

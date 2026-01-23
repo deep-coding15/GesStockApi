@@ -5,12 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProduitResponseDTO {
-    public Long id;
+public class ProduitUpdateRequestDTO {
+    public int produitId;
     public String reference;
     public String nom;
     public String description;
-    public double getPrixUnitaire;
-    public String categorieCode;
-    public boolean actif; 
+    public double prix;
+    public Long categorieId;
 }
+

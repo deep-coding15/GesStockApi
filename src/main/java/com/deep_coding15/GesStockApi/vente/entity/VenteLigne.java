@@ -15,12 +15,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(
     name = "vente_ligne",
     uniqueConstraints = @UniqueConstraint(columnNames = {"vente_id", "produit_id"})
 )
+@Getter
+@Setter
 public class VenteLigne extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

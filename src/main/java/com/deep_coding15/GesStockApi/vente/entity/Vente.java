@@ -21,8 +21,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "vente")
 public class Vente extends BaseEntity{
     @Id
@@ -48,6 +52,6 @@ public class Vente extends BaseEntity{
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL)
-    private List<VenteLigne> lignes;
+    private List<VenteLigne> lignesVente;
     //getters / setters
 }

@@ -2,6 +2,8 @@ package com.deep_coding15.GesStockApi.catalogue.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +15,8 @@ import com.deep_coding15.GesStockApi.common.BaseEntity;
     name = "produit",
     uniqueConstraints = @UniqueConstraint(columnNames = "reference")
 )
+@Getter
+@Setter
 public class Produit extends BaseEntity {
 
     @Id
