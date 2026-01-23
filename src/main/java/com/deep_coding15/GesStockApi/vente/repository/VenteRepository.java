@@ -6,7 +6,7 @@ import com.deep_coding15.GesStockApi.vente.entity.Vente;
 
 public interface VenteRepository extends JpaRepository<Vente, Long> {
     
-    <Optional> Vente findByReference(String reference);
+    <Optional> Vente findByReferenceVente(String reference);
 
-    boolean existsByReference(String reference);
+    boolean existsByReferenceVente(String reference);
 }
