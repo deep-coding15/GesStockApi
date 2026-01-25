@@ -32,7 +32,7 @@ public class UtilisateurService {
 
     public Utilisateur getUtilisateurById(Long id) {
         
-        if(Utils.isNegative(id))
+        if(Utils.isNegativeOrNullOrZero(id))
             throw new EntityIllegalArgumentException("Utilisateur", "id", id.toString());
 
         Utilisateur utilisateur = utilisateurRepository

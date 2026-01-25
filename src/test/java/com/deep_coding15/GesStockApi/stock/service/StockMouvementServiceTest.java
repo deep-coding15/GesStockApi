@@ -70,7 +70,7 @@ public class StockMouvementServiceTest {
 
         // GIVEN
         StockMouvement sm = createValidStockMouvement();
-        sm.setQuantite(0);
+        sm.setQuantite(-1);
 
         // WHEN + THEN
         assertThrows(

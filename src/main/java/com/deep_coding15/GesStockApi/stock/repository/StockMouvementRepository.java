@@ -9,5 +9,5 @@ import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
 public interface StockMouvementRepository extends JpaRepository<StockMouvement, Long> {
 
     List<StockMouvement> findAllByProduitId(Long id);
-
+    List<StockMouvement> findByStockId(Long id);
 }

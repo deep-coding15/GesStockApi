@@ -20,6 +20,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
 @Setter
 @Getter
@@ -29,6 +30,7 @@ public class StockMouvement extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // utilisee pour les statistiques
     @ManyToOne(optional = false)
     @JoinColumn(name = "produit_id")
     private Produit produit;

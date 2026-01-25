@@ -54,8 +54,8 @@ public class ProduitService {
         return produitRepository.findAll();
     }
 
-    public List<Produit> getProduitsByCategorie(Long categorieId) {
-        if (Utils.isNegative(categorieId))
+    public List<Produit> getProduitsByCategorie(Long categorieId){
+        if(Utils.isNegativeOrNull(categorieId))
             throw new EntityIllegalArgumentException(
                     "Produit", "categorieId",
                     categorieId);
@@ -81,7 +81,7 @@ public class ProduitService {
      * @return Produit
      */
     public Produit getProduitById(Long id) {
-        if (Utils.isNegative(id))
+        if(Utils.isNegativeOrNull(id))
             throw new EntityIllegalArgumentException(
                     "Produit", "id",
                     "L'id n'est pas valide");

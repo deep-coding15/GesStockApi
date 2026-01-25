@@ -48,7 +48,7 @@ public class CategorieService {
      */
     public Categorie getCategorieById(Long id) {
 
-        if (Utils.isNegative(id))
+        if (Utils.isNegativeOrNull(id))
             throw new EntityIllegalArgumentException("Categorie", "id", id.toString());
 
         Categorie categorie = categorieRepository

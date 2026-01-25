@@ -17,11 +17,23 @@ public class EntityIllegalArgumentException extends BusinessException {
                 entity + ", illegal argument exception for: " + field + "=" + value,
                 "ENTITY_ILLEGAL_ARGUMENT_EXCEPTION");
     }
+
+    public EntityIllegalArgumentException(String entity, String field, String value, String commentaire) {
+        super(
+                entity + ", illegal argument exception for: " + field + "=" + value,
+                "ENTITY_ILLEGAL_ARGUMENT_EXCEPTION" + " : " + commentaire);
+    }
     
     public EntityIllegalArgumentException(String entity, String field, Long value) {
         super(
                 entity + ", illegal argument exception for: " + field + "=" + value,
                 "ENTITY_ILLEGAL_ARGUMENT_EXCEPTION");
+    }
+    
+    public EntityIllegalArgumentException(String entity, String field, Long value, String commentaire) {
+        super(
+                entity + ", illegal argument exception for: " + field + "=" + value,
+                "ENTITY_ILLEGAL_ARGUMENT_EXCEPTION" + " : " + commentaire);
     }
 
     /**
