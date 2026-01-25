@@ -5,12 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StockMouvementResponse {
-    public Long id;
-    public int produitId;
+public class StockMouvementCreateRequestDTO {
+    public String type; // ENTREE : SORTIE : REAJUSTEMENT
     public int quantite;
-    public String type;
     public Long utilisateurId;
-    public String dateMouvement;
     public String commentaire;
 }

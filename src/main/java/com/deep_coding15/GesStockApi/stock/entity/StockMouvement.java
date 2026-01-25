@@ -17,7 +17,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "stock_mouvement")
 public class StockMouvement extends BaseEntity {
@@ -25,6 +29,7 @@ public class StockMouvement extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // utilisee pour les statistiques
     @ManyToOne(optional = false)
     @JoinColumn(name = "produit_id")
     private Produit produit;
