@@ -12,7 +12,7 @@ import com.deep_coding15.GesStockApi.stock.mapper.StockMouvementMapper;
 import com.deep_coding15.GesStockApi.stock.service.StockMouvementService;
 
 @RestController
-@RequestMapping("/api/stock-mouvements")
+@RequestMapping("/api/v1/stock-mouvements")
 public class StockMouvementController {
     private final StockMouvementService stockMouvementService;
     private final StockMouvementMapper stockMouvementMapper;

@@ -7,11 +7,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
-import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
-import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityBusinessException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
@@ -19,7 +16,6 @@ import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
-import com.deep_coding15.GesStockApi.security.service.UtilisateurService;
 import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
 import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
@@ -35,29 +31,24 @@ public class StockService {
     private ProduitRepository produitRepository;
     private StockMouvementRepository stockMouvementRepository;
     private UtilisateurRepository utilisateurRepository;
-    private UtilisateurService utilisateurService;
-    private ProduitService produitService;
 
     public StockService(
             StockRepository stockRepository,
             ProduitRepository produitRepository,
             StockMouvementRepository stockMouvementRepository,
-            UtilisateurService utilisateurService,
-            ProduitService produitService,
             UtilisateurRepository utilisateurRepository) {
         this.stockRepository = stockRepository;
         this.produitRepository = produitRepository;
         this.stockMouvementRepository = stockMouvementRepository;
         this.utilisateurRepository = utilisateurRepository;
-        this.utilisateurService = utilisateurService;
-        this.produitService = produitService;
     }
 
     @Transactional
     public Stock createStock(Produit produit, Integer quantiteInitiale, Utilisateur utilisateur) {
 
         if (Utils.isNegativeOrNullOrZero(quantiteInitiale))
-            throw new EntityIllegalArgumentException("Stock", "quantiteInitiale", String.valueOf(quantiteInitiale));
+            throw new EntityIllegalArgumentException("Stock", 
+        "quantiteInitiale", String.valueOf(quantiteInitiale));
 
         if (produit == null || Utils.isNegativeOrNullOrZero(produit.getId()))
             throw new EntityIllegalArgumentException(
@@ -68,9 +59,11 @@ public class StockService {
                         "Produit", "id",
                         produit.getId().toString()));
 
+        // Est ce qu'il existe un stock pour ce produit
         if (stockRepository.existsByProduitId(produitExist.getId()))
-            throw new EntityAlreadyExistsException(
-                    "Produit", "id", produitExist.getId().toString());
+            throw new EntityBusinessException(
+                    "Produit", "id", produitExist.getId().toString(), 
+                    "Il existe dejà un stock pour ce produit");
 
         Utilisateur utilisateurExist = utilisateurRepository.findById(utilisateur.getId())
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -96,9 +89,9 @@ public class StockService {
 
         stock.getMouvements().add(mouvement);
 
+        // Sauvegarde automatiquement le mouvement car  
+        // la relation est cascade = CascadeType.ALL
         return stockRepository.save(stock);
-        // stockMouvementRepository.save(mouvement); Inutile ici car cascade =
-        // CascadeType.ALL
     }
 
     public Stock getStockById(Long id) {
@@ -134,17 +127,6 @@ public class StockService {
     public List<StockMouvement> getMouvementsByStock(Long stockId) {
         return stockMouvementRepository.findAllByStockId(stockId);
     }
-
-    /*
-     * public List<StockMouvement> getMouvementsByProduit(Long produitId) {
-     * if (Utils.isNegativeOrNullOrZero(produitId)) {
-     * throw new EntityIllegalArgumentException(
-     * "Stock", "produitId",
-     * produitId.toString());
-     * }
-     * 
-     * }
-     */
 
     @Transactional
     public Stock patchStockQuantite(
