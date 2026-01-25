@@ -6,9 +6,9 @@ import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentExcep
 
 public enum TypeMouvementStockEnum {
 
-    ENTREE("ENT", "Entrée en stock"),
-    SORTIE("SOR", "Sortie de stock"),
-    AJUSTEMENT("AJU", "Ajustement de stock");
+    ENTREE("ENTREE", "Entrée en stock"),
+    SORTIE("SORTIE", "Sortie de stock"),
+    AJUSTEMENT("AJUSTEMENT", "Ajustement de stock");
 
     private final String code;
     private final String libelle;
