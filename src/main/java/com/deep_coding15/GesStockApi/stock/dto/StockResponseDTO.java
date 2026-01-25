@@ -11,5 +11,5 @@ public class StockResponseDTO {
     public Long id;
     public Long produitId;
     public int quantite;
-    private List<StockMouvementResponse> mouvements;
+    private List<StockMouvementResponseDTO> mouvements;
 }

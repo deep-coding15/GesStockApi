@@ -2,19 +2,11 @@ package com.deep_coding15.GesStockApi.stock.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
-import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
 import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurCreateRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurResponseDTO;
-import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
-import com.deep_coding15.GesStockApi.stock.dto.StockCreateRequestDTO;
-import com.deep_coding15.GesStockApi.stock.dto.StockMouvementResponse;
+import com.deep_coding15.GesStockApi.stock.dto.StockMouvementResponseDTO;
 import com.deep_coding15.GesStockApi.stock.dto.StockResponseDTO;
-import com.deep_coding15.GesStockApi.stock.dto.StockUpdateRequestDTO;
 import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
-import com.deep_coding15.GesStockApi.stock.repository.StockRepository;
 import com.deep_coding15.GesStockApi.stock.service.StockService;
 
 @Component
@@ -88,8 +80,8 @@ public class StockMapper {
         return dto;
     }
 
-    private StockMouvementResponse toMouvementResponse(StockMouvement m) {
-        StockMouvementResponse dto = new StockMouvementResponse();
+    private StockMouvementResponseDTO toMouvementResponse(StockMouvement m) {
+        StockMouvementResponseDTO dto = new StockMouvementResponseDTO();
         dto.setType(m.getTypeMouvement().getCode());
         dto.setQuantite(m.getQuantite());
         dto.setDateMouvement(m.getDateMouvement().toString());

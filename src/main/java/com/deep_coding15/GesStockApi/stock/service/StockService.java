@@ -132,7 +132,7 @@ public class StockService {
     }
 
     public List<StockMouvement> getMouvementsByStock(Long stockId) {
-        return stockMouvementRepository.findByStockId(stockId);
+        return stockMouvementRepository.findAllByStockId(stockId);
     }
 
     /*

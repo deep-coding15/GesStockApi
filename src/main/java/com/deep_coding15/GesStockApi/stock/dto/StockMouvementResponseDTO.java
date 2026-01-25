@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StockMouvementResponse {
+public class StockMouvementResponseDTO {
     public Long id;
     public int produitId;
     public int quantite;
