@@ -129,12 +129,7 @@ public class StockService {
     }
 
     @Transactional
-    public Stock patchStockQuantite(
-            Long stockId,
-            int delta,
-            String type,
-            Utilisateur utilisateur,
-            String commentaire) {
+    public Stock patchStockQuantite(Long stockId, int delta, String type, Utilisateur utilisateur,String commentaire) {
 
         if (delta == 0)
             throw new EntityIllegalArgumentException("Stock", "delta", "0");

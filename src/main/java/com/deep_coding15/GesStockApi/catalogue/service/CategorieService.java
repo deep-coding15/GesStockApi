@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
+
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
+
 import com.deep_coding15.GesStockApi.common.utils.Utils;
 
 @Service

@@ -25,6 +25,8 @@ public class Produit extends BaseEntity {
     @Column(nullable = false, unique = true, length = 50)
     private String reference;
 
+    private Long codeBarre;
+    
     @Column(nullable = false, length = 100)
     private String nom;
 

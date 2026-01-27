@@ -11,8 +11,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.security.entity.Role;
@@ -21,7 +20,7 @@ import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
 import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
 
-@DataJpaTest
+@org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 class StockMouvementRepositoryTest {
 
     @Autowired

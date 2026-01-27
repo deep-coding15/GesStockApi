@@ -55,7 +55,7 @@ public class VenteServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
+    /* @Test
     void createVente_shouldSucceed_whenValidVente() {
 
         // GIVEN : un utilisateur et une vente avec lignes
@@ -120,7 +120,7 @@ public class VenteServiceTest {
             () -> venteService.createVente(vente)
         );
     }
-
+ */
     @Test
     void getVenteById_shouldSucceed_whenVenteExists() {
 

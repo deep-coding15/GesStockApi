@@ -30,6 +30,8 @@ public class Utilisateur extends BaseEntity{
 
     @Column(name = "mot_de_passe", nullable = false)
     private String motDePasse;
+    
+    private String telephone;
 
     @Column(nullable = false)
     private boolean actif = true;
