@@ -1,6 +1,7 @@
 package com.deep_coding15.GesStockApi.catalogue.mapper;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -100,6 +101,12 @@ public class ProduitMapper {
     }
 
     public Set<ProduitResponseDTO> toResponseSet(Set<Produit> produits) {
+        return produits.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toSet());
+    }
+    
+    public Set<ProduitResponseDTO> toResponseSet(List<Produit> produits) {
         return produits.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toSet());

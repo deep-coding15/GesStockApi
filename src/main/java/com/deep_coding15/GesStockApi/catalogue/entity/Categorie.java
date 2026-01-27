@@ -3,6 +3,7 @@ package com.deep_coding15.GesStockApi.catalogue.entity;
 import java.util.List;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,6 +39,7 @@ public class Categorie extends BaseEntity {
 
     // Categorie
     @OneToMany(mappedBy = "categorie")
+    @JsonManagedReference //parent
     private List<Produit> produits;
     
     // getters / setters

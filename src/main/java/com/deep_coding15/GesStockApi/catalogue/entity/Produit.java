@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class Produit extends BaseEntity {
     private String reference;
 
     private Long codeBarre;
-    
+
     @Column(nullable = false, length = 100)
     private String nom;
 
@@ -47,6 +48,7 @@ public class Produit extends BaseEntity {
     * */
     @ManyToOne(optional = true) //todo: A mettre a false car chaque produit doit avoir une categorie. Ici a true juste pour les tests
     @JoinColumn(name = "categorie_id")
+    @JsonBackReference //child
     private Categorie categorie;
 
 }

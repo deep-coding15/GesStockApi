@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.deep_coding15.GesStockApi.catalogue.dto.ProduitCreateRequestDTO;
 import com.deep_coding15.GesStockApi.catalogue.dto.ProduitPatchRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.ProduitResponseDTO;
 import com.deep_coding15.GesStockApi.catalogue.dto.ProduitUpdateRequestDTO;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
@@ -15,6 +16,7 @@ import com.deep_coding15.GesStockApi.catalogue.mapper.ProduitMapper;
 import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/produits")
@@ -51,8 +53,9 @@ public class ProduitController {
      * @return ResponseEntity<List<Produit>>
      */
     @GetMapping("/")
-    public ResponseEntity<List<Produit>> getProduits() {
-        return ResponseEntity.ok(produitService.getProduits());
+    public ResponseEntity<Set<ProduitResponseDTO>> getProduits() {
+        List<Produit> produits = produitService.getProduits();
+        return new ResponseEntity<>(produitMapper.toResponseSet(produits), HttpStatus.OK);
     }
 
     /**
