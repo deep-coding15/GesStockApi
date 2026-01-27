@@ -49,7 +49,7 @@ public class Vente extends BaseEntity{
     private LocalDateTime dateVente = LocalDateTime.now();
 
     @Positive
-    @Column(nullable = false, precision = 38, scale = 2)
+    @Column(name = "prix_total_ht", nullable = false, precision = 38, scale = 2)
     private BigDecimal prixTotalHT; 
 
     @Enumerated(EnumType.STRING)
@@ -61,6 +61,7 @@ public class Vente extends BaseEntity{
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL)
+    @Column(name = "vente_ligne")
     private List<VenteLigne> lignesVente;
 
     @PrePersist

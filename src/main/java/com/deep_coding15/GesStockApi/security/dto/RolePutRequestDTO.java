@@ -6,15 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleResponseDTO {
-    
-    public Long id;
+public class RolePutRequestDTO {
 
     @NotBlank
     public String code;
 
     @NotBlank
     public String libelle;
-      
-    // Getters / Setters
 }

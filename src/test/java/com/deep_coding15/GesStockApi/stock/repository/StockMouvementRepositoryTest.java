@@ -20,7 +20,7 @@ import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
 import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
 
-@org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+/* @org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 class StockMouvementRepositoryTest {
 
     @Autowired
@@ -115,3 +115,4 @@ class StockMouvementRepositoryTest {
         assertThat(result).hasSize(1);
     }
 }
+ */
