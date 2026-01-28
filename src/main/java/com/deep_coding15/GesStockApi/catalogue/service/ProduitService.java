@@ -1,7 +1,14 @@
 package com.deep_coding15.GesStockApi.catalogue.service;
 
+import com.deep_coding15.GesStockApi.catalogue.dto.ProduitPatchRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
+import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
+import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
+import com.deep_coding15.GesStockApi.common.utils.Utils;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -9,42 +16,197 @@ import java.util.List;
 @Service
 public class ProduitService {
 
-    private final ProduitRepository produitRepository;
+    private final ProduitRepository   produitRepository;
+    private final CategorieRepository categorieRepository;
 
-    public ProduitService(ProduitRepository produitRepository) {
-        this.produitRepository = produitRepository;
+    public ProduitService(
+        CategorieRepository categorieRepository,
+        ProduitRepository   produitRepository
+    ) {
+        this.categorieRepository = categorieRepository;
+        this.produitRepository   = produitRepository;
     }
 
-    /** 
+    /**
      * @param produit
      * @return Produit
      */
     public Produit createProduit(Produit produit) {
 
+        if (Utils.isStringUseless(produit.getReference()))
+            throw new EntityIllegalArgumentException(
+                    "produit", "reference",
+                    produit.getReference());
+
         if (produitRepository.existsByReference(produit.getReference())) {
-            throw new IllegalArgumentException("Un produit avec cette référence existe déjà");
+            throw new EntityAlreadyExistsException(
+                    "Produit", "reference",
+                    produit.getReference());
         }
 
         return produitRepository.save(produit);
     }
 
-    /** 
+    /**
      * @return List<Produit>
      */
     public List<Produit> getProduits() {
         return produitRepository.findAll();
     }
 
-    /** 
+    public List<Produit> getProduitsByCategorie(Long categorieId){
+        if(Utils.isNegativeOrNull(categorieId))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "categorieId",
+                    categorieId);
+
+        List<Produit> produitsParCategorie = produitRepository.findByCategorieId(categorieId);
+
+        return produitsParCategorie;
+    }
+
+    public List<Produit> getProduitsByCategorie(String code) {
+        if (Utils.isStringUseless(code))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "categorie : code",
+                    code);
+
+        List<Produit> produitsParCategorie = produitRepository.findByCategorieCode(code);
+
+        return produitsParCategorie;
+    }
+
+    /**
      * @param id
      * @return Produit
      */
-    public Produit findProduitById(Long id) {
+    public Produit getProduitById(Long id) {
+        if(Utils.isNegativeOrNull(id))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "id",
+                    "L'id n'est pas valide");
+
         return produitRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Produit introuvable."));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "id", id.toString()));
     }
 
-    /** 
+    /**
+     * @param reference
+     * @return Produit
+     */
+    public Produit getProduitByReference(String reference) {
+        if (Utils.isStringUseless(reference))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "reference",
+                    reference);
+
+        return produitRepository.findByReference(reference)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "id", reference));
+    }
+
+    /**
+     * @param reference
+     * @return Produit
+     */
+    public Produit getProduitByNom(String nom) {
+        if (Utils.isStringUseless(nom))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "nom",
+                    nom);
+
+        return produitRepository.findByNom(nom)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "nom", nom));
+    }
+
+    /**
+     * @param reference
+     * @return Produit
+     */
+    public Produit getProduitByDescription(String description) {
+        if (Utils.isStringUseless(description))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "description",
+                    description);
+
+        return produitRepository.findByDescription(description)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "description", description));
+    }
+
+    ////////////////////////////////////////////////////////
+
+    public Produit updateProduit(Long id, Produit produit) {
+
+        if (Utils.isNegativeOrNull(id)) {
+            throw new EntityIllegalArgumentException(
+                    "Produit", "id", id.toString());
+        }
+
+        Produit produitExistant = produitRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "id", id.toString()));
+
+        // Mise à jour champ par champ
+        produitExistant.setNom(produit.getNom());
+        produitExistant.setDescription(produit.getDescription());
+        produitExistant.setPrixUnitaire(produit.getPrixUnitaire());
+        produitExistant.setReference(produit.getReference());
+        produitExistant.setCategorie(produit.getCategorie());
+
+        return produitRepository.save(produitExistant);
+    }
+
+    ///////////////////////////////////////////////////////////
+    public Produit patchProduit(Long id, Produit produit) {
+
+        if (Utils.isNegativeOrNull(id)) {
+            throw new EntityIllegalArgumentException("Produit", "id", id.toString());
+        }
+
+        Produit produitExistant = produitRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "id", id.toString()));
+
+        if (produit.getNom() != null)
+            produitExistant.setNom(produit.getNom());
+
+        if (produit.getDescription() != null)
+            produitExistant.setDescription(produit.getDescription());
+
+        if (produit.getPrixUnitaire() != null)
+            produitExistant.setPrixUnitaire(produit.getPrixUnitaire());
+
+        if (produit.getCategorie() != null) {
+            Categorie categorie = categorieRepository.findById(produit.getCategorie().getId())
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Categorie", "id", produit.getCategorie().getId().toString()));
+            produitExistant.setCategorie(categorie);
+        }
+
+        return produitRepository.save(produitExistant);
+    }
+
+    ///////////////////////////////////////////////////////////
+    public boolean deleteProduit(Long id) {
+
+        if (Utils.isNegativeOrNull(id)) {
+            throw new EntityIllegalArgumentException(
+                    "Produit", "id", id.toString());
+        }
+
+        Produit produit = produitRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Produit", "id", id.toString()));
+
+        produitRepository.deleteById(produit.getId());
+        return true;
+        //produitRepository.delete(produit);
+    }
+
+    /**
      * @param ref
      * @return boolean
      */

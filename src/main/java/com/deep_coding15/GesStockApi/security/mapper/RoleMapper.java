@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.deep_coding15.GesStockApi.security.dto.RoleCreateRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.RolePatchRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.RolePutRequestDTO;
 import com.deep_coding15.GesStockApi.security.dto.RoleResponseDTO;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 
@@ -26,6 +28,26 @@ public class RoleMapper {
      */
     // DTO -> Entity
     public Role toEntity(RoleCreateRequestDTO dto) {
+
+        Role role = new Role();
+
+        role.setCode(dto.getCode());
+        role.setLibelle(dto.getLibelle());
+
+        return role;
+    }
+    
+    public Role toEntity(RolePatchRequestDTO dto) {
+
+        Role role = new Role();
+
+        role.setCode(dto.getCode());
+        role.setLibelle(dto.getLibelle());
+
+        return role;
+    }
+    
+    public Role toEntity(RolePutRequestDTO dto) {
 
         Role role = new Role();
 
@@ -56,9 +78,9 @@ public class RoleMapper {
     }
 
     public Set<RoleResponseDTO> toResponseSet(Set<Role> roles) {
-        return roles.stream()
-                .map(this::toResponse)
-                .collect(Collectors.toSet());
+        return roles.stream() // crée un flux de Role
+                .map(this::toResponse) // transforme chaque Role en RoleResponseDTO
+                .collect(Collectors.toSet()); // reconstruit un Set<RoleResponseDTO>
     }
 
 }

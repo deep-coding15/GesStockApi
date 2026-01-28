@@ -3,7 +3,6 @@ package com.deep_coding15.GesStockApi.catalogue.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -30,7 +29,7 @@ public class CategorieMapper {
         categorie.setCode(dto.getCode());
         categorie.setDescription(dto.getDescription());
         categorie.setLibelle(dto.getLibelle());
-        List<Produit> listProduits = new ArrayList();
+        List<Produit> listProduits = new ArrayList<Produit>();
         categorie.setProduits(listProduits);
         
         return categorie;
@@ -45,7 +44,7 @@ public class CategorieMapper {
         categorie.setCode(dto.getCode());
         categorie.setDescription(dto.getDescription());
         categorie.setLibelle(dto.getLibelle());
-        List<Produit> listProduits = new ArrayList();
+        List<Produit> listProduits = new ArrayList<Produit>();
         categorie.setProduits(listProduits);
         
         return categorie;
@@ -60,7 +59,7 @@ public class CategorieMapper {
         categorie.setCode(dto.getCode());
         categorie.setDescription(dto.getDescription());
         categorie.setLibelle(dto.getLibelle());
-        List<Produit> listProduits = new ArrayList();
+        List<Produit> listProduits = new ArrayList<Produit>();
         categorie.setProduits(listProduits);
         
         return categorie;

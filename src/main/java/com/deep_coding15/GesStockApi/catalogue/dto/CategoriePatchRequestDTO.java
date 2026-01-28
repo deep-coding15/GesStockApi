@@ -1,6 +1,5 @@
 package com.deep_coding15.GesStockApi.catalogue.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +7,13 @@ import lombok.Setter;
 @Setter
 public class CategoriePatchRequestDTO {
 
+    public Long id;
+
     public String Code;
 
     public String Libelle;
 
     public String Description;
+    
+    public boolean actif;
 }

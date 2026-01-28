@@ -23,7 +23,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
+
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
@@ -148,4 +150,73 @@ public class CategorieServiceTest {
         assertEquals(0, list_Categories.size());
         verify(categorieRepository, times(1)).findAll();
     }
+
+    @Test
+    void updateCategorie_shouldFail_whenIdIsInvalid() {
+
+        Categorie categorie = new Categorie();
+
+        assertThrows(
+                EntityIllegalArgumentException.class,
+                () -> categorieService.patchCategorie(0L, categorie));
+    }
+
+    @Test
+    void updateCategorie_shouldFail_whenCategorieDoesNotExist() {
+
+        when(categorieRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                EntityNotFoundException.class,
+                () -> categorieService.patchCategorie(1L, new Categorie()));
+    }
+
+    @Test
+    void patchCategorie_shouldUpdateOnlyProvidedFields() {
+
+        Categorie categorie = new Categorie();
+        categorie.setId(1L);
+        categorie.setCode("CODE");
+
+        Categorie dto = new Categorie();
+        dto.setCode("Nouveau nom");
+
+        when(categorieRepository.findById(1L))
+                .thenReturn(Optional.of(categorie));
+
+        when(categorieRepository.save(any()))
+                .thenAnswer(i -> i.getArgument(0));
+
+        Categorie result = categorieService.patchCategorie(1L, dto);
+
+        assertEquals("Nouveau nom", result.getCode());
+    }
+
+    @Test
+    void deleteCategorie_shouldSucceed_whenCategorieExists() {
+
+        Categorie categorie = new Categorie();
+        categorie.setId(1L);
+
+        when(categorieRepository.findById(1L))
+                .thenReturn(Optional.of(categorie));
+
+        categorieService.deleteCategorie(1L);
+
+        verify(categorieRepository).deleteById(1L);
+    }
+
+    @Test
+    void deleteProduit_shouldFail_whenProduitDoesNotExist() {
+
+        when(categorieRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                EntityNotFoundException.class,
+                () -> categorieService.deleteCategorie(1L));
+    }
+
+
 }

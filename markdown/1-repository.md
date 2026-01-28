@@ -55,7 +55,7 @@ Cas d’usage typique
 Avant la création d’un produit :
 ```java
 if (produitRepository.existsByReference(dto.getReference())) {
-    throw new IllegalArgumentException("Référence déjà utilisée");
+    throw new EntityIllegalArgumentException("Produit", "reference", dto.getReference);
 }
 ```
 👉 Très utile pour garantir l’unicité métier (souvent couplé à @Column(unique = true)).

@@ -89,7 +89,7 @@ public class CategorieController {
     @GetMapping("/libelle/{libelle}")
     public ResponseEntity<CategorieResponseDTO> getCategorieByLibelle(@PathVariable String libelle) {
         try {
-            Categorie categorie = categorieService.getCatgorieByLibelle(libelle);
+            Categorie categorie = categorieService.getCategorieByLibelle(libelle);
             CategorieResponseDTO dto = categorieMapper.toResponse(categorie);
 
             return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
@@ -101,6 +101,23 @@ public class CategorieController {
 
     @GetMapping("/")
     public ResponseEntity<List<CategorieResponseDTO>> getCategories() {
+        try {
+            List<Categorie> categoriesTrouves = categorieService.getCategories();
+
+            List<CategorieResponseDTO> categories = categoriesTrouves.stream()
+                    .map(categorieMapper::toResponse)
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity<>(categories, HttpStatus.OK);
+        } catch (Exception e) {
+            // TODO: logger l'erreur
+            // log.error("Erreur lors de la récupération des rôles", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/produits")
+    public ResponseEntity<List<CategorieResponseDTO>> getCategoriesWithProduits() {
         try {
             List<Categorie> categoriesTrouves = categorieService.getCategories();
 
@@ -141,7 +158,7 @@ public class CategorieController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Retourne un code 204 (Succès sans contenu)
-    public void deletecategorie(@PathVariable Long id) {
+    public void deleteCategorie(@PathVariable Long id) {
         categorieService.deleteCategorie(id);
     }
 }

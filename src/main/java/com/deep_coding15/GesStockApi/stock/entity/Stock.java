@@ -5,6 +5,7 @@ import java.util.List;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Setter
+@Getter
 public class Stock extends BaseEntity {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +33,6 @@ public class Stock extends BaseEntity {
     @JoinColumn(name = "produit_id", unique = true)
     private Produit produit;
 
-    @OneToMany(mappedBy = "stock")
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StockMouvement> mouvements;
 }
