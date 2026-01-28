@@ -1,23 +1,18 @@
 package com.deep_coding15.GesStockApi.security.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UtilisateurCreateRequestDTO {
+public class UtilisateurPatchRequestDTO {
 
-    @NotBlank
     public String email;
 
-    @NotBlank
     public Long   roleId;
-    
-    @NotBlank
+
     public String motDePasse;
-    
-    @NotBlank
+
     public String username;
 
     // getters / setters
