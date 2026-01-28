@@ -8,6 +8,7 @@ import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
 import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
+import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 
 @Service
 public class CategorieService {
@@ -29,6 +30,8 @@ public class CategorieService {
                     "Categorie", "code",
                     categorie.getCode());
         }
+
+        if(Util)
 
         return categorieRepository.save(categorie);
     }
@@ -83,6 +86,28 @@ public class CategorieService {
                         "libelle", libelle));
 
         return categorie;
+    }
+
+    public Utilisateur patchUtilisateur(Long id, Utilisateur utilisateur) {
+        if (Utils.isNegativeOrNullOrZero(id))
+            throw new EntityIllegalArgumentException("Utilisateur", "id", id.toString());
+
+        Utilisateur utilisateurUpdate = utilisateurRepository
+                .findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Utilisateur",
+                                "id", id.toString()));
+
+        if (!Utils.isStringUseless(utilisateur.getEmail()))
+            utilisateurUpdate.setEmail(utilisateur.getEmail());
+
+        if (!Utils.isStringUseless(utilisateur.getUsername()))
+            utilisateurUpdate.setUsername(utilisateur.getUsername());
+
+        if (!Utils.isStringUseless(utilisateur.getTelephone()))
+            utilisateurUpdate.setTelephone(utilisateur.getTelephone());
+
+        return utilisateurRepository.save(utilisateurUpdate);
     }
 
 }
