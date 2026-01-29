@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.catalogue.dto.CategorieCreateRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.CategoriePatchRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.CategoriePutRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.CategorieResponseDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategorieCreateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategoriePatchRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategoriePutRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategorieResponseDTO;
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 

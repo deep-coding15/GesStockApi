@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.deep_coding15.GesStockApi.catalogue.dto.CategorieCreateRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.CategoriePatchRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.CategoriePutRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.CategorieResponseDTO;
-
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategorieCreateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategoriePatchRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategoriePutRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.categorie.CategorieResponseDTO;
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 
 import com.deep_coding15.GesStockApi.catalogue.mapper.CategorieMapper;

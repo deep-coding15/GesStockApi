@@ -19,6 +19,8 @@ import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.mapper.UtilisateurMapper;
 import com.deep_coding15.GesStockApi.security.service.UtilisateurService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UtilisateurController {
@@ -36,7 +38,7 @@ public class UtilisateurController {
     }
 
     @PostMapping
-    public ResponseEntity<UtilisateurResponseDTO> creerUtilisateur(@RequestBody UtilisateurCreateRequestDTO dto) {
+    public ResponseEntity<UtilisateurResponseDTO> creerUtilisateur(@Valid @RequestBody UtilisateurCreateRequestDTO dto) {
 
         Utilisateur utilisateur = utilisateurMapper.toEntity(dto);
 

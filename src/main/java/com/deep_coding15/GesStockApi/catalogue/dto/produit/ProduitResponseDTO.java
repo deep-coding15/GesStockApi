@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.catalogue.dto;
+package com.deep_coding15.GesStockApi.catalogue.dto.produit;
 
 import lombok.Getter;
 import lombok.Setter;

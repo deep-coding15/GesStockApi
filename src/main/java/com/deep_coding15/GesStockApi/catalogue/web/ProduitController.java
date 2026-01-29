@@ -2,18 +2,21 @@ package com.deep_coding15.GesStockApi.catalogue.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitCreateRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitPatchRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitResponseDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitUpdateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitCreateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitPatchRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitPutRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitResponseDTO;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 
 import com.deep_coding15.GesStockApi.catalogue.mapper.ProduitMapper;
 
 import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Set;
@@ -39,12 +42,14 @@ public class ProduitController {
      * @param produit
      * @return ResponseEntity<Produit>
      */
-    @PostMapping
-    public ResponseEntity<Produit> createProduit(@RequestBody ProduitCreateRequestDTO produitDto) {
+    @PostMapping("/")
+    public ResponseEntity<ProduitResponseDTO> createProduit(@Valid @RequestBody ProduitCreateRequestDTO produitDto) {
         Produit produit = produitMapper.toEntity(produitDto);
 
         Produit produitCree = produitService.createProduit(produit);
-        return new ResponseEntity<>(produitCree, HttpStatus.CREATED);
+
+        ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produitCree);
+        return new ResponseEntity<>(produitResponseDTO, HttpStatus.CREATED);
     }
 
     /* ===================== READ ===================== */
@@ -62,9 +67,13 @@ public class ProduitController {
      * @param id
      * @return ResponseEntity<Produit>
      */
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Produit> getProduit(@PathVariable Long id) {
-        return ResponseEntity.ok(produitService.getProduitById(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<ProduitResponseDTO> getProduit(@PathVariable Long id) {
+        
+        Produit produit = produitService.getProduitById(id);
+        ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
+        
+        return ResponseEntity.ok(produitResponseDTO);
     }
 
     /**
@@ -72,8 +81,12 @@ public class ProduitController {
      * @return ResponseEntity<Produit>
      */
     @GetMapping("/reference/{reference}")
-    public ResponseEntity<Produit> getProduitByReference(@PathVariable String reference) {
-        return ResponseEntity.ok(produitService.getProduitByReference(reference));
+    public ResponseEntity<ProduitResponseDTO> getProduitByReference(@PathVariable String reference) {
+        
+        Produit produit = produitService.getProduitByReference(reference);
+        ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
+        
+        return ResponseEntity.ok(produitResponseDTO);
     }
 
     /**
@@ -81,8 +94,12 @@ public class ProduitController {
      * @return ResponseEntity<Produit>
      */
     @GetMapping("/nom/{nom}")
-    public ResponseEntity<Produit> getProduitByNom(@PathVariable String nom) {
-        return ResponseEntity.ok(produitService.getProduitByNom(nom));
+    public ResponseEntity<ProduitResponseDTO> getProduitByNom(@PathVariable String nom) {
+
+        Produit produit = produitService.getProduitByNom(nom);
+        ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
+        
+        return ResponseEntity.ok(produitResponseDTO);
     }
 
     /**
@@ -90,8 +107,12 @@ public class ProduitController {
      * @return ResponseEntity<Produit>
      */
     @GetMapping("/description/{description}")
-    public ResponseEntity<Produit> getProduitByDescription(@PathVariable String description) {
-        return ResponseEntity.ok(produitService.getProduitByDescription(description));
+    public ResponseEntity<ProduitResponseDTO> getProduitByDescription(@PathVariable String description) {
+
+        Produit produit = produitService.getProduitByDescription(description);
+        ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
+        
+        return ResponseEntity.ok(produitResponseDTO);
     }
 
     /**
@@ -99,31 +120,36 @@ public class ProduitController {
      * @return ResponseEntity<Produit>
      */
     @GetMapping("/categorie/{categorieId}")
-    public ResponseEntity<List<Produit>> getProduitByCategorie(@PathVariable Long categorieId) {
-        return ResponseEntity.ok(produitService.getProduitsByCategorie(categorieId));
+    public ResponseEntity<List<ProduitResponseDTO>> getProduitByCategorie(@PathVariable Long categorieId) {
+
+        List<Produit> listProduits = produitService.getProduitsByCategorieId(categorieId);
+
+        return ResponseEntity.ok(produitMapper.toResponseList(listProduits));
     }
 
     /* ===================== UPDATE ===================== */
     @PutMapping("/{id}")
-    public ResponseEntity<Produit> updateProduit(
+    public ResponseEntity<ProduitResponseDTO> putProduit(
             @PathVariable Long id,
-            @RequestBody ProduitUpdateRequestDTO produitDto) {
+            @Valid @RequestBody ProduitPutRequestDTO produitDto) {
 
         Produit produit = produitMapper.toEntity(produitDto);
 
         return ResponseEntity.ok(
-                produitService.updateProduit(id, produit));
+                produitMapper.toResponse(produitService.putProduit(id, produit))
+            );
     }
 
     /* ===================== PATCH ===================== */
     @PatchMapping("/{id}")
-    public ResponseEntity<Produit> patchProduit(
+    public ResponseEntity<ProduitResponseDTO> patchProduit(
             @PathVariable Long id,
-            @RequestBody ProduitPatchRequestDTO dto) {
+            @Valid @RequestBody ProduitPatchRequestDTO dto) {
 
         Produit produit = produitMapper.toEntity(dto);
         return ResponseEntity.ok(
-                produitService.patchProduit(id, produit));
+                produitMapper.toResponse(produitService.patchProduit(id, produit))
+        );
     }
 
     /* ===================== DELETE ===================== */

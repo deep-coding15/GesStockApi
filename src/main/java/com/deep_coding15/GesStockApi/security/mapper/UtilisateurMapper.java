@@ -38,7 +38,7 @@ public class UtilisateurMapper {
         dto.setUsername(utilisateur.getUsername());
         dto.setActif(utilisateur.getActif());
 
-        return new UtilisateurResponseDTO();
+        return dto;
     }
 
 }

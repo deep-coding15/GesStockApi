@@ -138,7 +138,7 @@ public class ProduitServiceTest {
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
         // WHEN
-        Produit result = produitService.updateProduit(produitId, updated);
+        Produit result = produitService.putProduit(produitId, updated);
 
         // THEN
         assertNotNull(result);
@@ -152,7 +152,7 @@ public class ProduitServiceTest {
 
         assertThrows(
                 EntityIllegalArgumentException.class,
-                () -> produitService.updateProduit(0L, produit));
+                () -> produitService.putProduit(0L, produit));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class ProduitServiceTest {
 
         assertThrows(
                 EntityNotFoundException.class,
-                () -> produitService.updateProduit(1L, new Produit()));
+                () -> produitService.putProduit(1L, new Produit()));
     }
 
     @Test

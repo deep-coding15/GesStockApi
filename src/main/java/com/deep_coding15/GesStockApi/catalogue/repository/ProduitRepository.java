@@ -1,5 +1,6 @@
 package com.deep_coding15.GesStockApi.catalogue.repository;
 
+import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,8 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     Optional<Produit> findByDescription(String description);
     Optional<Produit> findByNom(String nom);
     Optional<Produit> findByReference(String reference);
+
+    Optional<Categorie> findCategorieById(Long produitId);
 
     boolean existsByReference(String reference);
 }

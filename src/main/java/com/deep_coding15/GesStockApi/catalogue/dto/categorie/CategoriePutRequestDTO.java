@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.catalogue.dto;
+package com.deep_coding15.GesStockApi.catalogue.dto.categorie;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

@@ -7,10 +7,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitCreateRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitPatchRequestDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitResponseDTO;
-import com.deep_coding15.GesStockApi.catalogue.dto.ProduitUpdateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitCreateRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitPatchRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitPutRequestDTO;
+import com.deep_coding15.GesStockApi.catalogue.dto.produit.ProduitResponseDTO;
+
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 
@@ -36,7 +37,6 @@ public class ProduitMapper {
         categorie.setId(dto.getCategorieId());
 
         Produit produit = new Produit();
-        produit.setReference(dto.getReference());
         produit.setNom(dto.getNom());
         produit.setDescription(dto.getDescription());
         produit.setPrixUnitaire(BigDecimal.valueOf(dto.getPrix()));
@@ -45,17 +45,17 @@ public class ProduitMapper {
         return produit;
     }
 
-    public Produit toEntity(ProduitUpdateRequestDTO dto) {
+    public Produit toEntity(ProduitPutRequestDTO dto) {
 
         Categorie categorie = new Categorie();
         categorie.setId(dto.getCategorieId());
 
         Produit produit = new Produit();
-        produit.setId(Long.valueOf(dto.getProduitId()));
+        produit.setId(Long.valueOf(dto.getId()));
         produit.setReference(dto.getReference());
         produit.setNom(dto.getNom());
         produit.setDescription(dto.getDescription());
-        produit.setPrixUnitaire(BigDecimal.valueOf(dto.getPrix()));
+        produit.setPrixUnitaire(dto.getPrix());
         produit.setCategorie(categorie);
 
         return produit;
@@ -110,6 +110,12 @@ public class ProduitMapper {
         return produits.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toSet());
+    }
+    
+    public List<ProduitResponseDTO> toResponseList(List<Produit> produits) {
+        return produits.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
 }
