@@ -2,7 +2,7 @@ package com.deep_coding15.GesStockApi.stock.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.stock.dto.StockMouvementResponseDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock_mouvement.StockMouvementResponseDTO;
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
 
 @Component

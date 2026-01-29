@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
-
-import com.deep_coding15.GesStockApi.stock.dto.StockCreateRequestDTO;
-import com.deep_coding15.GesStockApi.stock.dto.StockPatchQuantityRequestDTO;
-import com.deep_coding15.GesStockApi.stock.dto.StockResponseDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock.StockCreateRequestDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock.StockPatchQuantityRequestDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock.StockResponseDTO;
 import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.mapper.StockMapper;
 import com.deep_coding15.GesStockApi.stock.service.StockService;

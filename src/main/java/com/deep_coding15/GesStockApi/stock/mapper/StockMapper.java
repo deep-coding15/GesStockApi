@@ -3,8 +3,8 @@ package com.deep_coding15.GesStockApi.stock.mapper;
 import org.springframework.stereotype.Component;
 
 import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
-import com.deep_coding15.GesStockApi.stock.dto.StockMouvementResponseDTO;
-import com.deep_coding15.GesStockApi.stock.dto.StockResponseDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock.StockResponseDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock_mouvement.StockMouvementResponseDTO;
 import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.entity.StockMouvement;
 import com.deep_coding15.GesStockApi.stock.service.StockService;

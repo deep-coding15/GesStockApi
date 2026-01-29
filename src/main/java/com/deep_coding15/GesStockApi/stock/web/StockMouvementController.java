@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.deep_coding15.GesStockApi.stock.dto.StockMouvementResponseDTO;
+import com.deep_coding15.GesStockApi.stock.dto.stock_mouvement.StockMouvementResponseDTO;
 import com.deep_coding15.GesStockApi.stock.mapper.StockMouvementMapper;
 import com.deep_coding15.GesStockApi.stock.service.StockMouvementService;
 
