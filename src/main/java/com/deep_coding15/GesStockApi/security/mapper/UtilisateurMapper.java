@@ -6,14 +6,18 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurCreateRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurPatchRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurPutRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurResponseDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RoleResponseDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurCreateRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurPatchRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurPutRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurResponseDTO;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 
+import lombok.NoArgsConstructor;
+
 @Component
+@NoArgsConstructor
 public class UtilisateurMapper {
     
     /*****************************************************/
@@ -73,9 +77,10 @@ public class UtilisateurMapper {
     public UtilisateurResponseDTO toResponse(Utilisateur utilisateur) {
 
         UtilisateurResponseDTO dto = new UtilisateurResponseDTO();
+        RoleResponseDTO roleDto = toroleResponseDTO(utilisateur.getRole());
 
         dto.setId(utilisateur.getId());
-        dto.setRoleId(utilisateur.getRole().getId());
+        dto.setRole(roleDto);
         dto.setEmail(utilisateur.getEmail());
         dto.setUsername(utilisateur.getUsername());
         dto.setActif(utilisateur.getActif());
@@ -103,6 +108,16 @@ public class UtilisateurMapper {
                 .collect(Collectors.toSet()); // reconstruit un Set<UtilisateurResponseDTO>
 
         return utilisateurResponseDto;
+    }
+
+    public RoleResponseDTO toroleResponseDTO(Role role) {
+        RoleResponseDTO dto = new RoleResponseDTO();
+
+        dto.setId(role.getId());
+        dto.setCode(role.getCode());
+        dto.setLibelle(role.getLibelle());
+
+        return dto;
     }
 
 }

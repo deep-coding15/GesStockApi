@@ -43,10 +43,10 @@ public class ProduitService {
                     produit.getReference(), "Certains champs sont manquants.");
         }
 
-        if (produitRepository.existsByReference(produit.getReference())) {
+        if (produitRepository.existsByNom(produit.getReference())) {
             throw new EntityAlreadyExistsException(
-                    "Produit", "reference",
-                    produit.getReference());
+                    "Produit", "nom",
+                    produit.getNom());
         }
 
         Categorie categorie = categorieRepository.findById(produit.getCategorie().getId())
@@ -175,7 +175,7 @@ public class ProduitService {
         produitExistant.setDescription(produit.getDescription());
         produitExistant.setPrixUnitaire(produit.getPrixUnitaire());
         produitExistant.setReference(produit.getReference());
-        //produitExistant.setCategorie(produit.getCategorie());
+        // produitExistant.setCategorie(produit.getCategorie());
 
         if (produit.getCategorie() != null) {
             Categorie categorie = categorieRepository.findById(produit.getCategorie().getId())
@@ -216,19 +216,11 @@ public class ProduitService {
         if (!Utils.isNegativeOrNullOrZero(produit.getPrixUnitaire()))
             produitExistant.setPrixUnitaire(produit.getPrixUnitaire());
 
-        if (produit.getCategorie() != null) {
-            Categorie categorie = categorieRepository.findById(produit.getCategorie().getId())
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Categorie", "id", produit.getCategorie().getId().toString()));
-
-            produitExistant.setCategorie(categorie);
-        } else {
-            Categorie categorie = produitRepository.findCategorieById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Produit", "categorieId", produit.getId().toString(),
-                            "pas de categorie pour ce produit."));
-
-            produitExistant.setCategorie(categorie);
+        if (produit.getCategorie() != null && produit.getCategorie().getId() != null) {
+            Categorie cat = categorieRepository.findById(produit.getCategorie().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Categorie", "id",
+                            produit.getCategorie().getId().toString()));
+            produitExistant.setCategorie(cat);
         }
 
         return produitRepository.save(produitExistant);

@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.security.dto.RoleCreateRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.RolePatchRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.RolePutRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.RoleResponseDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RoleCreateRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RolePatchRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RolePutRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RoleResponseDTO;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 
 /**

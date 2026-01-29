@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class StockMouvementResponseDTO {
     public Long id;
-    public int produitId;
-    public int quantite;
+    public Long produitId;
+    public Integer quantite;
     public String type;
     public Long utilisateurId;
     public String dateMouvement;

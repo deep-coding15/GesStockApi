@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
+import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityBusinessException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
@@ -44,35 +45,43 @@ public class StockService {
     }
 
     @Transactional
-    public Stock createStock(Produit produit, Integer quantiteInitiale, Utilisateur utilisateur) {
+    public Stock createStock(Long produitId, Integer quantiteInitiale, Long utilisateurId) {
 
         if (Utils.isNegativeOrNullOrZero(quantiteInitiale))
-            throw new EntityIllegalArgumentException("Stock", 
-        "quantiteInitiale", String.valueOf(quantiteInitiale));
-
-        if (produit == null || Utils.isNegativeOrNullOrZero(produit.getId()))
             throw new EntityIllegalArgumentException(
-                    "Produit", "id", "null");
+                    "Stock", "quantiteInitiale", 
+                    String.valueOf(quantiteInitiale));
 
-        Produit produitExist = produitRepository.findById(produit.getId())
+        if (Utils.isNegativeOrNullOrZero(produitId))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "id", 
+                    String.valueOf(produitId));
+
+        if (Utils.isNegativeOrNullOrZero(utilisateurId))
+            throw new EntityIllegalArgumentException(
+                    "Utilisateur", "id", 
+                    String.valueOf(utilisateurId));
+
+        Produit produitExist = produitRepository.findById(produitId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Produit", "id",
-                        produit.getId().toString()));
+                        produitId.toString()));
 
         // Est ce qu'il existe un stock pour ce produit
         if (stockRepository.existsByProduitId(produitExist.getId()))
-            throw new EntityBusinessException(
-                    "Produit", "id", produitExist.getId().toString(), 
-                    "Il existe dejà un stock pour ce produit");
+            throw new EntityAlreadyExistsException(
+                    "Produit", "id", produitExist.getId().toString(),
+                    "Il existe dejà un stock pour ce produit"
+                    );
 
-        Utilisateur utilisateurExist = utilisateurRepository.findById(utilisateur.getId())
+        Utilisateur utilisateurExist = utilisateurRepository.findById(utilisateurId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Utilisateur", "id",
-                        utilisateur.getId().toString()));
+                        utilisateurId.toString()));
 
         Stock stock = new Stock();
         stock.setProduit(produitExist);
-        stock.setQuantite(0);
+        stock.setQuantite(quantiteInitiale);
 
         StockMouvement mouvement = new StockMouvement();
         mouvement.setTypeMouvement(TypeMouvementStockEnum.INITIAL);
@@ -81,15 +90,14 @@ public class StockService {
         mouvement.setCommentaire("STOCK INITIAL");
 
         mouvement.setUtilisateur(utilisateurExist);
-        mouvement.setProduit(produitExist);
+        //mouvement.setProduit(produitExist);
         mouvement.setStock(stock);
 
-        stock.setQuantite(quantiteInitiale);
         stock.setMouvements(new ArrayList<>());
 
         stock.getMouvements().add(mouvement);
 
-        // Sauvegarde automatiquement le mouvement car  
+        // Sauvegarde automatiquement le mouvement car
         // la relation est cascade = CascadeType.ALL
         return stockRepository.save(stock);
     }
@@ -129,7 +137,7 @@ public class StockService {
     }
 
     @Transactional
-    public Stock patchStockQuantite(Long stockId, int delta, String type, Utilisateur utilisateur,String commentaire) {
+    public Stock patchStockQuantite(Long stockId, int delta, String type, Utilisateur utilisateur, String commentaire) {
 
         if (delta == 0)
             throw new EntityIllegalArgumentException("Stock", "delta", "0");
@@ -176,7 +184,7 @@ public class StockService {
         mouvement.setUtilisateur(utilisateurExist);
         mouvement.setCommentaire(commentaire);
         mouvement.setStock(stock);
-        mouvement.setProduit(produit);
+        //mouvement.setProduit(produit);
 
         stock.setQuantite(nouvelleQuantite);
         stock.getMouvements().add(mouvement);

@@ -1,6 +1,8 @@
-package com.deep_coding15.GesStockApi.security.dto;
+package com.deep_coding15.GesStockApi.security.dto.role;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class RoleResponseDTO {
     
+    @NotNull
     public Long id;
 
     @NotBlank

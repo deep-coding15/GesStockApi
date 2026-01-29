@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurCreateRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurPatchRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurPutRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.UtilisateurResponseDTO;
-
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurCreateRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurPatchRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurPutRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.utilisateur.UtilisateurResponseDTO;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 
 import com.deep_coding15.GesStockApi.security.mapper.UtilisateurMapper;
@@ -46,7 +45,8 @@ public class UtilisateurController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<UtilisateurResponseDTO> createUtilisateur(@Valid @RequestBody UtilisateurCreateRequestDTO dto) {
+    public ResponseEntity<UtilisateurResponseDTO> createUtilisateur(
+        @Valid @RequestBody UtilisateurCreateRequestDTO dto) {
 
         Utilisateur utilisateur = utilisateurMapper.toEntity(dto);
 

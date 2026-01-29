@@ -56,9 +56,9 @@ public class StockMouvementService {
         "Produit", "id", 
                 produitId.toString());
 
-        return  stockMouvementRepository.findAllByProduitId(produitId);
+        return  stockMouvementRepository.findAllByStockProduitId(produitId);
     }
-
+    
     public List<StockMouvement> getAllMouvementsByStock(Long stockId) {
 
         if(Utils.isNegativeOrNull(stockId)) {

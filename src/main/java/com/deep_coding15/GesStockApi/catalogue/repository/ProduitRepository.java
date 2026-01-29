@@ -20,4 +20,5 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     Optional<Categorie> findCategorieById(Long produitId);
 
     boolean existsByReference(String reference);
+    boolean existsByNom(String nom);
 }

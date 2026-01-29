@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.security.dto;
+package com.deep_coding15.GesStockApi.security.dto.role;
 
 import lombok.Getter;
 import lombok.Setter;

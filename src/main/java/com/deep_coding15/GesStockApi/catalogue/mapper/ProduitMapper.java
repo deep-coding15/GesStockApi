@@ -60,19 +60,24 @@ public class ProduitMapper {
 
         return produit;
     }
-    
+
     public Produit toEntity(ProduitPatchRequestDTO dto) {
 
-        Categorie categorie = new Categorie();
-        categorie.setId(dto.getCategorieId());
+        if (dto == null)
+            return null;
 
         Produit produit = new Produit();
-        produit.setId(Long.valueOf(dto.getId()));
+        produit.setId(dto.getId() != null ? Long.valueOf(dto.getId()) : null);
         produit.setReference(dto.getReference());
         produit.setNom(dto.getNom());
         produit.setDescription(dto.getDescription());
         produit.setPrixUnitaire(dto.getPrix());
-        produit.setCategorie(categorie);
+
+        if (dto.getCategorieId() != null) {
+            Categorie cat = new Categorie();
+            cat.setId(dto.getCategorieId());
+            produit.setCategorie(cat);
+        }
 
         return produit;
     }
@@ -105,13 +110,13 @@ public class ProduitMapper {
                 .map(this::toResponse)
                 .collect(Collectors.toSet());
     }
-    
+
     public Set<ProduitResponseDTO> toResponseSet(List<Produit> produits) {
         return produits.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toSet());
     }
-    
+
     public List<ProduitResponseDTO> toResponseList(List<Produit> produits) {
         return produits.stream()
                 .map(this::toResponse)
@@ -119,4 +124,3 @@ public class ProduitMapper {
     }
 
 }
- 

@@ -69,7 +69,7 @@ public class StockServiceTest {
         when(stockRepository.existsByProduitId(1L)).thenReturn(false);
         when(stockRepository.save(any(Stock.class))).thenAnswer(i -> i.getArgument(0));
 
-        Stock stock = stockService.createStock(produit, 10, utilisateur);
+        Stock stock = stockService.createStock(1L, 10, 1L);
 
         assertNotNull(stock);
         assertEquals(10, stock.getQuantite());
@@ -90,7 +90,7 @@ public class StockServiceTest {
         when(stockRepository.existsByProduitId(1L)).thenReturn(true);
 
         assertThrows(EntityBusinessException.class,
-                () -> stockService.createStock(produit, 10, new Utilisateur()));
+                () -> stockService.createStock(1L, 10, 1L));
     }
 
     @Test
@@ -112,8 +112,8 @@ public class StockServiceTest {
 
         assertThrows(EntityNotFoundException.class,
                 () -> stockService.createStock(
-                        stock.getProduit(),
-                        stock.getQuantite(), utilisateur));
+                        1L,
+                        stock.getQuantite(), 1L));
 
         // On verifie que il n'a pas appele le repositoiry pour le save
         verify(stockRepository, never())

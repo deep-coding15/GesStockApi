@@ -10,7 +10,7 @@ import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
 
 public interface StockMouvementRepository extends JpaRepository<StockMouvement, Long> {
 
-    List<StockMouvement> findAllByProduitId(Long id);
+    List<StockMouvement> findAllByStockProduitId(Long id);
     
     List<StockMouvement> findAllByStockId(Long id);
 
