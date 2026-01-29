@@ -1,6 +1,7 @@
 package com.deep_coding15.GesStockApi.security.entity;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -36,6 +37,7 @@ public class Utilisateur extends BaseEntity{
     @Column(nullable = false)
     private boolean actif = true;
 
+    @JsonBackReference
     @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")
     private Role role;
