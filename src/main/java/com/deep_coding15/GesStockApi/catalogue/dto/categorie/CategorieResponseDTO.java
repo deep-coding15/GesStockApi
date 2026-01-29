@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class CategorieResponseDTO {
     public Long id;
-    public String Code;
-    public String Libelle;
-    public String Description;
+    public String code;
+    public String libelle;
+    public String description;
     public boolean actif;
 }

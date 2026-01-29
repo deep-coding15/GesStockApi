@@ -139,7 +139,7 @@ public class CategorieService {
     @Transactional
     public Categorie patchCategorie(Long id, Categorie categorie) {
 
-        if (Utils.isNegativeOrNull(id)) {
+        if (Utils.isNegativeOrNullOrZero(id)) {
             throw new EntityIllegalArgumentException("Categorie", "id", id.toString());
         }
 
@@ -160,7 +160,7 @@ public class CategorieService {
         if (categorie.getActif() != categorieExistant.getActif())
             categorieExistant.setActif(categorie.getActif());        
 
-        return categorieRepository.save(categorie);
+        return categorieRepository.save(categorieExistant);
     }
 
     @Transactional

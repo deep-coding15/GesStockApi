@@ -7,13 +7,11 @@ import lombok.Setter;
 @Setter
 public class CategoriePatchRequestDTO {
 
-    public Long id;
+    public String code = null;
 
-    public String Code;
+    public String libelle = null;
 
-    public String Libelle;
-
-    public String Description;
+    public String description = null;
     
-    public boolean actif;
+    public boolean actif = false;
 }

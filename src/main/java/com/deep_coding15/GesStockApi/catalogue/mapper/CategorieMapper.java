@@ -29,6 +29,7 @@ public class CategorieMapper {
         categorie.setCode(dto.getCode());
         categorie.setDescription(dto.getDescription());
         categorie.setLibelle(dto.getLibelle());
+
         List<Produit> listProduits = new ArrayList<Produit>();
         categorie.setProduits(listProduits);
         
@@ -40,12 +41,10 @@ public class CategorieMapper {
         Categorie categorie = new Categorie();
         //utilisateur.setRole();
         
-        categorie.setActif(true);
+        categorie.setActif(dto.actif);
         categorie.setCode(dto.getCode());
         categorie.setDescription(dto.getDescription());
         categorie.setLibelle(dto.getLibelle());
-        List<Produit> listProduits = new ArrayList<Produit>();
-        categorie.setProduits(listProduits);
         
         return categorie;
     }
@@ -55,12 +54,10 @@ public class CategorieMapper {
         Categorie categorie = new Categorie();
         //utilisateur.setRole();
         
-        categorie.setActif(true);
+        categorie.setActif(dto.actif);
         categorie.setCode(dto.getCode());
         categorie.setDescription(dto.getDescription());
         categorie.setLibelle(dto.getLibelle());
-        List<Produit> listProduits = new ArrayList<Produit>();
-        categorie.setProduits(listProduits);
         
         return categorie;
     }

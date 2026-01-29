@@ -9,11 +9,11 @@ import lombok.Setter;
 public class CategorieCreateRequestDTO {
 
     @NotBlank
-    public String Code;
+    public String code;
 
     @NotBlank
-    public String Libelle;
+    public String libelle;
 
     @NotBlank
-    public String Description;
+    public String description;
 }

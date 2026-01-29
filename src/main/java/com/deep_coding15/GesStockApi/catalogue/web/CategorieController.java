@@ -150,7 +150,7 @@ public class CategorieController {
 
         Categorie categorie = categorieMapper.toEntity(categorieDto);
 
-        Categorie categorieUpdate = categorieService.patchCategorie(id, categorie);
+        Categorie categorieUpdate = categorieService.putCategorie(id, categorie);
 
         return new ResponseEntity<>(categorieMapper.toResponse(categorieUpdate), HttpStatus.OK);
     }
