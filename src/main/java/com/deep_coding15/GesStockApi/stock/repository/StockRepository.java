@@ -11,6 +11,9 @@ import com.deep_coding15.GesStockApi.stock.entity.Stock;
 public interface StockRepository extends JpaRepository<Stock, Long> {
     
     Optional<Stock> findByProduitId(Long produitId);
+    
+    boolean existsByProduitId(Long id);
+    
     List<Stock> findAllMouvementsStocksByProduitId(Long produitId);
 
 }

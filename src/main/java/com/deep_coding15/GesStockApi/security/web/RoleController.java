@@ -1,23 +1,30 @@
 package com.deep_coding15.GesStockApi.security.web;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.deep_coding15.GesStockApi.security.dto.RoleCreateRequestDTO;
-import com.deep_coding15.GesStockApi.security.dto.RoleResponseDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RoleCreateRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RolePatchRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RolePutRequestDTO;
+import com.deep_coding15.GesStockApi.security.dto.role.RoleResponseDTO;
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.mapper.RoleMapper;
 import com.deep_coding15.GesStockApi.security.service.RoleService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/roles")
@@ -47,8 +54,8 @@ public class RoleController {
      *         le rôle créé
      *         avec le code HTTP 201 CREATED
      */
-    @PostMapping
-    public ResponseEntity<RoleResponseDTO> creerRole(@RequestBody RoleCreateRequestDTO dto) {
+    @PostMapping("/")
+    public ResponseEntity<RoleResponseDTO> createRole(@Valid @RequestBody RoleCreateRequestDTO dto) {
 
         // Il n'a pas d'Id : contient les arguments du DTO
         Role role = roleMapper.toEntity(dto);
@@ -65,7 +72,7 @@ public class RoleController {
             Role roleTrouvee = roleService.getRoleById(id);
             RoleResponseDTO dto = roleMapper.toResponse(roleTrouvee);
 
-            return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: handle
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,28 +85,54 @@ public class RoleController {
             Role roleTrouvee = roleService.getRoleByCode(code);
             RoleResponseDTO dto = roleMapper.toResponse(roleTrouvee);
 
-            return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: handle
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<Set<RoleResponseDTO>> getRoles() {
         try {
             Set<Role> rolesTrouves = roleService.getRoles();
 
-            Set<RoleResponseDTO> roles = rolesTrouves.stream() // crée un flux de Role
-                    .map(roleMapper::toResponse) // transforme chaque Role en RoleResponseDTO
-                    .collect(Collectors.toSet()); // reconstruit un Set<RoleResponseDTO>
-
+            Set<RoleResponseDTO> roles = roleMapper.toResponseSet(rolesTrouves);
+            
             return new ResponseEntity<>(roles, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: logger l'erreur
             //log.error("Erreur lors de la récupération des rôles", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<RoleResponseDTO> patchRole(
+        @PathVariable Long id, 
+        @Valid @RequestBody RolePatchRequestDTO rolePatchRequestDTO){
+        Role role = roleMapper.toEntity(rolePatchRequestDTO);
+        
+        Role updateRole = this.roleService.patchRole(id, role);
+
+        return new ResponseEntity<>(roleMapper.toResponse(updateRole), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RoleResponseDTO> putRole(
+        @PathVariable Long id, 
+        @Valid @RequestBody RolePutRequestDTO rolePutRequestDTO){
+        Role role = roleMapper.toEntity(rolePutRequestDTO);
+        
+        Role updateRole = this.roleService.putRole(id, role);
+
+        return new ResponseEntity<>(roleMapper.toResponse(updateRole), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Retourne un code 204 (Succès sans contenu)
+    public void deleteRole(@PathVariable Long id){
+        roleService.deleteRole(id);
     }
 
 }

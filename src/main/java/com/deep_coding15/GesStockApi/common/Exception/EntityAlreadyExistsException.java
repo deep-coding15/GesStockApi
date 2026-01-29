@@ -15,4 +15,11 @@ public class EntityAlreadyExistsException extends BusinessException {
             "ENTITY_ALREADY_EXISTS"
         );
     }
+    
+    public EntityAlreadyExistsException(String entity, String field, String value, String message) {
+        super(
+            entity + " already exists with " + field + "=" + value + " message: " + message,
+            "ENTITY_ALREADY_EXISTS"
+        );
+    }
 }

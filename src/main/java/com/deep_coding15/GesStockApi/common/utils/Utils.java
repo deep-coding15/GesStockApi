@@ -84,7 +84,7 @@ public final class Utils {
      * Vérifie si un BigDecimal est nul ou inférieur à zéro.
      * Utile pour les prix unitaires.
      */
-    public static boolean isNegative(BigDecimal value) {
+    public static boolean isNegativeOrNull(BigDecimal value) {
         return value == null || value.compareTo(BigDecimal.ZERO) < 0;
     }
     
@@ -92,7 +92,7 @@ public final class Utils {
      * Vérifie si un BigDecimal est nul, inférieur ou égale à zéro.
      * Utile pour les prix unitaires.
      */
-    public static boolean isNegativeOrNull(BigDecimal value) {
+    public static boolean isNegativeOrNullOrZero(BigDecimal value) {
         return value == null || value.compareTo(BigDecimal.ZERO) <= 0;
     }
 
@@ -100,7 +100,7 @@ public final class Utils {
      * Vérifie si un Integer est nul ou inférieur à zéro.
      * Utile pour les quantités en stock.
      */
-    public static boolean isNegative(Integer value) {
+    public static boolean isNegativeOrNull(Integer value) {
         return value == null || value < 0;
     }
     
@@ -108,7 +108,7 @@ public final class Utils {
      * Vérifie si un Integer est nul, inférieur ou égale à zéro.
      * Utile pour les prix unitaires.
      */
-    public static boolean isNegativeOrNull(Integer value) {
+    public static boolean isNegativeOrNullOrZero(Integer value) {
         return value == null || value <= 0;
     }
 
@@ -117,7 +117,7 @@ public final class Utils {
      * Utile pour les quantités en stock.
      */
     public static boolean isNegativeOrNull(Long value) {
-        return value == null || value < 0;
+        return value == null || value <= 0;
     }
     
     
@@ -125,8 +125,8 @@ public final class Utils {
      * Vérifie si un Long est nul ou inférieur à zéro.
      * Utile pour les ids.
      */
-    public static boolean isNegative(Long value) {
-        return value == null || value < 0;
+    public static boolean isNegativeOrNullOrZero(Long value) {
+        return value == null || value <= 0;
     }
 
     /**
@@ -141,7 +141,7 @@ public final class Utils {
      * Vérifie si un nombre est positif ou nul ( >= 0 ).
      * Utile pour valider qu'une vente comporte au moins 1 article.
      */
-    public static boolean isPositiveOrNull(Integer value) {
+    public static boolean isPositiveOrNullOrZero(Integer value) {
         return value != null && value >= 0;
     }
     
@@ -155,7 +155,7 @@ public final class Utils {
     /**
      * Vérifie si un Long est strictement positif ( > 0 ).
      */
-    public static boolean isPositiveOrNull(Long value) {
+    public static boolean isPositiveOrNullOrZero(Long value) {
         return value != null && value >= 0;
     }
 

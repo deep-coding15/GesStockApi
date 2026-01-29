@@ -3,11 +3,14 @@ package com.deep_coding15.GesStockApi.vente.entity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 import java.math.BigDecimal;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
+
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
+
 import com.deep_coding15.GesStockApi.vente.enums.StatutVenteEnum;
 
 import jakarta.persistence.CascadeType;
@@ -24,7 +27,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.Positive;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,10 +46,10 @@ public class Vente extends BaseEntity{
     private String referenceVente;
 
     @Column(name = "date_vente", nullable = false)
-    private LocalDateTime dateVente;
+    private LocalDateTime dateVente = LocalDateTime.now();
 
     @Positive
-    @Column(nullable = false, precision = 38, scale = 2)
+    @Column(name = "prix_total_ht", nullable = false, precision = 38, scale = 2)
     private BigDecimal prixTotalHT; 
 
     @Enumerated(EnumType.STRING)
@@ -56,6 +61,7 @@ public class Vente extends BaseEntity{
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL)
+    @Column(name = "vente_ligne")
     private List<VenteLigne> lignesVente;
 
     @PrePersist
@@ -70,10 +76,12 @@ public class Vente extends BaseEntity{
     }
     // Génération automatique de la référence
     public void generateReferenceVente() {
+
         if (Utils.isStringUseless(referenceVente)) {
             String datePart = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             this.referenceVente = "VTE-" + datePart;
         }
+        
     }
 
     public void setTotalPrixHT(){

@@ -120,7 +120,8 @@ createRole_shouldFail_whenCodeAlreadyExists
 ```json
 {
   "produitId": 1,
-  "quantite": 100
+  "quantite": 100,
+  "utilisateurId": 1
 }
 ```
 

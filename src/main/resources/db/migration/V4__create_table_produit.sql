@@ -5,19 +5,11 @@ CREATE TABLE produit (
     nom VARCHAR(100) NOT NULL,
     description TEXT,
     prix_unitaire DECIMAL(10,2),
-    prix_achat DECIMAL(10,2),
-    unite_mesure VARCHAR(20),
-    statut VARCHAR(20) DEFAULT 'actif',
-    seuil_alerte_stock INT DEFAULT 0,
-    seuil_critique_stock INT DEFAULT 0,
+    actif BOOLEAN DEFAULT TRUE,
     categorie_id BIGINT,
-    fournisseur_id BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     CONSTRAINT fk_produit_categorie 
-        FOREIGN KEY (categorie_id) REFERENCES categorie_produit(id),
-    
-    CONSTRAINT fk_produit_fournisseur 
-        FOREIGN KEY (fournisseur_id) REFERENCES fournisseur(id)
-);
+        FOREIGN KEY (categorie_id) REFERENCES categorie(id)
+   );

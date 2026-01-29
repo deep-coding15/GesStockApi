@@ -27,7 +27,7 @@ import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 
 import com.deep_coding15.GesStockApi.security.entity.Role;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
-
+import com.deep_coding15.GesStockApi.security.repository.RoleRepository;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,6 +35,9 @@ public class UtilisateurServiceTest {
 
     @Mock
     private UtilisateurRepository utilisateurRepository;
+
+    @Mock
+    private RoleRepository roleRepository;
 
     @InjectMocks
     private UtilisateurService utilisateurService;
@@ -68,12 +71,17 @@ public class UtilisateurServiceTest {
     @Test
     public void createUtilisateur__shouldSucceeded__whenEmailNotExists() {
         String email = "email@email.com";
+        Role role = new Role();
+        role.setId(1L);
+
         // GIVEN
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setEmail(email);
         utilisateur.setMotDePasse("password");
         utilisateur.setUsername("email");
-        //utilisateur.setRole(new Role());
+        utilisateur.setRole(role);
+
+        when(roleRepository.existsById(1L)).thenReturn(true);
 
         // WHEN + THEN 
         when(utilisateurRepository.existsByEmail(email))
@@ -82,7 +90,7 @@ public class UtilisateurServiceTest {
         utilisateurService.createUtilisateur(utilisateur);
         
         verify(
-            utilisateurRepository
+            utilisateurRepository, times(1)
         ).save(utilisateur);
     }
 

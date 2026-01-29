@@ -2,7 +2,6 @@ package com.deep_coding15.GesStockApi.stock.entity;
 
 import java.time.LocalDateTime;
 
-import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.stock.enums.TypeMouvementStockEnum;
@@ -20,6 +19,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
 @Setter
 @Getter
@@ -29,9 +29,10 @@ public class StockMouvement extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    // utilisee pour les statistiques
+    /* @ManyToOne(optional = false)
     @JoinColumn(name = "produit_id")
-    private Produit produit;
+    private Produit produit; */
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_mouvement", nullable = false, length = 20)
