@@ -27,6 +27,9 @@ import com.deep_coding15.GesStockApi.security.mapper.UtilisateurMapper;
 
 import com.deep_coding15.GesStockApi.security.service.UtilisateurService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -44,9 +47,15 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
+    @Operation(summary = "Créer un utilisateur", description = "Crée un utilisateur et lui associe un rôle")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Utilisateur créé"),
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
+            @ApiResponse(responseCode = "404", description = "Rôle introuvable")
+    })
     @PostMapping("/")
     public ResponseEntity<UtilisateurResponseDTO> createUtilisateur(
-        @Valid @RequestBody UtilisateurCreateRequestDTO dto) {
+            @Valid @RequestBody UtilisateurCreateRequestDTO dto) {
 
         Utilisateur utilisateur = utilisateurMapper.toEntity(dto);
 
@@ -84,7 +93,7 @@ public class UtilisateurController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
     @GetMapping("/email/{email}")
     public ResponseEntity<UtilisateurResponseDTO> getUtilisateurByemail(@PathVariable String email) {
         try {
@@ -100,20 +109,21 @@ public class UtilisateurController {
 
     @GetMapping("/")
     public ResponseEntity<Set<UtilisateurResponseDTO>> getUtilisateurs() {
-        
-        //return new ResponseEntity<>(utilisateurService.getUtilisateurs(), HttpStatus.OK);
+
+        // return new ResponseEntity<>(utilisateurService.getUtilisateurs(),
+        // HttpStatus.OK);
         try {
             List<Utilisateur> utilisateursTrouves = utilisateurService.getUtilisateurs();
 
             Set<UtilisateurResponseDTO> utilisateurs = utilisateurMapper
-                .toResponseSet(utilisateursTrouves);
+                    .toResponseSet(utilisateursTrouves);
 
             return new ResponseEntity<>(utilisateurs, HttpStatus.OK);
         } catch (Exception e) {
             // TODO: logger l'erreur
             // log.error("Erreur lors de la récupération des rôles", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } 
+        }
     }
 
     @PatchMapping("/{id}")
@@ -130,8 +140,8 @@ public class UtilisateurController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UtilisateurResponseDTO> putUtilisateur(
-        @PathVariable Long id, @Valid @RequestBody UtilisateurPutRequestDTO utilisateurDto) {
-        
+            @PathVariable Long id, @Valid @RequestBody UtilisateurPutRequestDTO utilisateurDto) {
+
         Utilisateur utilisateur = utilisateurMapper.toEntity(utilisateurDto);
 
         Utilisateur utilisateurUpdate = utilisateurService.patchUtilisateur(id, utilisateur);
@@ -144,5 +154,5 @@ public class UtilisateurController {
     public void deleteUtilisateur(@PathVariable Long id) {
         utilisateurService.deleteUtilisateur(id);
     }
-    
+
 }

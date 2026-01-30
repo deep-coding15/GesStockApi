@@ -1,500 +1,314 @@
+# 📦 GesStockApi – API REST de gestion de stock et de vente
+
+GesStockApi est une **API REST backend** développée avec **Spring Boot 3**, conçue pour gérer les **produits**, **catégories**, **stocks**, **mouvements de stock** et **utilisateurs** d’un système de commerce.
+
+🎯 Objectif : proposer un **MVP propre, modulaire et extensible**, respectant les bonnes pratiques REST et Spring.
+
+---
+
+## 🧠 Ce que démontre ce projet
+
+- Conception d’une **API REST professionnelle**
+- Architecture modulaire et maintenable
+- Utilisation correcte de **Spring Data JPA**
+- Gestion métier du **stock avec traçabilité**
+- Validation, exceptions métier et statuts HTTP
+- Tests complets via **Postman**
+
+---
+
+## 🛠️ Stack technique
+
+- Java 17  
+- Spring Boot 3.2.5  
+- Spring Web (REST)  
+- Spring Data JPA  
+- H2 Database (in-memory)  
+- Maven  
+- JUnit 5
+- Postman (tests des endpoints)
+
+## 🧩 Modules fonctionnels
+
+- **Catalogue**
+  - Catégories
+  - Produits
+- **Stock**
+  - Stock par produit
+  - Mouvements (entrée / sortie)
+- **Sécurité (MVP)**
+  - Utilisateurs
+  - Rôles
+- **Health**
+  - Monitoring API
+  
+---
+
+## 🔄 Gestion intelligente du stock
+
+Chaque modification de stock :
+- met à jour la quantité courante
+- génère automatiquement un **mouvement de stock**
+- est traçable par **produit**, **stock** et **utilisateur**
+
+➡️ Approche orientée **métier réel**
+
+---
+
+
+## 🧩 Architecture & Modules
 GesStockApi
-API REST de gestion de commerce (vente et stock) - Spring Boot 3.2.5
-
-Base URL: http://localhost:8089﻿
-
-Modules
-Catalogue: Gestion des catégories et produits
-Stock: Gestion des stocks et mouvements de stock
-Security: Gestion des utilisateurs et rôles
-Health: Endpoints de santé de l'API
-﻿
-
-Health
-Endpoints de santé et vérification de l'API
-
-﻿
-
-GET
-Home
-http://localhost:8089/
-Add request description…
-
-﻿
-
-GET
-Health Check
-http://localhost:8089/api/health
-Add request description…
-
-﻿
-
-GET
-Ping
-http://localhost:8089/ping
-Add request description…
-
-﻿
-
-Categories
-Gestion des catégories de produits
-
-Base path: /api/v1/categories
-
-﻿
-
-POST
-Create Category
-http://localhost:8089/api/v1/categories/
-Add request description…
-
-﻿
-
-Body
-raw (json)
-View More
-json
-{
-  "code": "CAT001",
-  "libelle": "Électronique",
-  "description": "Produits électroniques et accessoires"
-}
-GET
-Get All Categories
-http://localhost:8089/api/v1/categories/
-Add request description…
-
-﻿
-
-GET
-Get Categories With Products
-http://localhost:8089/api/v1/categories/produits
-Add request description…
-
-﻿
-
-GET
-Get Category by ID
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Category by Code
-http://localhost:8089/api/v1/categories/code/:code
-Add request description…
-
-﻿
-
-Path Variables
-code
-GET
-Get Category by Libelle
-http://localhost:8089/api/v1/categories/libelle/:libelle
-Add request description…
-
-﻿
-
-Path Variables
-libelle
-PUT
-Update Category (PUT)
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "code": "CAT001",
-  "libelle": "Électronique Mise à jour",
-  "description": "Description mise à jour",
-  "actif": true
-}
-PATCH
-Partial Update Category (PATCH)
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "libelle": "Nouveau libellé",
-  "actif": true
-}
-DELETE
-Delete Category
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Products
-Gestion des produits
-
-Base path: /api/v1/produits
-
-﻿
-
-POST
-Create Product
-http://localhost:8089/api/v1/produits/
-Add request description…
-
-﻿
-
-Body
-raw (json)
-View More
-json
-{
-  "nom": "Smartphone XYZ",
-  "description": "Smartphone dernière génération",
-  "prix": 599.99,
-  "categorieId": 1
-}
-GET
-Get All Products
-http://localhost:8089/api/v1/produits/
-Add request description…
-
-﻿
-
-GET
-Get Product by ID
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Product by Reference
-http://localhost:8089/api/v1/produits/reference/:reference
-Add request description…
-
-﻿
-
-Path Variables
-reference
-GET
-Get Product by Name
-http://localhost:8089/api/v1/produits/nom/:nom
-Add request description…
-
-﻿
-
-Path Variables
-nom
-GET
-Get Product by Description
-http://localhost:8089/api/v1/produits/description/:description
-Add request description…
-
-﻿
-
-Path Variables
-description
-GET
-Get Products by Category
-http://localhost:8089/api/v1/produits/categorie/:categorieId
-Add request description…
-
-﻿
-
-Path Variables
-categorieId
-PUT
-Update Product (PUT)
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-View More
-json
-{
-  "id": 1,
-  "nom": "Smartphone XYZ Pro",
-  "reference": "REF-001",
-  "description": "Smartphone Pro dernière génération",
-  "prix": 799.99,
-  "categorieId": 1
-}
-PATCH
-Partial Update Product (PATCH)
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "id": 1,
-  "prix": 549.99
-}
-DELETE
-Delete Product
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Stock
-Gestion des stocks
-
-Base path: /api/v1/stocks
-
-﻿
-
-POST
-Create Stock
-http://localhost:8089/api/v1/stocks
-Add request description…
-
-﻿
-
-Body
-raw (json)
-json
-{
-  "produitId": 1,
-  "quantiteInitiale": 100,
-  "utilisateurId": 1
-}
-GET
-Get All Stocks
-http://localhost:8089/api/v1/stocks
-Add request description…
-
-﻿
-
-GET
-Get Stock by ID
-http://localhost:8089/api/v1/stocks/id/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Stock by Product ID
-http://localhost:8089/api/v1/stocks/produit/:produitId
-Add request description…
-
-﻿
-
-Path Variables
-produitId
-PATCH
-Update Stock Quantity (PATCH)
-http://localhost:8089/api/v1/stocks/:id/quantite
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
+├── catalogue
+│   ├── categories
+│   └── produits
+├── stock
+│   ├── stocks
+│   └── mouvements de stock
+├── security
+│   ├── utilisateurs
+│   └── rôles
+├── common
+│   ├── exceptions
+│   └── utils
+└── health
+
+## 🌐 Exemple d’endpoint
+
+```http
+PATCH /api/v1/stocks/{id}
+```
+```json
 {
   "delta": 10,
   "typeMouvement": "ENTREE",
   "commentaire": "Réapprovisionnement",
   "utilisateurId": 1
 }
-Stock Movements
-Consultation des mouvements de stock
+```
 
-Base path: /api/v1/stock-mouvements
+## 🧪 Tests
+- Collection Postman complète
+- Tous les endpoints CRUD testables
+- Variables d’environnement (baseUrl)
 
-﻿
+## 📈 Évolutions prévues
+* Authentification JWT / Spring Security
+* Base de données MySQL / PostgreSQL
+* Gestion des ventes et facturation
+* Pagination, tri, filtres
+* Dockerisation
 
-GET
-Get Movements by Stock ID
-http://localhost:8089/api/v1/stock-mouvements/stock/:stockId
-Add request description…
+# 3️⃣ Diagramme d’architecture (clair & pédagogique)
 
-﻿
+### 📐 Vue globale (ASCII – parfaite pour README)
+```scss
+             ┌───────────────┐
+             │   Client API  │
+             │ (Postman / UI)│
+             └───────┬───────┘
+                     │ HTTP (REST)
+                     ▼
+          ┌─────────────────────────┐
+          │      Controllers        │
+          │  (REST Endpoints)       │
+          └─────────┬───────────────┘
+                    ▼
+          ┌─────────────────────────┐
+          │        Services          │
+          │  - Logique métier        │
+          │  - Validation            │
+          │  - Transactions          │
+          └─────────┬───────────────┘
+                    ▼
+          ┌─────────────────────────┐
+          │      Repositories        │
+          │   (Spring Data JPA)      │
+          └─────────┬───────────────┘
+                    ▼
+          ┌─────────────────────────┐
+          │        Database          │
+          │        H2 (MVP)          │
+          └─────────────────────────┘
+```
 
-Path Variables
-stockId
-GET
-Get Movements by Product ID
-http://localhost:8089/api/v1/stock-mouvements/produit/:produitId
-Add request description…
+### Focus module stock
+```scss
+[Stock]
+│
+├── quantite
+├── produitId
+│
+└── [Mouvements de stock]
+├── type (ENTREE | SORTIE)
+├── quantite
+├── utilisateurId
+└── date
+```
 
-﻿
+🔑 Fonctionnalités principales
+📂 Catalogue
 
-Path Variables
-produitId
-GET
-Get Movements by User ID
-http://localhost:8089/api/v1/stock-mouvements/utilisateur/:utilisateurId
-Add request description…
+CRUD Catégories
 
-﻿
+CRUD Produits
 
-Path Variables
-utilisateurId
-Roles
-Gestion des rôles utilisateurs
+Recherche par :
 
-Base path: /api/v1/roles
+ID
 
-﻿
+Code
 
-POST
-Create Role
-http://localhost:8089/api/v1/roles/
-Add request description…
+Libellé
 
-﻿
+Référence
 
-Body
-raw (json)
-json
-{
-  "code": "ADMIN",
-  "libelle": "Administrateur"
-}
-GET
-Get All Roles
-http://localhost:8089/api/v1/roles/
-Add request description…
+Catégorie
 
-﻿
+📦 Stock
 
-GET
-Get Role by ID
-http://localhost:8089/api/v1/roles/:id
-Add request description…
+Création d’un stock par produit
 
-﻿
+Consultation du stock
 
-Path Variables
-id
-GET
-Get Role by Code
-http://localhost:8089/api/v1/roles/code/:code
-Add request description…
+Mise à jour de la quantité via mouvements de stock
 
-﻿
+Historique des mouvements (entrée / sortie)
 
-Path Variables
-code
-PUT
-Update Role (PUT)
-http://localhost:8089/api/v1/roles/:id
-Add request description…
+🔄 Mouvements de stock
 
-﻿
+Consultation par :
 
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "code": "ADMIN",
-  "libelle": "Super Administrateur"
-}
-PATCH
-Partial Update Role (PATCH)
-http://localhost:8089/api/v1/roles/:id
-Add request description…
+Stock
 
-﻿
+Produit
 
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "libelle": "Nouveau libellé"
-}
-DELETE
-Delete Role
-http://localhost:8089/api/v1/roles/:id
-Add request description…
+Utilisateur
 
-﻿
+Traçabilité complète des opérations
 
-Path Variables
-id
-Users
+👥 Sécurité (basique – MVP)
+
+Gestion des rôles
+
 Gestion des utilisateurs
 
-Base path: /api/v1/users
+Association utilisateur ↔ rôle
 
-﻿
+🩺 Health
 
-POST
-Create User
-http://localhost:8089/api/v1/users
-Add request description…
+Vérification de l’état de l’API
 
-﻿
+Endpoints de diagnostic simples
 
-Body
-raw (json)
-json
-{
-  "email": "user@example.com",
-  "username": "johndoe",
-  "password": "securePassword123",
-  "roleId": 1
-}
-GET
-Get All Users
-http://localhost:8089/api/v1/users/
-Add request description…
+🌐 Base URL
+http://localhost:8089
 
-﻿
+📌 Endpoints principaux
+Health
+GET  /ping
+GET  /api/health
 
-GET
-Get User by ID
-http://localhost:8089/api/v1/users/:id
-Add request description…
+Catégories
+POST   /api/v1/categories/
+GET    /api/v1/categories/
+GET    /api/v1/categories/{id}
+GET    /api/v1/categories/code/{code}
+PUT    /api/v1/categories/{id}
+PATCH  /api/v1/categories/{id}
+DELETE /api/v1/categories/{id}
 
-﻿
+Produits
+POST   /api/v1/produits/
+GET    /api/v1/produits/
+GET    /api/v1/produits/{id}
+GET    /api/v1/produits/reference/{reference}
+GET    /api/v1/produits/categorie/{categorieId}
+PUT    /api/v1/produits/{id}
+PATCH  /api/v1/produits/{id}
+DELETE /api/v1/produits/{id}
 
-Path Variables
-id
-GET
-Get User by Username
-http://localhost:8089/api/v1/users/name/:username
-Add request description…
+Stocks
+POST  /api/v1/stocks/
+GET   /api/v1/stocks/
+GET   /api/v1/stocks/{id}
+GET   /api/v1/stocks/produit/{produitId}
+PATCH /api/v1/stocks/{id}/quantite
 
-﻿
+Mouvements de stock
+GET /api/v1/stock-mouvements/stock/{stockId}
+GET /api/v1/stock-mouvements/produit/{produitId}
+GET /api/v1/stock-mouvements/utilisateur/{utilisateurId}
 
-Path Variables
-username
+Utilisateurs
+POST /api/v1/users/
+GET  /api/v1/users/
+GET  /api/v1/users/{id}
+GET  /api/v1/users/name/{username}
+
+Rôles
+POST   /api/v1/roles/
+GET    /api/v1/roles/
+GET    /api/v1/roles/{id}
+GET    /api/v1/roles/code/{code}
+PUT    /api/v1/roles/{id}
+PATCH  /api/v1/roles/{id}
+DELETE /api/v1/roles/{id}
+
+🧪 Tests API
+
+Une collection Postman complète est fournie (export JSON)
+
+Tous les endpoints CRUD sont testables directement
+
+Utilisation de variables ({{baseUrl}})
+
+🗄️ Base de données
+
+H2 in-memory
+
+Données réinitialisées à chaque redémarrage
+
+Idéal pour :
+
+MVP
+
+Tests
+
+Démonstration
+
+⚠️ Accès H2 Console possible si activé dans application.yml
+
+📈 État du projet
+
+✅ MVP fonctionnel
+✅ Architecture propre et modulaire
+✅ Bonnes pratiques REST
+⏳ Sécurité avancée (JWT, auth) à venir
+⏳ Migration vers base persistante (MySQL/PostgreSQL) à venir
+
+🎯 Objectif du projet
+
+Ce projet a été conçu comme :
+
+- un socle backend propre
+
+- un support d’apprentissage Spring Boot
+
+- une base réutilisable pour un système de gestion de commerce plus avancé
+
+👩‍💻 Auteur
+
+Lydivine Merveille Magne Tsafack
+Étudiante en 4e en Génie Informatique
+Projet académique – API REST Java Spring Boot
+
+The Swagger UI page will then be available at http://server:port/context-path/swagger-ui.html and the OpenAPI description will be available at the following url for json format: http://server:port/context-path/v3/api-docs
+
+server: The server name or IP
+
+port: The server port
+
+context-path: The context path of the application
+
+Documentation will be available in yaml format as well, on the following path : /v3/api-docs.yaml
+

@@ -16,6 +16,9 @@ import com.deep_coding15.GesStockApi.catalogue.mapper.ProduitMapper;
 
 import com.deep_coding15.GesStockApi.catalogue.service.ProduitService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -30,8 +33,7 @@ public class ProduitController {
 
     public ProduitController(
             ProduitMapper produitMapper,
-            ProduitService produitService
-        ) {
+            ProduitService produitService) {
         this.produitService = produitService;
         this.produitMapper = produitMapper;
     }
@@ -42,6 +44,12 @@ public class ProduitController {
      * @param produit
      * @return ResponseEntity<Produit>
      */
+    @Operation(summary = "Créer un produit", description = "Ajoute un nouveau produit dans le catalogue")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Produit créé"),
+            @ApiResponse(responseCode = "400", description = "Données invalides"),
+            @ApiResponse(responseCode = "409", description = "Référence déjà existante")
+    })
     @PostMapping("/")
     public ResponseEntity<ProduitResponseDTO> createProduit(@Valid @RequestBody ProduitCreateRequestDTO produitDto) {
         Produit produit = produitMapper.toEntity(produitDto);
@@ -69,10 +77,10 @@ public class ProduitController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ProduitResponseDTO> getProduit(@PathVariable Long id) {
-        
+
         Produit produit = produitService.getProduitById(id);
         ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
-        
+
         return ResponseEntity.ok(produitResponseDTO);
     }
 
@@ -82,10 +90,10 @@ public class ProduitController {
      */
     @GetMapping("/reference/{reference}")
     public ResponseEntity<ProduitResponseDTO> getProduitByReference(@PathVariable String reference) {
-        
+
         Produit produit = produitService.getProduitByReference(reference);
         ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
-        
+
         return ResponseEntity.ok(produitResponseDTO);
     }
 
@@ -98,7 +106,7 @@ public class ProduitController {
 
         Produit produit = produitService.getProduitByNom(nom);
         ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
-        
+
         return ResponseEntity.ok(produitResponseDTO);
     }
 
@@ -111,7 +119,7 @@ public class ProduitController {
 
         Produit produit = produitService.getProduitByDescription(description);
         ProduitResponseDTO produitResponseDTO = produitMapper.toResponse(produit);
-        
+
         return ResponseEntity.ok(produitResponseDTO);
     }
 
@@ -136,8 +144,7 @@ public class ProduitController {
         Produit produit = produitMapper.toEntity(produitDto);
 
         return ResponseEntity.ok(
-                produitMapper.toResponse(produitService.putProduit(id, produit))
-            );
+                produitMapper.toResponse(produitService.putProduit(id, produit)));
     }
 
     /* ===================== PATCH ===================== */
@@ -148,8 +155,7 @@ public class ProduitController {
 
         Produit produit = produitMapper.toEntity(dto);
         return ResponseEntity.ok(
-                produitMapper.toResponse(produitService.patchProduit(id, produit))
-        );
+                produitMapper.toResponse(produitService.patchProduit(id, produit)));
     }
 
     /* ===================== DELETE ===================== */
