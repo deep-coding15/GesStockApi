@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import com.deep_coding15.GesStockApi.common.Exception.EntityBusinessException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
 import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
+
 import com.deep_coding15.GesStockApi.common.utils.Utils;
+
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
+
 import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.repository.StockRepository;
 import com.deep_coding15.GesStockApi.stock.service.StockService;
+
 import com.deep_coding15.GesStockApi.vente.entity.Vente;
 import com.deep_coding15.GesStockApi.vente.enums.StatutVenteEnum;
 import com.deep_coding15.GesStockApi.vente.repository.VenteRepository;
@@ -40,22 +44,12 @@ public class VenteService {
     }
 
     @Transactional
-    public Vente createVente(Vente vente, Utilisateur utilisateur) {
+    /* public Vente createVente(Long utilisateurId, String statut) {
 
-        if (vente == null) {
-            throw new EntityIllegalArgumentException(
-                "Vente", "vente", "null");
-        }
-
-        if (vente.getId() != null) {
-            throw new EntityIllegalArgumentException(
-                    "Vente", "id", "doit être null lors de la création");
-        }
-
-        if (Utils.isNegativeOrNullOrZero(utilisateur.getId())) {
+        if (Utils.isNegativeOrNullOrZero(utilisateurId)) {
             throw new EntityIllegalArgumentException(
                     "Utilisateur", "id",
-                    utilisateur.getId().toString());
+                    utilisateurId.toString());
         }
 
         Utilisateur utilisateurOptional = utilisateurRepository.findById(utilisateur.getId())
@@ -113,7 +107,7 @@ public class VenteService {
 
         return venteRepository.save(vente);
     }
-
+ */
     public Vente getVenteById(Long venteId) {
 
         if (Utils.isNegativeOrNull(venteId))

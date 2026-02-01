@@ -118,7 +118,7 @@ public class CategorieService {
     @Transactional
     public Categorie putCategorie(Long id, Categorie categorie) {
 
-        if (Utils.isNegativeOrNull(id)) {
+        if (Utils.isNegativeOrNullOrZero(id)) {
             throw new EntityIllegalArgumentException(
                     "Categorie", "id", id.toString());
         }
@@ -128,6 +128,7 @@ public class CategorieService {
                         "Categorie", "id", id.toString()));
 
         // Mise à jour champ par champ
+        categorieExistant.setId(id);
         categorieExistant.setCode(categorie.getCode());
         categorieExistant.setDescription(categorie.getDescription());
         categorieExistant.setLibelle(categorie.getLibelle());

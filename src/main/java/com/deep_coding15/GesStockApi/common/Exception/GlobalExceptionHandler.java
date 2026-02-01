@@ -10,9 +10,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.deep_coding15.GesStockApi.common.dto.ApiError;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
+@ApiResponses({
+        @ApiResponse(responseCode = "400", description = "Requête invalide"),
+        @ApiResponse(responseCode = "401", description = "Non autorisé"),
+        @ApiResponse(responseCode = "403", description = "Interdit"),
+        @ApiResponse(responseCode = "500", description = "Erreur interne du serveur")
+})
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
