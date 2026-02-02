@@ -267,9 +267,9 @@ public class CategorieController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Catégorie mise à jour avec succès", content = @Content(schema = @Schema(implementation = CategorieResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Données invalides ou incomplètes"),
+            @ApiResponse(responseCode = "401", description = "Authentification requise"),
             @ApiResponse(responseCode = "404", description = "Catégorie non trouvée (ID inexistant)"),
             @ApiResponse(responseCode = "409", description = "Code de catégorie en conflit (déjà existant)"),
-            @ApiResponse(responseCode = "401", description = "Authentification requise"),
             @ApiResponse(responseCode = "500", description = "Erreur interne du serveur")
     })
     public ResponseEntity<CategorieResponseDTO> putCategorie(
