@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
-import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityBusinessException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
-
+import com.deep_coding15.GesStockApi.common.exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.exception.EntityBusinessException;
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityNotFoundException;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
@@ -137,17 +136,26 @@ public class StockService {
     }
 
     @Transactional
-    public Stock patchStockQuantite(Long stockId, int delta, String type, Utilisateur utilisateur, String commentaire) {
+    /**
+     * Modifie la quantité du stock en fonction du delta
+     * @param stockId 
+     * @param delta : positif pour une entrée, négatif pour une sortie
+     * @param typeMouvement : "ENTREE", "SORTIE" ou "AJUSTEMENT"
+     * @param utilisateur
+     * @param commentaire
+     * @return
+     */
+    public Stock patchStockQuantite(Long stockId, int delta, String typeMouvement, Utilisateur utilisateur, String commentaire) {
 
         if (delta == 0)
             throw new EntityIllegalArgumentException("Stock", "delta", "0");
 
         TypeMouvementStockEnum typeM;
         try {
-            typeM = TypeMouvementStockEnum.valueOf(type.toUpperCase());
+            typeM = TypeMouvementStockEnum.valueOf(typeMouvement.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new EntityIllegalArgumentException(
-                    "StockMouvement", "type", type);
+                    "StockMouvement", "type", typeMouvement);
         }
 
         if (typeM == TypeMouvementStockEnum.SORTIE && delta > 0)
@@ -178,7 +186,7 @@ public class StockService {
 
         StockMouvement mouvement = new StockMouvement();
         mouvement.setTypeMouvement(typeM);
-        mouvement.setQuantite(delta);
+        mouvement.setQuantite(Math.abs(delta));
         mouvement.setDateMouvement(LocalDateTime.now());
 
         mouvement.setUtilisateur(utilisateurExist);

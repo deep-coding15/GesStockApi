@@ -1,17 +1,24 @@
 package com.deep_coding15.GesStockApi.vente.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
-import com.deep_coding15.GesStockApi.vente.dto.VenteCreateRequestDTO;
-import com.deep_coding15.GesStockApi.vente.dto.VenteResponseDTO;
+import com.deep_coding15.GesStockApi.vente.dto.vente.VenteCreateRequestDTO;
+import com.deep_coding15.GesStockApi.vente.dto.vente.VenteResponseDTO;
 import com.deep_coding15.GesStockApi.vente.entity.Vente;
 
 
 @Component
 public class VenteMapper {
+
+    private VenteLigneMapper venteLigneMapper;
+
+    public VenteMapper(VenteLigneMapper venteLigneMapper) {
+        this.venteLigneMapper = venteLigneMapper;
+    }
 
     /*****************************************************/
     /********************** DTO -> ENTITY ******************/
@@ -31,29 +38,29 @@ public class VenteMapper {
     /*****************************************************/
     /********************** ENTITY -> DTO ******************/
     /*****************************************************/
-    /* public VenteResponseDTO toResponseDTO(Vente vente) {
+    public VenteResponseDTO toResponseDTO(Vente vente) {
         VenteResponseDTO dto = new VenteResponseDTO();
         dto.setId(vente.getId());
-        dto.setQuantite(vente.getQuantite());
-        dto.setProduitId(vente.getProduit().getId());
-        dto.setMouvements(
-                vente.getMouvements()
-                        .stream()
-                        .map(this::toMouvementResponse)
-                        .toList());
+        dto.setReference(vente.getReferenceVente());
+        dto.setDateVente(vente.getDateVente().toString());
+        dto.setUtilisateurId(vente.getUtilisateur().getId());
+        dto.setStatut(vente.getStatutVente().toString());
+        dto.setTotal(vente.getPrixTotalHT().doubleValue());
+
+        dto.setVenteLignes(
+            venteLigneMapper.toResponseList(
+                vente.getLignesVente()));
+
         return dto;
-    } */
-    /* public List<VenteResponseDTO> toResponseDTOList(Vente vente) {
-        VenteResponseDTO dto = new VenteResponseDTO();
-        dto.setId(vente.getId());
-        dto.setQuantite(vente.getQuantite());
-        dto.setProduitId(vente.getProduit().getId());
-        dto.setMouvements(
-                vente.getMouvements()
-                        .stream()
-                        .map(this::toMouvementResponse)
-                        .toList());
-        return dto;
-    } */
+    }
+
+    public List<VenteResponseDTO> toResponseDTOList(List<Vente> listVentes) {
+        List<VenteResponseDTO> dtos = new ArrayList<VenteResponseDTO>();
+        dtos = listVentes.stream()
+            .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+                
+        return dtos;
+    }
 
 }

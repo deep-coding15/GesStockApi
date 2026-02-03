@@ -1,6 +1,8 @@
-package com.deep_coding15.GesStockApi.vente.dto;
+package com.deep_coding15.GesStockApi.vente.dto.vente;
 
 import java.util.List;
+
+import com.deep_coding15.GesStockApi.vente.dto.venteLigne.VenteLigneResponseDTO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.Setter;
     example = "{\"id\": 1, \"reference\": \"VENTE-2025-001\", \"dateVente\": \"2025-01-30T14:30:00\", \"utilisateur\": \"john.doe\", \"statut\": \"CONFIRMEE\", \"total\": 150.75, \"ligneVentes\": []}"
 )
 public class VenteResponseDTO {
+
     @Schema(example = "1", description = "Identifiant unique de la vente (auto-généré)")
     public Long id;
     
@@ -23,15 +26,16 @@ public class VenteResponseDTO {
     @Schema(example = "2025-01-30T14:30:00", description = "Date et heure exacte de la transaction")
     public String dateVente;
     
-    @Schema(example = "john.doe", description = "Nom d'utilisateur du vendeur/caissier")
-    public String utilisateur;
+    @Schema(example = "1", description = "Nom d'utilisateur du vendeur/caissier")
+    public Long utilisateurId;
     
-    @Schema(example = "CONFIRMEE", description = "Statut actuel: PENDING, CONFIRMEE, VALIDEE, ANNULEE, etc")
+    @Schema(example = "VALIDEE", description = "Statut actuel: EN_COURS, VALIDEE, ANNULEE, etc")
     public String statut;
     
     @Schema(example = "150.75", description = "Montant total calculé (somme de tous les articles)")
     public double total;
     
     @Schema(description = "Liste complète des articles vendus avec quantités et prix")
-    public List<VenteLigneResponseDTO> ligneVentes;
+    public List<VenteLigneResponseDTO> venteLignes;
+
 }

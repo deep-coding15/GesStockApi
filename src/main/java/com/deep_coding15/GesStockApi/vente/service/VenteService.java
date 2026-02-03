@@ -1,13 +1,15 @@
 package com.deep_coding15.GesStockApi.vente.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.deep_coding15.GesStockApi.common.Exception.EntityBusinessException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
-
+import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
+import com.deep_coding15.GesStockApi.common.exception.EntityBusinessException;
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityNotFoundException;
+import com.deep_coding15.GesStockApi.common.exception.stock.StockQuantiteInsuffisanteException;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
 
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
@@ -17,17 +19,23 @@ import com.deep_coding15.GesStockApi.stock.entity.Stock;
 import com.deep_coding15.GesStockApi.stock.repository.StockRepository;
 import com.deep_coding15.GesStockApi.stock.service.StockService;
 
+import com.deep_coding15.GesStockApi.vente.dto.vente.VenteCreateRequestDTO;
+import com.deep_coding15.GesStockApi.vente.dto.venteLigne.VenteLigneCreateRequestDTO;
 import com.deep_coding15.GesStockApi.vente.entity.Vente;
+import com.deep_coding15.GesStockApi.vente.entity.VenteLigne;
 import com.deep_coding15.GesStockApi.vente.enums.StatutVenteEnum;
+import com.deep_coding15.GesStockApi.vente.mapper.VenteLigneMapper;
 import com.deep_coding15.GesStockApi.vente.repository.VenteRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class VenteService {
 
     private VenteRepository venteRepository;
     private UtilisateurRepository utilisateurRepository;
+    private ProduitRepository produitRepository;
     private StockRepository stockRepository;
     private StockService stockService;
 
@@ -35,79 +43,87 @@ public class VenteService {
             VenteRepository venteRepository,
             UtilisateurRepository utilisateurRepository,
             StockRepository stockRepository,
-            StockService stockService
-        ) {
-        this.venteRepository       = venteRepository;
+            StockService stockService,
+            ProduitRepository produitRepository
+            ) {
+        this.venteRepository = venteRepository;
         this.utilisateurRepository = utilisateurRepository;
-        this.stockRepository       = stockRepository;
-        this.stockService          = stockService;
+        this.stockRepository = stockRepository;
+        this.stockService = stockService;
+        this.produitRepository = produitRepository;
     }
 
     @Transactional
-    /* public Vente createVente(Long utilisateurId, String statut) {
+    public Vente createVente(VenteCreateRequestDTO venteDto) {
 
-        if (Utils.isNegativeOrNullOrZero(utilisateurId)) {
+        if (Utils.isNegativeOrNullOrZero(venteDto.getUtilisateurId())) {
             throw new EntityIllegalArgumentException(
                     "Utilisateur", "id",
-                    utilisateurId.toString());
+                    venteDto.getUtilisateurId().toString());
         }
 
-        Utilisateur utilisateurOptional = utilisateurRepository.findById(utilisateur.getId())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Vente", "utilisateurId",
-                        utilisateur.getId().toString()));
-
-        if (Utils.isCollectionEmpty(vente.getLignesVente())) {
+        if (Utils.isCollectionEmpty(venteDto.getVenteLignes())) {
             throw new EntityIllegalArgumentException(
                     "Vente", "lignesVente",
                     "vide ou null");
         }
 
+        Utilisateur utilisateurOptional = utilisateurRepository.findById(venteDto.getUtilisateurId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Vente", "utilisateurId",
+                        venteDto.getUtilisateurId().toString()));
+
+        Vente vente = new Vente();
+
         vente.setUtilisateur(utilisateurOptional);
+        vente.setDateVente(LocalDateTime.now());
+        vente.setStatutVente(StatutVenteEnum.valueOf(venteDto.getStatutCode()));
 
         // Lie chaque ligne à la vente : lignes + stock
-        vente.getLignesVente().forEach(ligne -> {
+        for (VenteLigneCreateRequestDTO ligne : venteDto.getVenteLignes()) {
 
             if (Utils.isNegativeOrNullOrZero(ligne.getQuantite())) {
-                throw new EntityBusinessException(
+                throw new EntityIllegalArgumentException(
                         "LigneVente", "quantite",
                         String.valueOf(ligne.getQuantite()),
-                        "La quantité doit être > 0");
+                        "La quantité doit être strictement positive");
             }
 
-            ligne.setVente(vente);
+            Stock stock = stockRepository.findByProduitId(ligne.getProduitId())
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Produit", "id", ligne.getProduitId().toString()));
 
-            Stock stock = stockRepository.findByProduitId(ligne.getProduit()
-                .getId()).orElseThrow(() -> new EntityNotFoundException(
-                        "Produit", "id",
-                        ligne.getProduit().getId().toString()));
+            VenteLigne venteLigne = new VenteLigne();
+            venteLigne.setProduit(stock.getProduit());
+            venteLigne.setQuantite(ligne.getQuantite());
+            venteLigne.setPrixUnitaire(stock.getProduit().getPrixUnitaire());
 
-            // Gestion du stock
+            // Vérification AVANT sortie
+            if (stock.getQuantite() < ligne.getQuantite()) {
+                throw new StockQuantiteInsuffisanteException(
+                        ligne.getQuantite(),
+                        stock.getQuantite());
+            }
+
+            // Gestion du stock CENTRALISÉE
             stockService.patchStockQuantite(
-                stock.getId(), 
-                -ligne.getQuantite(), "SORTIE", 
-                utilisateurOptional, 
-                "Vente produit : " + ligne.getProduit().getNom());
+                    stock.getId(),
+                    -ligne.getQuantite(),
+                    "SORTIE",
+                    utilisateurOptional,
+                    "Vente produit : " + ligne.getProduitId());
 
-            
-            if(stock.getQuantite() < ligne.getQuantite())
-            {
-                throw new EntityBusinessException(
-                        "Stock", "produit quantite",
-                        String.valueOf(ligne.getQuantite()),
-                        "Le stock est insuffisant. Stock avant " + stock.getQuantite());
-            }
+            // Relation bidirectionnelle vente <-> venteLigne
+            /* venteLigne.setVente(vente);
+            vente.getLignesVente().add(venteLigne); */
+            vente.ajouterLigneVente(venteLigne);
+        }
 
-            stock.setQuantite(stock.getQuantite() - ligne.getQuantite());
-
-            ligne.setVente(vente);
-        });
-
-        vente.setUtilisateur(utilisateurOptional);
-
+        vente.setStatutVente(StatutVenteEnum.VALIDEE);
+        
         return venteRepository.save(vente);
     }
- */
+
     public Vente getVenteById(Long venteId) {
 
         if (Utils.isNegativeOrNull(venteId))
@@ -136,20 +152,40 @@ public class VenteService {
         return venteRepository.findByStatutVente(statutVenteEnum);
     }
 
-    public List<Vente> getVentesByUtilisateur(Utilisateur utilisateur) {
+    public List<Vente> getVentesByUtilisateurId(Long utilisateurId) {
 
-        if (Utils.isNegativeOrNull(utilisateur.getId()))
+        if (Utils.isNegativeOrNull(utilisateurId))
             throw new EntityIllegalArgumentException(
                     "Utilisateur", "id",
-                    utilisateur.getId().toString());
+                    utilisateurId.toString());
 
-        if (!utilisateurRepository.existsById(utilisateur.getId())) {
+        if (!utilisateurRepository.existsById(utilisateurId)) {
             throw new EntityNotFoundException(
                     "Utilisateur", "id",
-                    utilisateur.getId().toString());
+                    utilisateurId.toString());
         }
 
-        return venteRepository.findByUtilisateurId(utilisateur.getId());
+        return venteRepository.findByUtilisateurId(utilisateurId);
+    }
+    
+    public List<Vente> getVentesByProduitId(Long produitId) {
+
+        if (Utils.isNegativeOrNull(produitId))
+            throw new EntityIllegalArgumentException(
+                    "Produit", "id",
+                    produitId.toString());
+
+        if (!produitRepository.existsById(produitId)) {
+            throw new EntityNotFoundException(
+                    "Produit", "id",
+                    produitId.toString());
+        }
+
+        return venteRepository.findByLignesVente_Produit_Id(produitId);
+    }
+
+    public List<Vente> getVentes() {
+        return venteRepository.findAll();
     }
 
     /* public List<Vente> getVentesByProduitId(Long produitId) */
@@ -163,7 +199,7 @@ public class VenteService {
 
         StatutVenteEnum statutVenteEnum;
         try {
-            statutVenteEnum = StatutVenteEnum.valueOf(statutCode);
+            statutVenteEnum = StatutVenteEnum.fromCode(statutCode.toUpperCase());
         } catch (Exception e) {
             throw new EntityIllegalArgumentException(
                     "StatutVenteEnum", "code", statutCode,
@@ -171,17 +207,15 @@ public class VenteService {
         }
 
         Vente vente = venteRepository.findById(venteId).orElseThrow(
-                () -> new EntityIllegalArgumentException(
-                        "Vente", "id", venteId,
+                () -> new EntityNotFoundException(
+                        "Vente", "id", venteId.toString(),
                         "Cette vente n'existe pas."));
 
         vente.setStatutVente(statutVenteEnum);
+        
+        vente = venteRepository.save(vente);
 
         return vente;
-    }
-
-    public List<Vente> getVentes() {
-        return venteRepository.findAll();
     }
 
     @Transactional
