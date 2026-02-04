@@ -1,8 +1,6 @@
 package com.deep_coding15.GesStockApi.stock.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,8 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
-
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
 
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;

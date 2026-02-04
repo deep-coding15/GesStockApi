@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 src/main/resources/db/migration/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -32,9 +33,10 @@ build/
 ### VS Code ###
 .vscode/
 
-### Brouillon
+### Brouillon ###
 **/src/test/resources
 
-### Postman
+### Postman ###
 postman/
 .postman/
+GesStockApi.postman_collection.json

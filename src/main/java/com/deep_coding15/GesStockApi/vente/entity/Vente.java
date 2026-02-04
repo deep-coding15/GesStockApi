@@ -2,6 +2,7 @@ package com.deep_coding15.GesStockApi.vente.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.math.BigDecimal;
@@ -53,16 +54,20 @@ public class Vente extends BaseEntity{
     private BigDecimal prixTotalHT; 
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 50)
+    @Column(name = "statut_vente", nullable = false, length = 50)
     private StatutVenteEnum statutVente;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
-    @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL)
-    @Column(name = "vente_ligne")
-    private List<VenteLigne> lignesVente;
+    @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VenteLigne> lignesVente = new ArrayList<>();
+
+    public void ajouterLigneVente(VenteLigne ligne) {
+        this.lignesVente.add(ligne);
+        ligne.setVente(this); // Lien bidirectionnel
+    }
 
     @PrePersist
     public void beforeInsert(){
@@ -93,9 +98,10 @@ public class Vente extends BaseEntity{
 
         this.prixTotalHT = this.lignesVente.stream()
             .filter(ligne -> ligne.getQuantite() > 0)
-            .map(ligne -> ligne.getPrixUnitaire()
+            .map(ligne -> ligne.getProduit().getPrixUnitaire() 
                 .multiply(BigDecimal.valueOf(ligne.getQuantite())))
-            .reduce(BigDecimal.ZERO, BigDecimal::add);        
+            .reduce(BigDecimal.ZERO, BigDecimal::add);  
+
     }
 
     //getters / setters

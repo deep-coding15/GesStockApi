@@ -8,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Categorie;
 import com.deep_coding15.GesStockApi.catalogue.repository.CategorieRepository;
-
-import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
-
+import com.deep_coding15.GesStockApi.common.exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityNotFoundException;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
 
 @Service
@@ -118,7 +116,7 @@ public class CategorieService {
     @Transactional
     public Categorie putCategorie(Long id, Categorie categorie) {
 
-        if (Utils.isNegativeOrNull(id)) {
+        if (Utils.isNegativeOrNullOrZero(id)) {
             throw new EntityIllegalArgumentException(
                     "Categorie", "id", id.toString());
         }
@@ -128,6 +126,7 @@ public class CategorieService {
                         "Categorie", "id", id.toString()));
 
         // Mise à jour champ par champ
+        categorieExistant.setId(id);
         categorieExistant.setCode(categorie.getCode());
         categorieExistant.setDescription(categorie.getDescription());
         categorieExistant.setLibelle(categorie.getLibelle());

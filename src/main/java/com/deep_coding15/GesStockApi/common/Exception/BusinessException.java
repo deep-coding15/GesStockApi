@@ -1,4 +1,4 @@
-package com.deep_coding15.GesStockApi.common.Exception;
+package com.deep_coding15.GesStockApi.common.exception;
 
 public abstract class BusinessException extends RuntimeException {
 
