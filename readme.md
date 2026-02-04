@@ -300,7 +300,7 @@ Ce projet a été conçu comme :
 
 Lydivine Merveille Magne Tsafack
 Étudiante en 4e en Génie Informatique
-Projet académique – API REST Java Spring Boot
+Projet personnel – API REST Java Spring Boot
 
 The Swagger UI page will then be available at http://server:port/context-path/swagger-ui.html and the OpenAPI description will be available at the following url for json format: http://server:port/context-path/v3/api-docs
 
