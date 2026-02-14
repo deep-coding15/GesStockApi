@@ -62,3 +62,14 @@ jobs:
         run: docker build -t ges_stock_api:latest .
         # Cette étape construit une image Docker à partir du Dockerfile présent à la racine du projet
         # L’image est nommée "ges_stock_api" avec la tag "latest
+      - name: Login to Docker Hub
+        -run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        # Cette étape se connecte à Docker Hub en utilisant les identifiants stockés dans les secrets GitHub
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker tag ges_stock_api:latest ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+       # Cette étape retague l’image Docker locale pour inclure le nom d’utilisateur Docker Hub
+          docker push ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+        # Cette étape pousse l’image Docker construite précédemment vers Docker Hub
+        # Assure-toi que le nom de l’image inclut ton nom d’utilisateur Docker Hub, par exemple : "tonusername/ges_stock_api:latest"
