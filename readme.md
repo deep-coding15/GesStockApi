@@ -1,7 +1,6 @@
-<<<<<<< Updated upstream
 GesStockApi
 API REST de gestion de commerce (vente et stock) - Spring Boot 3.2.5
-=======
+
 # 📦 GesStockApi – API REST de gestion de stock et de vente
 
 GesStockApi est une **API REST backend** développée avec **Spring Boot 3**, conçue pour gérer les **produits**, **catégories**, **stocks**, **mouvements de stock** et **utilisateurs** d’un système de commerce.
