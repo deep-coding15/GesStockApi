@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deep_coding15.GesStockApi.common.Exception.EntityAlreadyExistsException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
+import com.deep_coding15.GesStockApi.common.exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityNotFoundException;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
 
 import com.deep_coding15.GesStockApi.security.entity.Role;

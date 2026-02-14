@@ -1,14 +1,25 @@
 package com.deep_coding15.GesStockApi.stock.dto.stock_mouvement;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Schema(description = "Requête de mise à jour complète d'un mouvement de stock")
 public class StockMouvementUpdateRequestDTO {
+    @Schema(example = "1", description = "Identifiant du produit", requiredMode = Schema.RequiredMode.REQUIRED)
     public Long produitId;
-    public String type; // ENTREE : SORTIE : REAJUSTEMENT
+    
+    @Schema(example = "ENTREE", description = "Type de mouvement: ENTREE, SORTIE, REAJUSTEMENT", requiredMode = Schema.RequiredMode.REQUIRED)
+    public String type;
+    
+    @Schema(example = "50", description = "Quantité du mouvement", requiredMode = Schema.RequiredMode.REQUIRED)
     public int quantite;
+    
+    @Schema(example = "1", description = "Identifiant de l'utilisateur", requiredMode = Schema.RequiredMode.REQUIRED)
     public Long utilisateurId;
+    
+    @Schema(example = "Correction d'inventaire", description = "Commentaire sur le mouvement")
     public String commentaire;
 }

@@ -23,10 +23,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.deep_coding15.GesStockApi.catalogue.entity.Produit;
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
-
-import com.deep_coding15.GesStockApi.common.Exception.EntityBusinessException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
-
+import com.deep_coding15.GesStockApi.common.exception.EntityAlreadyExistsException;
+import com.deep_coding15.GesStockApi.common.exception.EntityBusinessException;
+import com.deep_coding15.GesStockApi.common.exception.EntityNotFoundException;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
 
@@ -89,7 +88,7 @@ public class StockServiceTest {
         when(produitRepository.findById(1L)).thenReturn(Optional.of(produit));
         when(stockRepository.existsByProduitId(1L)).thenReturn(true);
 
-        assertThrows(EntityBusinessException.class,
+        assertThrows(EntityAlreadyExistsException.class,
                 () -> stockService.createStock(1L, 10, 1L));
     }
 

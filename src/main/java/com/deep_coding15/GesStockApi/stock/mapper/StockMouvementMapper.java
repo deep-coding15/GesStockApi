@@ -14,7 +14,7 @@ public class StockMouvementMapper {
         dto.setType(m.getTypeMouvement().getCode());
         dto.setQuantite(m.getQuantite());
         dto.setDateMouvement(m.getDateMouvement().toString());
-        //dto.setProduitId(m.getProduit().getId().intValue());
+        dto.setProduitId(m.getStock().getProduit().getId());
         dto.setUtilisateurId(m.getUtilisateur().getId());
         dto.setCommentaire(m.getCommentaire());
         return dto;

@@ -183,8 +183,8 @@ Types : `ENTREE`, `SORTIE`
 ```json
 {
   "utilisateurId": 1,
-  "statutId": 1,
-  "lignes": [
+  "statutCode": "EN_COURS",
+  "venteLignes": [
     { "produitId": 1, "quantite": 2 },
     { "produitId": 3, "quantite": 1 }
   ]
