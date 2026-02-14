@@ -57,6 +57,7 @@ Chaque modification de stock :
 
 
 ## 🧩 Architecture & Modules
+```scss
 GesStockApi
 ├── catalogue
 │   ├── categories
@@ -71,6 +72,7 @@ GesStockApi
 │   ├── exceptions
 │   └── utils
 └── health
+```
 
 ## 🌐 Exemple d’endpoint
 
@@ -98,9 +100,9 @@ PATCH /api/v1/stocks/{id}
 * Pagination, tri, filtres
 * Dockerisation
 
-# 3️⃣ Diagramme d’architecture (clair & pédagogique)
+# Diagramme d’architecture 
 
-### 📐 Vue globale (ASCII – parfaite pour README)
+## 📐 Vue globale (ASCII)
 ```scss
              ┌───────────────┐
              │   Client API  │
@@ -131,7 +133,7 @@ PATCH /api/v1/stocks/{id}
           └─────────────────────────┘
 ```
 
-### Focus module stock
+## Focus module stock
 ```scss
 [Stock]
 │
@@ -145,70 +147,51 @@ PATCH /api/v1/stocks/{id}
 └── date
 ```
 
-🔑 Fonctionnalités principales
-📂 Catalogue
+## 🔑 Fonctionnalités principales
+### 📂 Catalogue
+- CRUD Catégories
+- CRUD Produits
+- Recherche par :
+  - ID
+  - Code
+  - Libellé
+  - Référence
+  - Catégorie
 
-CRUD Catégories
+### 📦 Stock
+- Création d’un stock par produit
+- Consultation du stock
+- Mise à jour de la quantité via mouvements de stock
+- Historique des mouvements (entrée / sortie)
 
-CRUD Produits
+### 🔄 Mouvements de stock
+- Consultation par :
+  - Stock
+  - Produit
+  - Utilisateur
+- Traçabilité complète des opérations (A venir)
 
-Recherche par :
+### 👥 Sécurité (basique – MVP) : Simple authentification username + password
+- Gestion des rôles
+- Gestion des utilisateurs
+- Association utilisateur ↔ rôle
 
-ID
+### 🩺 Health
+- Vérification de l’état de l’API
+- Endpoints de diagnostic simples
 
-Code
+### 🌐 Base URL
+[lien vers l'application en local](http://localhost:8088)
 
-Libellé
-
-Référence
-
-Catégorie
-
-📦 Stock
-
-Création d’un stock par produit
-
-Consultation du stock
-
-Mise à jour de la quantité via mouvements de stock
-
-Historique des mouvements (entrée / sortie)
-
-🔄 Mouvements de stock
-
-Consultation par :
-
-Stock
-
-Produit
-
-Utilisateur
-
-Traçabilité complète des opérations
-
-👥 Sécurité (basique – MVP)
-
-Gestion des rôles
-
-Gestion des utilisateurs
-
-Association utilisateur ↔ rôle
-
-🩺 Health
-
-Vérification de l’état de l’API
-
-Endpoints de diagnostic simples
-
-🌐 Base URL
-http://localhost:8089
-
-📌 Endpoints principaux
-Health
+### 📌 Endpoints principaux
+#### Health
+```http
 GET  /ping
 GET  /api/health
+```
 
-Catégories
+#### Catégories
+```http
 POST   /api/v1/categories/
 GET    /api/v1/categories/
 GET    /api/v1/categories/{id}
@@ -216,8 +199,10 @@ GET    /api/v1/categories/code/{code}
 PUT    /api/v1/categories/{id}
 PATCH  /api/v1/categories/{id}
 DELETE /api/v1/categories/{id}
+```
 
-Produits
+#### Produits
+```http
 POST   /api/v1/produits/
 GET    /api/v1/produits/
 GET    /api/v1/produits/{id}
@@ -226,26 +211,34 @@ GET    /api/v1/produits/categorie/{categorieId}
 PUT    /api/v1/produits/{id}
 PATCH  /api/v1/produits/{id}
 DELETE /api/v1/produits/{id}
+```
 
-Stocks
+#### Stocks
+```http
 POST  /api/v1/stocks/
 GET   /api/v1/stocks/
 GET   /api/v1/stocks/{id}
 GET   /api/v1/stocks/produit/{produitId}
 PATCH /api/v1/stocks/{id}/quantite
+```
 
-Mouvements de stock
+#### Mouvements de stock
+```http
 GET /api/v1/stock-mouvements/stock/{stockId}
 GET /api/v1/stock-mouvements/produit/{produitId}
 GET /api/v1/stock-mouvements/utilisateur/{utilisateurId}
+```
 
-Utilisateurs
+#### Utilisateurs
+```http
 POST /api/v1/users/
 GET  /api/v1/users/
 GET  /api/v1/users/{id}
 GET  /api/v1/users/name/{username}
+```
 
-Rôles
+#### Rôles
+```http
 POST   /api/v1/roles/
 GET    /api/v1/roles/
 GET    /api/v1/roles/{id}
@@ -253,55 +246,44 @@ GET    /api/v1/roles/code/{code}
 PUT    /api/v1/roles/{id}
 PATCH  /api/v1/roles/{id}
 DELETE /api/v1/roles/{id}
+```
 
-🧪 Tests API
-
+#### 🧪 Tests API
 Une collection Postman complète est fournie (export JSON)
-
 Tous les endpoints CRUD sont testables directement
-
 Utilisation de variables ({{baseUrl}})
 
-🗄️ Base de données
-
-H2 in-memory
-
-Données réinitialisées à chaque redémarrage
+#### 🗄️ Base de données
+- H2 in-memory
+- Données réinitialisées à chaque redémarrage
 
 Idéal pour :
+- MVP
+- Tests
+- Démonstration
+- ⚠️ Accès H2 Console possible si activé dans application.yml
 
-MVP
+### 📈 État du projet
+- ✅ MVP fonctionnel
+- ✅ Architecture propre et modulaire
+- ✅ Bonnes pratiques REST
+- ✅ Dévelopement basé sur les tests
+- ⏳ Sécurité avancée (JWT, auth) à venir
+- ⏳ Migration vers base persistante (MySQL/PostgreSQL) à venir
 
-Tests
-
-Démonstration
-
-⚠️ Accès H2 Console possible si activé dans application.yml
-
-📈 État du projet
-
-✅ MVP fonctionnel
-✅ Architecture propre et modulaire
-✅ Bonnes pratiques REST
-⏳ Sécurité avancée (JWT, auth) à venir
-⏳ Migration vers base persistante (MySQL/PostgreSQL) à venir
-
-🎯 Objectif du projet
-
+# 🎯 Objectif du projet
 Ce projet a été conçu comme :
-
 - un socle backend propre
-
 - un support d’apprentissage Spring Boot
-
 - une base réutilisable pour un système de gestion de commerce plus avancé
 
-👩‍💻 Auteur
+# 👩‍💻 Auteure
 
-Lydivine Merveille Magne Tsafack
-Étudiante en 4e en Génie Informatique
-Projet personnel – API REST Java Spring Boot
+- Lydivine Merveille Magne Tsafack
+- Étudiante en 4e en Génie Informatique
+- Projet personnel – API REST Java Spring Boot
 
+# Swagger
 The Swagger UI page will then be available at http://server:port/context-path/swagger-ui.html and the OpenAPI description will be available at the following url for json format: http://server:port/context-path/v3/api-docs
 
 server: The server name or IP
@@ -312,3 +294,18 @@ context-path: The context path of the application
 
 Documentation will be available in yaml format as well, on the following path : /v3/api-docs.yaml
 
+# Lancer l'application et les tests
+## Lancer l'application :
+./mvnw spring-boot:run
+
+## Lancer tous les tests :
+./mvnw test
+
+## Lancer un test spécifique :
+./mvnw test -Dtest="NomDeLaClasseTest"
+
+## Nettoyer et compiler (Build) :
+./mvnw clean install (exécute aussi les tests)
+
+## Créer le fichier JAR sans lancer les tests :
+./mvnw package -DskipTests

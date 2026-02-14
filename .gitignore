@@ -3,7 +3,9 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-src/main/resources/db/migration/
+
+### Base de donnée H2 avec migration Flyway
+!src/main/resources/db/migration/
 
 ### STS ###
 .apt_generated
