@@ -69,7 +69,7 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker tag ges_stock_api:latest ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
-       # Cette étape retague l’image Docker locale pour inclure le nom d’utilisateur Docker Hub
           docker push ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+        # Cette étape retague l’image Docker locale pour inclure le nom d’utilisateur Docker Hub
         # Cette étape pousse l’image Docker construite précédemment vers Docker Hub
         # Assure-toi que le nom de l’image inclut ton nom d’utilisateur Docker Hub, par exemple : "tonusername/ges_stock_api:latest"
