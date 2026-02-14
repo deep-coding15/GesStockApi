@@ -1,0 +1,59 @@
+# Nom du workflow (visible dans l’onglet "Actions" de GitHub)
+name: GesStocApi Continuous Integration
+
+# Déclencheurs du workflow
+on:
+  # Le workflow se lance automatiquement :
+  push:
+    # Quand on pousse du code sur la branche "main"
+    branches: ["main"]
+  pull_request:
+    # Quand on ouvre une Pull Request vers "main"
+    branches: ["main"]
+
+  # Définition des jobs (un workflow peut contenir plusieurs jobs)
+
+jobs:
+  # Nom du job (identifiant interne)
+  build:
+    # Machine virtuelle utilisée par GitHub pour exécuter le job
+    # ubuntu-latest = serveur Linux temporaire propre
+    runs-on: ubuntu-latest
+
+    # Étapes exécutées dans l’ordre
+    steps:
+      # 1 - récupérer ton code depuis le repository
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+      # "uses" signifie qu’on utilise une action publique déjà existante
+      # actions/checkout permet de cloner ton repo dans la machine virtuelle
+
+      # 2 - Installer Java
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          # Distribution Temurin (ancienne AdoptOpenJDK)
+          distribution: "temurin"
+          # Version Java à installer
+          java-version: "17"
+      # Cette étape installe Java 17 sur la machine Linux temporaire
+
+      # 3 - Vérifier la version Java (option pédagogique)
+      - name: 🔍 Verify Java version
+        run: java -version
+      # "run" signifie qu’on exécute une commande shell Linux
+
+      # 4 - Construire le projet et exécuter les tests
+      - name: 🏗️ Build and Run Tests with Maven
+        run: mvn clean verify
+    # mvn clean :
+    #   supprime le dossier target/ (ancien build)
+    #
+    # mvn verify :
+    #   compile le projet
+    #   exécute les tests unitaires
+    #   vérifie que tout passe correctement
+    #
+    # Si un seul test échoue :
+    #   le job échoue
+    #   le workflow devient rouge
