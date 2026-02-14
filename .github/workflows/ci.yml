@@ -58,3 +58,7 @@ jobs:
         # Si un seul test échoue :
         #   le job échoue
         #   le workflow devient rouge
+      - name: Build Docker image
+        run: docker build -t ges_stock_api:latest .
+        # Cette étape construit une image Docker à partir du Dockerfile présent à la racine du projet
+        # L’image est nommée "ges_stock_api" avec la tag "latest
