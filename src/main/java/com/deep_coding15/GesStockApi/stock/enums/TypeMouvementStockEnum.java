@@ -2,9 +2,10 @@ package com.deep_coding15.GesStockApi.stock.enums;
 
 import java.util.Arrays;
 
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.utils.CodeEnumInterface;
 
-public enum TypeMouvementStockEnum {
+public enum TypeMouvementStockEnum implements CodeEnumInterface{
     INITIAL("INITIAL", "Stock Initial"), 
     ENTREE("ENTREE", "Entree de stock"),
     SORTIE("SORTIE", "Sortie de stock"),

@@ -23,10 +23,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.deep_coding15.GesStockApi.catalogue.repository.ProduitRepository;
-
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
-import com.deep_coding15.GesStockApi.common.Exception.EntityNotFoundException;
-
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityNotFoundException;
 import com.deep_coding15.GesStockApi.security.entity.Utilisateur;
 import com.deep_coding15.GesStockApi.security.repository.UtilisateurRepository;
 

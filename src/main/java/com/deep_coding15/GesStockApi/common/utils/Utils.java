@@ -5,9 +5,10 @@ import java.math.RoundingMode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.UUID;
+
 
 /**
  * <p>
@@ -308,6 +309,14 @@ public final class Utils {
             return false;
         }
     }
+
+    public static <E extends Enum<E> & CodeEnumInterface> E getEnumFromCode(Class<E> enumClass, String code) {
+    if (isStringUseless(code)) return null;
+    return Arrays.stream(enumClass.getEnumConstants())
+                 .filter(e -> ((CodeEnumInterface) e).getCode().equalsIgnoreCase(code))
+                 .findFirst()
+                 .orElse(null);
+}
 
     /*
      * =====================================================

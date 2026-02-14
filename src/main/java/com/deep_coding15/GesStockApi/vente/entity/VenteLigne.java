@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,17 +32,18 @@ public class VenteLigne extends BaseEntity{
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "vente_id")
+    @JoinColumn(name = "vente_id", nullable = false)
     private Vente vente;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "produit_id")
+    @JoinColumn(name = "produit_id", nullable = false)
     private Produit produit;
 
     @Column(nullable = false)
     private Integer quantite;
 
-    @Positive
+    @PositiveOrZero
     @Column(name = "prix_unitaire", nullable = false, precision = 38, scale = 2)
-    private BigDecimal prixUnitaire;    
+    private BigDecimal prixUnitaire; // Prix applique au moment de la vente
+
 }

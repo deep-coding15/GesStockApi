@@ -1,5 +1,6 @@
 server:
-  port: 8089
+  port: ${PORT:8088}
+  
 
 logging.level.org.springframework.boot.context.config: DEBUG
 

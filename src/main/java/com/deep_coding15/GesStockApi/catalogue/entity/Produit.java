@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.deep_coding15.GesStockApi.common.BaseEntity;
 import com.deep_coding15.GesStockApi.common.utils.Utils;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Getter
@@ -47,7 +48,7 @@ public class Produit extends BaseEntity {
 
     @Positive
     @Column(name = "prix_unitaire", nullable = false, precision = 38, scale = 2)
-    private BigDecimal prixUnitaire;
+    private BigDecimal prixUnitaire; // Prix de vente conseillé dans le catalogue
 
     @Column(nullable = false)
     private Boolean actif = true;

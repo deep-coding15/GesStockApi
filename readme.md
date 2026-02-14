@@ -1,4 +1,4 @@
-GesStockApi
+# GesStockApi
 API REST de gestion de commerce (vente et stock) - Spring Boot 3.2.5
 
 # 📦 GesStockApi – API REST de gestion de stock et de vente
@@ -90,7 +90,6 @@ GesStockApi
 └── health
 ```
 ---
->>>>>>> Stashed changes
 
 Base URL: http://localhost:8089﻿
 
@@ -424,16 +423,6 @@ json
 Stock Movements
 Consultation des mouvements de stock
 
-<<<<<<< Updated upstream
-Base path: /api/v1/stock-mouvements
-
-﻿
-
-GET
-Get Movements by Stock ID
-http://localhost:8089/api/v1/stock-mouvements/stock/:stockId
-Add request description…
-=======
 ---
 
 ## 🧪 Tests
@@ -453,18 +442,9 @@ Add request description…
 ---
 
 # Diagramme d’architecture 
->>>>>>> Stashed changes
 
 ﻿
 
-<<<<<<< Updated upstream
-Path Variables
-stockId
-GET
-Get Movements by Product ID
-http://localhost:8089/api/v1/stock-mouvements/produit/:produitId
-Add request description…
-=======
 ## Focus module stock
 ```scss
 [Stock]
@@ -478,7 +458,6 @@ Add request description…
 ├── utilisateurId
 └── date
 ```
->>>>>>> Stashed changes
 
 ﻿
 
@@ -560,11 +539,7 @@ Partial Update Role (PATCH)
 http://localhost:8089/api/v1/roles/:id
 Add request description…
 
-<<<<<<< Updated upstream
-﻿
-=======
 ---
->>>>>>> Stashed changes
 
 Path Variables
 id
@@ -579,23 +554,6 @@ Delete Role
 http://localhost:8089/api/v1/roles/:id
 Add request description…
 
-<<<<<<< Updated upstream
-﻿
-
-Path Variables
-id
-Users
-Gestion des utilisateurs
-
-Base path: /api/v1/users
-
-﻿
-
-POST
-Create User
-http://localhost:8089/api/v1/users
-Add request description…
-=======
 - Lydivine Merveille Magne Tsafack
 - Étudiante en 4e en Génie Informatique
 - Projet personnel – API REST Java Spring Boot
@@ -608,31 +566,14 @@ Add request description…
 # Swagger
 - The Swagger UI page will then be available at http://localhost:8088/swagger-ui/index.html#/ 
 - And the OpenAPI description will be available at the following url for json format: http://localhost:8088/v3/api-docs
->>>>>>> Stashed changes
 
 ﻿
 
-<<<<<<< Updated upstream
-Body
-raw (json)
-json
-{
-  "email": "user@example.com",
-  "username": "johndoe",
-  "password": "securePassword123",
-  "roleId": 1
-}
-GET
-Get All Users
-http://localhost:8089/api/v1/users/
-Add request description…
-=======
 ---
 
 # Lancer l'application et les tests
 ## Lancer l'application :
 ./mvnw spring-boot:run
->>>>>>> Stashed changes
 
 ﻿
 

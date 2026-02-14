@@ -2,9 +2,11 @@ package com.deep_coding15.GesStockApi.vente.enums;
 
 import java.util.Arrays;
 
-import com.deep_coding15.GesStockApi.common.Exception.EntityIllegalArgumentException;
+import com.deep_coding15.GesStockApi.common.exception.EntityIllegalArgumentException;
 
-public enum StatutVenteEnum {
+import com.deep_coding15.GesStockApi.common.utils.CodeEnumInterface;
+
+public enum StatutVenteEnum implements CodeEnumInterface {
     EN_COURS("EN_COURS", "Entrée en stock"),
     VALIDEE("VALIDEE", "Sortie de stock"),
     ANNULEE("ANNULEE", "Ajustement de stock");
