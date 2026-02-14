@@ -1,5 +1,97 @@
+<<<<<<< Updated upstream
 GesStockApi
 API REST de gestion de commerce (vente et stock) - Spring Boot 3.2.5
+=======
+# 📦 GesStockApi – API REST de gestion de stock et de vente
+
+GesStockApi est une **API REST backend** développée avec **Spring Boot 3**, conçue pour gérer les **produits**, **catégories**, **stocks**, **mouvements de stock** et **utilisateurs** d’un système de commerce.
+
+---
+
+# 🎯 Objectif du projet
+Ce projet a été conçu comme :
+- un socle backend propre
+- un support d’apprentissage Spring Boot
+- une base réutilisable pour un système de gestion de stock d'un commerce plus avancé
+- Proposer un **MVP propre, modulaire et extensible**, respectant les bonnes pratiques REST et Spring et TDD.
+
+---
+
+## 🧠 Ce que démontre ce projet
+
+- Conception d’une **API REST professionnelle**
+- Architecture modulaire et maintenable
+- Utilisation correcte de **Spring Data JPA**
+- Gestion métier du **stock avec traçabilité** (mouvements de stock)
+- Validation, exceptions métier et statuts HTTP
+- Tests complets via **Postman**
+
+---
+
+## 🛠️ Stack technique
+
+- Java 17  
+- Spring Boot 3.2.5  
+- Spring Web (REST)  
+- Spring Data JPA  
+- H2 Database (in-memory)  
+- Maven  
+- JUnit 5
+- Postman (tests des endpoints)
+
+---
+
+## CI & CD
+![CI](https://github.com/deep-coding15/GesStockApi/actions/workflows/ci.yml/badge.svg)
+
+---
+
+## 🧩 Modules fonctionnels
+
+- **Catalogue**
+  - Catégories
+  - Produits
+- **Stock**
+  - Stock par produit
+  - Mouvements (entrée / sortie)
+- **Sécurité (MVP)**
+  - Utilisateurs
+  - Rôles
+- **Health**
+  - Monitoring API
+  
+---
+
+## 🔄 Gestion intelligente du stock
+
+Chaque modification de stock :
+- met à jour la quantité courante
+- génère automatiquement un **mouvement de stock**
+- est traçable par **produit**, **stock** et **utilisateur**
+
+➡️ Approche orientée **métier réel**
+
+---
+
+## 🧩 Architecture & Modules
+```scss
+GesStockApi
+├── catalogue
+│   ├── categories
+│   └── produits
+├── stock
+│   ├── stocks
+│   └── mouvements de stock
+├── security
+│   ├── utilisateurs
+│   └── rôles
+├── common
+│   ├── exceptions
+│   └── utils
+└── health
+```
+---
+>>>>>>> Stashed changes
 
 Base URL: http://localhost:8089﻿
 
@@ -333,6 +425,7 @@ json
 Stock Movements
 Consultation des mouvements de stock
 
+<<<<<<< Updated upstream
 Base path: /api/v1/stock-mouvements
 
 ﻿
@@ -341,15 +434,52 @@ GET
 Get Movements by Stock ID
 http://localhost:8089/api/v1/stock-mouvements/stock/:stockId
 Add request description…
+=======
+---
+
+## 🧪 Tests
+- Collection Postman complète
+- Tous les endpoints CRUD testables
+- Variables d’environnement (baseUrl)
+
+---
+
+## 📈 Évolutions prévues
+* Authentification JWT / Spring Security
+* Base de données MySQL / PostgreSQL
+* Gestion des ventes et facturation
+* Pagination, tri, filtres
+* Dockerisation
+
+---
+
+# Diagramme d’architecture 
+>>>>>>> Stashed changes
 
 ﻿
 
+<<<<<<< Updated upstream
 Path Variables
 stockId
 GET
 Get Movements by Product ID
 http://localhost:8089/api/v1/stock-mouvements/produit/:produitId
 Add request description…
+=======
+## Focus module stock
+```scss
+[Stock]
+│
+├── quantite
+├── produitId
+│
+└── 'Mouvements de stock'
+├── type (ENTREE | SORTIE)
+├── quantite
+├── utilisateurId
+└── date
+```
+>>>>>>> Stashed changes
 
 ﻿
 
@@ -431,7 +561,11 @@ Partial Update Role (PATCH)
 http://localhost:8089/api/v1/roles/:id
 Add request description…
 
+<<<<<<< Updated upstream
 ﻿
+=======
+---
+>>>>>>> Stashed changes
 
 Path Variables
 id
@@ -446,6 +580,7 @@ Delete Role
 http://localhost:8089/api/v1/roles/:id
 Add request description…
 
+<<<<<<< Updated upstream
 ﻿
 
 Path Variables
@@ -461,9 +596,24 @@ POST
 Create User
 http://localhost:8089/api/v1/users
 Add request description…
+=======
+- Lydivine Merveille Magne Tsafack
+- Étudiante en 4e en Génie Informatique
+- Projet personnel – API REST Java Spring Boot
+- [Mon Email](tsafackmerveillem@gmail.com)
+- [Mon LinkedIn](https://www.linkedin.com/in/lydivine-merveille-magne-tsafack)
+- [Mon GitHub](https://github.com/deep-coding15)
+
+---
+
+# Swagger
+- The Swagger UI page will then be available at http://localhost:8088/swagger-ui/index.html#/ 
+- And the OpenAPI description will be available at the following url for json format: http://localhost:8088/v3/api-docs
+>>>>>>> Stashed changes
 
 ﻿
 
+<<<<<<< Updated upstream
 Body
 raw (json)
 json
@@ -477,6 +627,13 @@ GET
 Get All Users
 http://localhost:8089/api/v1/users/
 Add request description…
+=======
+---
+
+# Lancer l'application et les tests
+## Lancer l'application :
+./mvnw spring-boot:run
+>>>>>>> Stashed changes
 
 ﻿
 

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class GesStockApiApplication {
-	/** 
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
