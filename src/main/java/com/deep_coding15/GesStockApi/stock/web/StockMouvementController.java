@@ -41,6 +41,25 @@ public class StockMouvementController {
     }
 
     /**
+     * GET /api/v1/stock-mouvements/
+     * Récupère tous les mouvements d'un stock
+     * 
+     * @param stockId L'identifiant unique du stock
+     * @return Liste de tous les mouvements du stock
+     */
+    @GetMapping("/")
+    @Operation(summary = "GET: Lister tous les mouvements de stock", description = "Récupère l'historique complet des mouvements associés à un stock spécifique")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Mouvements récupérés avec succès"),
+    })
+    public List<StockMouvementResponseDTO> getAllStockMouvements() {
+        return stockMouvementService.getAllMouvements()
+                .stream()
+                .map(stockMouvementMapper::toResponse)
+                .toList();
+    }
+    
+    /**
      * GET /api/v1/stock-mouvements/stock/{stockId}
      * Récupère tous les mouvements d'un stock
      * 

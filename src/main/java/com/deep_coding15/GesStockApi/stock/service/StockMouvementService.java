@@ -40,6 +40,11 @@ public class StockMouvementService {
         this.utilisateurRepository = utilisateurRepository;
     }
 
+    public List<StockMouvement> getAllMouvements() {
+
+        return  stockMouvementRepository.findAll();
+    }
+    
     public List<StockMouvement> getAllMouvementsByProduit(Long produitId) {
 
         if(Utils.isNegativeOrNull(produitId)) {
