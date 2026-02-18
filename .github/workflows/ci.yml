@@ -63,7 +63,7 @@ jobs:
         with:
           # artifact name
           name: GesStock
-          path: target/
+          path: target/*.jar
           
   docker-build:
     needs: build
@@ -89,8 +89,15 @@ jobs:
       - name: Push Docker image to Docker Hub
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          docker tag ges_stock_api:latest ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:${{ github.sha }}
+          IMAGE=${{ secrets.DOCKER_USERNAME }}/ges_stock_api
+          SHA=${{ github.sha }}
+          
+          docker tag ges_stock_api:latest $IMAGE:latest
+          docker tag ges_stock_api:latest $IMAGE:$SHA
+          
+          docker push $IMAGE:latest
+          docker push $IMAGE:$SHA
+          
         # Cette étape retague l’image Docker locale pour inclure le nom d’utilisateur Docker Hub
         # Cette étape pousse l’image Docker construite précédemment vers Docker Hub
         # Assure-toi que le nom de l’image inclut ton nom d’utilisateur Docker Hub, par exemple : "tonusername/ges_stock_api:latest"
