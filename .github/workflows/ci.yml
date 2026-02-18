@@ -58,6 +58,26 @@ jobs:
         # Si un seul test échoue :
         #   le job échoue
         #   le workflow devient rouge
+      - name: Upload the build artifact
+        uses: actions/upload-artifact@v6.0.0
+        with:
+          # artifact name
+          name: GesStock
+          path: target/
+          
+  docker-build:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Upload the build artifact
+        uses: actions/download-artifact@v6.0.0
+        with:
+          # artifact name
+          name: GesStock
+          path: target/
+          
       - name: Build Docker image
         run: docker build -t ges_stock_api:latest .
         # Cette étape construit une image Docker à partir du Dockerfile présent à la racine du projet
@@ -67,9 +87,10 @@ jobs:
         # Cette étape se connecte à Docker Hub en utilisant les identifiants stockés dans les secrets GitHub
 
       - name: Push Docker image to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          docker tag ges_stock_api:latest ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+          docker tag ges_stock_api:latest ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/ges_stock_api:${{ github.sha }}
         # Cette étape retague l’image Docker locale pour inclure le nom d’utilisateur Docker Hub
         # Cette étape pousse l’image Docker construite précédemment vers Docker Hub
         # Assure-toi que le nom de l’image inclut ton nom d’utilisateur Docker Hub, par exemple : "tonusername/ges_stock_api:latest"
