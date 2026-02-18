@@ -42,7 +42,7 @@ Ce projet a été conçu comme :
 
 ## CI & CD
 ![CI](https://github.com/deep-coding15/GesStockApi/actions/workflows/ci.yml/badge.svg)
-
+[Lien du projet déployé](https://gesstockapi-production-79ed.up.railway.app/swagger-ui/index.html)
 ---
 
 ## 🧩 Modules fonctionnels
