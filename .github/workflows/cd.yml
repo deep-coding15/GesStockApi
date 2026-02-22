@@ -1,0 +1,29 @@
+name: GesStockApi C.D.
+
+# Déclencheurs du workflow
+on:
+  # Le workflow se lance automatiquement :
+  workflow_run:
+    workflows: ["GesStockApi C.I."]
+    types: 
+      - completed
+
+jobs:
+  deploy-docker-to-ec2:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull Docker Image from Docker Hub
+        run: sudo docker pull deepcoding15/ges_stock_api:latest
+      - name: Delete old container
+        run: |
+          sudo docker stop ges_stock_api || true
+          sudo docker rm ges_stock_api || true
+      - name: Run Docker Container
+        run: |
+          IMAGE=${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+          sudo docker run -d \
+              -p 8080:8088 \
+              --name ges_stock_api \
+              --restart always \
+              $IMAGE 
