@@ -14,14 +14,19 @@ jobs:
 
     steps:
       - name: Pull Docker Image from Docker Hub
-        run: sudo docker pull deepcoding15/ges_stock_api:latest
-      - name: Delete old container
-        run: |
-          sudo docker stop ges_stock_api || true
-          sudo docker rm ges_stock_api || true
-      - name: Run Docker Container
         run: |
           IMAGE=${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+          echo "Pulling latest image..."
+          docker pull $IMAGE
+      - name: Delete old container
+        run: |
+          echo "Stopping old container if exists..."
+          sudo docker stop ges_stock_api || true
+          sudo docker rm ges_stock_api || true
+      - name: Run new Docker Container
+        run: |
+          IMAGE=${{ secrets.DOCKER_USERNAME }}/ges_stock_api:latest
+          echo "Running new container..."
           sudo docker run -d \
               -p 8080:8088 \
               --name ges_stock_api \
