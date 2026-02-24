@@ -42,6 +42,7 @@ Ce projet a été conçu comme :
 
 ## CI & CD
 ![CI](https://github.com/deep-coding15/GesStockApi/actions/workflows/ci.yml/badge.svg)
+![CD](https://github.com/deep-coding15/GesStockApi/actions/workflows/cd.yml/badge.svg)
 
 ---
 
