@@ -7,15 +7,17 @@ INSERT INTO role (code, libelle) VALUES ('GERANT', 'Gérant');
 
 -- =====================================
 -- UTILISATEURS
+-- Mot de passe par défaut (dev) : pass1234
+-- Hash BCrypt cost=10 : $2b$10$428aq1VW6COxkPSupwxSP.6NIdGXS5RIZ3DzXy3TlErpgLhaB3nue
 -- =====================================
 INSERT INTO utilisateur (username, email, mot_de_passe, telephone, actif, role_id, created_at, updated_at)
-VALUES ('admin1', 'admin@example.com', '$2a$12$.8eUazSe8iLHTtG6IyN7t.sy/11SWO34IR1Nbeddy/5XYGGS55Yfm', '0600000001', true, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('admin1', 'admin1@example.com', '$2b$10$428aq1VW6COxkPSupwxSP.6NIdGXS5RIZ3DzXy3TlErpgLhaB3nue', '0600000001', true, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO utilisateur (username, email, mot_de_passe, telephone, actif, role_id, created_at, updated_at)
-VALUES ('caissier1', 'caissier1@example.com', '$2a$12$JLkVPiOJ7WFRDSMjoZv4s.qzmGq0avDjLVQBQkvvRayTx2OxFzmaq', '0600000002', true, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('caissier1', 'caissier1@example.com', '$2b$10$428aq1VW6COxkPSupwxSP.6NIdGXS5RIZ3DzXy3TlErpgLhaB3nue', '0600000002', true, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO utilisateur (username, email, mot_de_passe, telephone, actif, role_id, created_at, updated_at)
-VALUES ('gerant1', 'gerant1@example.com', '$2a$12$OZH/kYktIsNot9s/JadYv.dUrsbDMc4rZfgeJ81BWml.obNEutjui', '0600000003', true, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('gerant1', 'gerant1@example.com', '$2b$10$428aq1VW6COxkPSupwxSP.6NIdGXS5RIZ3DzXy3TlErpgLhaB3nue', '0600000003', true, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- =====================================
 -- CATEGORIES PRODUITS

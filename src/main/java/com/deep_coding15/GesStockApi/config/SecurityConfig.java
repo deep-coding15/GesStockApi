@@ -21,6 +21,8 @@ public class SecurityConfig {
         http
                 // API REST → pas de CSRF
                 .csrf(csrf -> csrf.disable())
+                // H2 console utilise des iframes -> lever la restriction X-Frame-Options
+                .headers(headers -> headers.frameOptions(fo -> fo.sameOrigin()))
                 // Autorisations par endpoint
                 .authorizeHttpRequests(auth -> auth
                         // PUBLIC
@@ -29,7 +31,8 @@ public class SecurityConfig {
                                 "/api/health/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-                                "/v3/api-docs/**")
+                                "/v3/api-docs/**",
+                                "/h2-console/**")
                         .permitAll() // Autoriser les endpoints d'authentification
 
                         // ADMIN
