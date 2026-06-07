@@ -1,0 +1,581 @@
+{
+  "info": {
+    "name": "GesStockApi",
+    "description": "Collection Postman complète pour l'API GesStockApi.\n\nAuthentification : HTTP Basic Auth\n- Username : admin1 | caissier1 | gerant1\n- Password : pass1234\n\nBase URL : http://localhost:8088\n\nModules : Health, Catégories, Produits, Stocks, Mouvements de stock, Ventes, Utilisateurs, Rôles",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{username}}", "type": "string" },
+      { "key": "password", "value": "{{password}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8088", "type": "string" },
+    { "key": "username", "value": "admin1", "type": "string" },
+    { "key": "password", "value": "pass1234", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Home",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/", "host": ["{{baseUrl}}"], "path": [""] }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+          }
+        },
+        {
+          "name": "Ping",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/ping", "host": ["{{baseUrl}}"], "path": ["ping"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Catégories",
+      "item": [
+        {
+          "name": "Créer une catégorie",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"CAT-LAITIER\",\n  \"libelle\": \"Produits Laitiers\",\n  \"description\": \"Ensemble des produits laitiers frais\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", ""] }
+          }
+        },
+        {
+          "name": "Lister toutes les catégories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", ""] }
+          }
+        },
+        {
+          "name": "Catégories avec leurs produits",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/produits", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "produits"] }
+          }
+        },
+        {
+          "name": "Récupérer une catégorie par ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "1"] }
+          }
+        },
+        {
+          "name": "Récupérer une catégorie par code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/code/CAT001", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "code", "CAT001"] }
+          }
+        },
+        {
+          "name": "Récupérer une catégorie par libellé",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/libelle/Boissons", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "libelle", "Boissons"] }
+          }
+        },
+        {
+          "name": "Modifier complètement une catégorie (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"CAT001\",\n  \"libelle\": \"Boissons Mise à jour\",\n  \"description\": \"Description mise à jour\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "1"] }
+          }
+        },
+        {
+          "name": "Modifier partiellement une catégorie (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"libelle\": \"Nouveau libellé\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "1"] }
+          }
+        },
+        {
+          "name": "Supprimer une catégorie",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/categories/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "categories", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Produits",
+      "item": [
+        {
+          "name": "Créer un produit",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Lait Entier 1L\",\n  \"description\": \"Lait frais entier de qualité premium\",\n  \"prix\": 8.50,\n  \"categorieId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", ""] }
+          }
+        },
+        {
+          "name": "Lister tous les produits",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", ""] }
+          }
+        },
+        {
+          "name": "Récupérer un produit par ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "1"] }
+          }
+        },
+        {
+          "name": "Récupérer un produit par référence",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/reference/PROD001", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "reference", "PROD001"] }
+          }
+        },
+        {
+          "name": "Récupérer un produit par nom",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/nom/Eau minérale 1L", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "nom", "Eau minérale 1L"] }
+          }
+        },
+        {
+          "name": "Récupérer un produit par description",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/description/Bouteille", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "description", "Bouteille"] }
+          }
+        },
+        {
+          "name": "Produits d'une catégorie",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/categorie/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "categorie", "1"] }
+          }
+        },
+        {
+          "name": "Modifier complètement un produit (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Eau Minérale 1.5L\",\n  \"description\": \"Bouteille d'eau minérale grande taille\",\n  \"prix\": 6.50,\n  \"categorieId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "1"] }
+          }
+        },
+        {
+          "name": "Modifier partiellement un produit (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prix\": 5.50\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "1"] }
+          }
+        },
+        {
+          "name": "Supprimer un produit",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/produits/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "produits", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stocks",
+      "item": [
+        {
+          "name": "Créer un stock",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"produitId\": 1,\n  \"quantiteInitiale\": 100,\n  \"utilisateurId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", ""] }
+          }
+        },
+        {
+          "name": "Lister tous les stocks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", ""] }
+          }
+        },
+        {
+          "name": "Récupérer un stock par ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", "1"] }
+          }
+        },
+        {
+          "name": "Récupérer le stock d'un produit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/produit/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", "produit", "1"] }
+          }
+        },
+        {
+          "name": "Mettre à jour la quantité (entrée)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"delta\": 50,\n  \"typeMouvement\": \"ENTREE\",\n  \"commentaire\": \"Réapprovisionnement fournisseur\",\n  \"utilisateurId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/1/quantite", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", "1", "quantite"] }
+          }
+        },
+        {
+          "name": "Mettre à jour la quantité (sortie)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"delta\": 10,\n  \"typeMouvement\": \"SORTIE\",\n  \"commentaire\": \"Vente comptoir\",\n  \"utilisateurId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/1/quantite", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", "1", "quantite"] }
+          }
+        },
+        {
+          "name": "Réajustement de stock",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"delta\": 5,\n  \"typeMouvement\": \"REAJUSTEMENT\",\n  \"commentaire\": \"Correction inventaire\",\n  \"utilisateurId\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/stocks/1/quantite", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stocks", "1", "quantite"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mouvements de stock",
+      "item": [
+        {
+          "name": "Lister tous les mouvements",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stock-mouvements/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stock-mouvements", ""] }
+          }
+        },
+        {
+          "name": "Mouvements d'un stock",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stock-mouvements/stock/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stock-mouvements", "stock", "1"] }
+          }
+        },
+        {
+          "name": "Mouvements d'un produit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stock-mouvements/produit/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stock-mouvements", "produit", "1"] }
+          }
+        },
+        {
+          "name": "Mouvements d'un utilisateur",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/stock-mouvements/utilisateur/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "stock-mouvements", "utilisateur", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ventes",
+      "item": [
+        {
+          "name": "Créer une vente",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"utilisateurId\": 2,\n  \"statutCode\": \"EN_COURS\",\n  \"venteLignes\": [\n    { \"produitId\": 1, \"quantite\": 2 },\n    { \"produitId\": 3, \"quantite\": 1 }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", ""] }
+          }
+        },
+        {
+          "name": "Lister toutes les ventes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", ""] }
+          }
+        },
+        {
+          "name": "Récupérer une vente par ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", "1"] }
+          }
+        },
+        {
+          "name": "Ventes d'un utilisateur",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/user/2", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", "user", "2"] }
+          }
+        },
+        {
+          "name": "Ventes d'un produit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/produit/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", "produit", "1"] }
+          }
+        },
+        {
+          "name": "Ventes par statut",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/statut/VALIDEE", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", "statut", "VALIDEE"] }
+          }
+        },
+        {
+          "name": "Changer le statut d'une vente (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statutCode\": \"VALIDEE\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/1/statut", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", "1", "statut"] }
+          }
+        },
+        {
+          "name": "Supprimer une vente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/ventes/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "ventes", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Utilisateurs",
+      "item": [
+        {
+          "name": "Créer un utilisateur",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john.doe\",\n  \"email\": \"john.doe@example.com\",\n  \"motDePasse\": \"SecurePassword123!\",\n  \"roleId\": 3\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/users/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", ""] }
+          }
+        },
+        {
+          "name": "Lister tous les utilisateurs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/users/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", ""] }
+          }
+        },
+        {
+          "name": "Récupérer un utilisateur par ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/users/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "1"] }
+          }
+        },
+        {
+          "name": "Récupérer un utilisateur par username",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/users/name/admin1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "name", "admin1"] }
+          }
+        },
+        {
+          "name": "Récupérer un utilisateur par email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/users/email/admin1@example.com", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "email", "admin1@example.com"] }
+          }
+        },
+        {
+          "name": "Modifier complètement un utilisateur (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john.doe\",\n  \"email\": \"john.doe.updated@example.com\",\n  \"motDePasse\": \"NewPassword456!\",\n  \"roleId\": 2\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/users/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "1"] }
+          }
+        },
+        {
+          "name": "Modifier partiellement un utilisateur (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telephone\": \"0612345678\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/users/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "1"] }
+          }
+        },
+        {
+          "name": "Supprimer un utilisateur",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/users/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "users", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rôles",
+      "item": [
+        {
+          "name": "Créer un rôle",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SUPERVISEUR\",\n  \"libelle\": \"Superviseur\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", ""] }
+          }
+        },
+        {
+          "name": "Lister tous les rôles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", ""] }
+          }
+        },
+        {
+          "name": "Récupérer un rôle par ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", "1"] }
+          }
+        },
+        {
+          "name": "Récupérer un rôle par code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/code/ADMIN", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", "code", "ADMIN"] }
+          }
+        },
+        {
+          "name": "Modifier complètement un rôle (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"ADMIN\",\n  \"libelle\": \"Super Administrateur\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", "1"] }
+          }
+        },
+        {
+          "name": "Modifier partiellement un rôle (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"libelle\": \"Nouveau libellé\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", "1"] }
+          }
+        },
+        {
+          "name": "Supprimer un rôle",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/roles/1", "host": ["{{baseUrl}}"], "path": ["api", "v1", "roles", "1"] }
+          }
+        }
+      ]
+    }
+  ]
+}

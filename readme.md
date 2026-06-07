@@ -1,598 +1,161 @@
 # GesStockApi
-API REST de gestion de commerce (vente et stock) - Spring Boot 3.2.5
 
-# 📦 GesStockApi – API REST de gestion de stock et de vente
+API REST de gestion de stock et de ventes — Spring Boot 3.2.5
 
-GesStockApi est une **API REST backend** développée avec **Spring Boot 3**, conçue pour gérer les **produits**, **catégories**, **stocks**, **mouvements de stock** et **utilisateurs** d’un système de commerce.
-
----
-
-# 🎯 Objectif du projet
-Ce projet a été conçu comme :
-- un socle backend propre
-- un support d’apprentissage Spring Boot
-- une base réutilisable pour un système de gestion de stock d'un commerce plus avancé
-- Proposer un **MVP propre, modulaire et extensible**, respectant les bonnes pratiques REST et Spring et TDD.
-
----
-
-## 🧠 Ce que démontre ce projet
-
-- Conception d’une **API REST professionnelle**
-- Architecture modulaire et maintenable
-- Utilisation correcte de **Spring Data JPA**
-- Gestion métier du **stock avec traçabilité** (mouvements de stock)
-- Validation, exceptions métier et statuts HTTP
-- Tests complets via **Postman**
-
----
-
-## 🛠️ Stack technique
-
-- Java 17  
-- Spring Boot 3.2.5  
-- Spring Web (REST)  
-- Spring Data JPA  
-- H2 Database (in-memory)  
-- Maven  
-- JUnit 5
-- Postman (tests des endpoints)
-
----
-
-## CI & CD
 ![CI](https://github.com/deep-coding15/GesStockApi/actions/workflows/ci.yml/badge.svg)
 ![CD](https://github.com/deep-coding15/GesStockApi/actions/workflows/cd.yml/badge.svg)
 
 ---
 
-## 🧩 Modules fonctionnels
+## Objectif
 
-- **Catalogue**
-  - Catégories
-  - Produits
-- **Stock**
-  - Stock par produit
-  - Mouvements (entrée / sortie)
-- **Sécurité (MVP)**
-  - Utilisateurs
-  - Rôles
-- **Health**
-  - Monitoring API
-  
+GesStockApi est un backend REST conçu pour gérer les produits, catégories, stocks, mouvements de stock, ventes et utilisateurs d'un commerce. Il sert de socle modulaire et extensible, respectant les bonnes pratiques REST, Spring Boot et TDD.
+
 ---
 
-## 🔄 Gestion intelligente du stock
+## Stack technique
+
+| Technologie | Version |
+|---|---|
+| Java | 17 |
+| Spring Boot | 3.2.5 |
+| Spring Security | HTTP Basic Auth + RBAC |
+| Spring Data JPA | — |
+| H2 Database | in-memory (dev) |
+| Flyway | migrations versionnées |
+| springdoc-openapi | 2.5.0 (Swagger UI) |
+| Maven | — |
+| JUnit 5 | TDD |
+
+---
+
+## Modules fonctionnels
+
+```
+GesStockApi
+├── catalogue
+│   ├── catégories          /api/v1/categories
+│   └── produits            /api/v1/produits
+├── stock
+│   ├── stocks              /api/v1/stocks
+│   └── mouvements          /api/v1/stock-mouvements
+├── vente
+│   ├── ventes              /api/v1/ventes
+│   └── lignes de vente     /api/v1/vente-lignes
+├── security
+│   ├── utilisateurs        /api/v1/users
+│   └── rôles               /api/v1/roles
+└── health                  /api/health
+```
+
+---
+
+## Lancer l'application
+
+```bash
+./mvnw spring-boot:run
+```
+
+L'API est disponible sur : `http://localhost:8088`
+
+---
+
+## Swagger UI
+
+| URL | Description |
+|---|---|
+| `http://localhost:8088/swagger-ui/index.html` | Interface Swagger |
+| `http://localhost:8088/v3/api-docs` | Spec OpenAPI JSON |
+
+### S'authentifier sur Swagger
+
+Cliquer sur le bouton **Authorize** en haut de la page et renseigner :
+
+| Champ | Valeur |
+|---|---|
+| Username | `admin1` |
+| Password | `pass1234` |
+
+---
+
+## Sécurité
+
+L'API utilise **Spring Security avec HTTP Basic Authentication**.
+
+### Rôles et accès
+
+| Rôle | Endpoints accessibles |
+|---|---|
+| `ADMIN` | Tout (users, rôles, catalogue, stock, ventes) |
+| `GERANT` | Catalogue, stock, ventes |
+| `CAISSIER` | Ventes uniquement |
+
+### Comptes de développement (H2 in-memory)
+
+| Username | Rôle | Mot de passe |
+|---|---|---|
+| `admin1` | ADMIN | `pass1234` |
+| `gerant1` | GERANT | `pass1234` |
+| `caissier1` | CAISSIER | `pass1234` |
+
+> Ces comptes sont insérés par Flyway au démarrage (`V9__init_data.sql`). Les mots de passe sont hashés en BCrypt.
+
+---
+
+## Base de données H2
+
+La base est **in-memory** : elle est recréée à chaque démarrage.
+
+### Console web
+
+`http://localhost:8088/h2-console`
+
+| Champ | Valeur |
+|---|---|
+| JDBC URL | `jdbc:h2:mem:gesstockdb` |
+| Username | `sa` |
+| Password | *(vide)* |
+
+### Connexion via DBeaver
+
+Un serveur TCP H2 est démarré sur le port `9092` pour les outils externes.
+
+| Champ | Valeur |
+|---|---|
+| JDBC URL | `jdbc:h2:tcp://localhost:9092/mem:gesstockdb` |
+| Username | `sa` |
+| Password | *(vide)* |
+
+> DBeaver doit se connecter **après** le démarrage de l'application (base in-memory).
+
+---
+
+## Gestion du stock
 
 Chaque modification de stock :
 - met à jour la quantité courante
-- génère automatiquement un **mouvement de stock**
-- est traçable par **produit**, **stock** et **utilisateur**
-
-➡️ Approche orientée **métier réel**
+- génère automatiquement un mouvement de stock tracé (type, quantité, utilisateur, date)
 
 ---
 
-## 🧩 Architecture & Modules
-```scss
-GesStockApi
-├── catalogue
-│   ├── categories
-│   └── produits
-├── stock
-│   ├── stocks
-│   └── mouvements de stock
-├── security
-│   ├── utilisateurs
-│   └── rôles
-├── common
-│   ├── exceptions
-│   └── utils
-└── health
-```
----
+## Tests
 
-Base URL: http://localhost:8089﻿
-
-Modules
-Catalogue: Gestion des catégories et produits
-Stock: Gestion des stocks et mouvements de stock
-Security: Gestion des utilisateurs et rôles
-Health: Endpoints de santé de l'API
-﻿
-
-Health
-Endpoints de santé et vérification de l'API
-
-﻿
-
-GET
-Home
-http://localhost:8089/
-Add request description…
-
-﻿
-
-GET
-Health Check
-http://localhost:8089/api/health
-Add request description…
-
-﻿
-
-GET
-Ping
-http://localhost:8089/ping
-Add request description…
-
-﻿
-
-Categories
-Gestion des catégories de produits
-
-Base path: /api/v1/categories
-
-﻿
-
-POST
-Create Category
-http://localhost:8089/api/v1/categories/
-Add request description…
-
-﻿
-
-Body
-raw (json)
-View More
-json
-{
-  "code": "CAT001",
-  "libelle": "Électronique",
-  "description": "Produits électroniques et accessoires"
-}
-GET
-Get All Categories
-http://localhost:8089/api/v1/categories/
-Add request description…
-
-﻿
-
-GET
-Get Categories With Products
-http://localhost:8089/api/v1/categories/produits
-Add request description…
-
-﻿
-
-GET
-Get Category by ID
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Category by Code
-http://localhost:8089/api/v1/categories/code/:code
-Add request description…
-
-﻿
-
-Path Variables
-code
-GET
-Get Category by Libelle
-http://localhost:8089/api/v1/categories/libelle/:libelle
-Add request description…
-
-﻿
-
-Path Variables
-libelle
-PUT
-Update Category (PUT)
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "code": "CAT001",
-  "libelle": "Électronique Mise à jour",
-  "description": "Description mise à jour",
-  "actif": true
-}
-PATCH
-Partial Update Category (PATCH)
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "libelle": "Nouveau libellé",
-  "actif": true
-}
-DELETE
-Delete Category
-http://localhost:8089/api/v1/categories/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Products
-Gestion des produits
-
-Base path: /api/v1/produits
-
-﻿
-
-POST
-Create Product
-http://localhost:8089/api/v1/produits/
-Add request description…
-
-﻿
-
-Body
-raw (json)
-View More
-json
-{
-  "nom": "Smartphone XYZ",
-  "description": "Smartphone dernière génération",
-  "prix": 599.99,
-  "categorieId": 1
-}
-GET
-Get All Products
-http://localhost:8089/api/v1/produits/
-Add request description…
-
-﻿
-
-GET
-Get Product by ID
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Product by Reference
-http://localhost:8089/api/v1/produits/reference/:reference
-Add request description…
-
-﻿
-
-Path Variables
-reference
-GET
-Get Product by Name
-http://localhost:8089/api/v1/produits/nom/:nom
-Add request description…
-
-﻿
-
-Path Variables
-nom
-GET
-Get Product by Description
-http://localhost:8089/api/v1/produits/description/:description
-Add request description…
-
-﻿
-
-Path Variables
-description
-GET
-Get Products by Category
-http://localhost:8089/api/v1/produits/categorie/:categorieId
-Add request description…
-
-﻿
-
-Path Variables
-categorieId
-PUT
-Update Product (PUT)
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-View More
-json
-{
-  "id": 1,
-  "nom": "Smartphone XYZ Pro",
-  "reference": "REF-001",
-  "description": "Smartphone Pro dernière génération",
-  "prix": 799.99,
-  "categorieId": 1
-}
-PATCH
-Partial Update Product (PATCH)
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "id": 1,
-  "prix": 549.99
-}
-DELETE
-Delete Product
-http://localhost:8089/api/v1/produits/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Stock
-Gestion des stocks
-
-Base path: /api/v1/stocks
-
-﻿
-
-POST
-Create Stock
-http://localhost:8089/api/v1/stocks
-Add request description…
-
-﻿
-
-Body
-raw (json)
-json
-{
-  "produitId": 1,
-  "quantiteInitiale": 100,
-  "utilisateurId": 1
-}
-GET
-Get All Stocks
-http://localhost:8089/api/v1/stocks
-Add request description…
-
-﻿
-
-GET
-Get Stock by ID
-http://localhost:8089/api/v1/stocks/id/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Stock by Product ID
-http://localhost:8089/api/v1/stocks/produit/:produitId
-Add request description…
-
-﻿
-
-Path Variables
-produitId
-PATCH
-Update Stock Quantity (PATCH)
-http://localhost:8089/api/v1/stocks/:id/quantite
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "delta": 10,
-  "typeMouvement": "ENTREE",
-  "commentaire": "Réapprovisionnement",
-  "utilisateurId": 1
-}
-Stock Movements
-Consultation des mouvements de stock
+- Tests unitaires JUnit 5 (TDD)
+- Collection Postman disponible pour tous les endpoints CRUD
 
 ---
 
-## 🧪 Tests
-- Collection Postman complète
-- Tous les endpoints CRUD testables
-- Variables d’environnement (baseUrl)
+## CI / CD
+
+- **CI** : build + tests Maven à chaque push
+- **CD** : déploiement Docker automatisé
 
 ---
 
-## 📈 Évolutions prévues
-* Authentification JWT / Spring Security
-* Base de données MySQL / PostgreSQL
-* Gestion des ventes et facturation
-* Pagination, tri, filtres
-* Dockerisation
+## Auteur
 
----
+**Lydivine Merveille Magne Tsafack** — Étudiante en 4e année Génie Informatique
 
-# Diagramme d’architecture 
-
-﻿
-
-## Focus module stock
-```scss
-[Stock]
-│
-├── quantite
-├── produitId
-│
-└── 'Mouvements de stock'
-├── type (ENTREE | SORTIE)
-├── quantite
-├── utilisateurId
-└── date
-```
-
-﻿
-
-Path Variables
-produitId
-GET
-Get Movements by User ID
-http://localhost:8089/api/v1/stock-mouvements/utilisateur/:utilisateurId
-Add request description…
-
-﻿
-
-Path Variables
-utilisateurId
-Roles
-Gestion des rôles utilisateurs
-
-Base path: /api/v1/roles
-
-﻿
-
-POST
-Create Role
-http://localhost:8089/api/v1/roles/
-Add request description…
-
-﻿
-
-Body
-raw (json)
-json
-{
-  "code": "ADMIN",
-  "libelle": "Administrateur"
-}
-GET
-Get All Roles
-http://localhost:8089/api/v1/roles/
-Add request description…
-
-﻿
-
-GET
-Get Role by ID
-http://localhost:8089/api/v1/roles/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get Role by Code
-http://localhost:8089/api/v1/roles/code/:code
-Add request description…
-
-﻿
-
-Path Variables
-code
-PUT
-Update Role (PUT)
-http://localhost:8089/api/v1/roles/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "code": "ADMIN",
-  "libelle": "Super Administrateur"
-}
-PATCH
-Partial Update Role (PATCH)
-http://localhost:8089/api/v1/roles/:id
-Add request description…
-
----
-
-Path Variables
-id
-Body
-raw (json)
-json
-{
-  "libelle": "Nouveau libellé"
-}
-DELETE
-Delete Role
-http://localhost:8089/api/v1/roles/:id
-Add request description…
-
-- Lydivine Merveille Magne Tsafack
-- Étudiante en 4e en Génie Informatique
-- Projet personnel – API REST Java Spring Boot
-- [Mon Email](tsafackmerveillem@gmail.com)
-- [Mon LinkedIn](https://www.linkedin.com/in/lydivine-merveille-magne-tsafack)
-- [Mon GitHub](https://github.com/deep-coding15)
-
----
-
-# Swagger
-- The Swagger UI page will then be available at http://localhost:8088/swagger-ui/index.html#/ 
-- And the OpenAPI description will be available at the following url for json format: http://localhost:8088/v3/api-docs
-
-﻿
-
----
-
-# Lancer l'application et les tests
-## Lancer l'application :
-./mvnw spring-boot:run
-
-﻿
-
-GET
-Get User by ID
-http://localhost:8089/api/v1/users/:id
-Add request description…
-
-﻿
-
-Path Variables
-id
-GET
-Get User by Username
-http://localhost:8089/api/v1/users/name/:username
-Add request description…
-
-﻿
-
-Path Variables
-username
+- Email : tsafackmerveillem@gmail.com
+- LinkedIn : [lydivine-merveille-magne-tsafack](https://www.linkedin.com/in/lydivine-merveille-magne-tsafack)
+- GitHub : [deep-coding15](https://github.com/deep-coding15)

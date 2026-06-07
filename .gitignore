@@ -41,4 +41,3 @@ build/
 ### Postman ###
 postman/
 .postman/
-GesStockApi.postman_collection.json
