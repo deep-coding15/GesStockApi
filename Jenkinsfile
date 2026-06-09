@@ -20,7 +20,7 @@ pipeline {
         
         stage('Test Unitaires') {
             steps {
-                sh 'mvn -B test'
+                sh 'JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 mvn -B test'
             }
             post {
                 always {
