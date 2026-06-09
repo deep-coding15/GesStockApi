@@ -1,4 +1,4 @@
-# GesStockApi
+# GesStockApi v1
 
 API REST de gestion de stock et de ventes — Spring Boot 3.2.5
 
