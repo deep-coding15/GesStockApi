@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Test de Maven') {
             steps {
-                bat 'mvn -version'
+                sh 'mvn -version'
             }
         }
     }
