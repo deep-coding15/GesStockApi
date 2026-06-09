@@ -8,16 +8,27 @@ pipeline {
                 echo "Branche : ${env.GIT_BRANCH}"
             }
         }
-        stage('Test de Maven') {
+        stage('Test Unitaires') {
             steps {
-                sh 'mvn -version'
+                sh 'mvn -B test'
+            }
+            post {
+                always {
+                    junit(
+                        testResults: 'target/surefire-reports/*.xml',
+                        allowEmptyResults: true
+                    )
+                }
             }
         }
     }
 
     post {
         success {
-            echo "Premier pipeline Jenkins fonctionnel !"
+            echo "Tests passés !"
+        }
+        failure {
+            echo "Echec : Vérifier les logs."
         }
     }
 }
