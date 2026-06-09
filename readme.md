@@ -26,6 +26,7 @@ GesStockApi est un backend REST conçu pour gérer les produits, catégories, st
 | springdoc-openapi | 2.5.0 (Swagger UI) |
 | Maven | — |
 | JUnit 5 | TDD |
+| Jenkins | Automatisation pipeline CI/CD |
 
 ---
 
