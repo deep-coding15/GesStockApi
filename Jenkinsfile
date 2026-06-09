@@ -46,6 +46,21 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploiement') {
+            steps {
+                sh """
+                    docker stop ges_stock_api || true
+                    docker rm   ges_stock_api || true
+                    docker pull ${IMAGE_FULL}
+                    docker run -d \ 
+                        --name ges_stock_api \
+                        --restart unless-stopped \
+                        -p 8080:8088 \
+                        ${IMAGE_FULL}
+                """
+            }
+        }
     }
 
     post {
