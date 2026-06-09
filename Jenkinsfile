@@ -54,17 +54,25 @@ pipeline {
                     docker rm   ges_stock_api || true
                     docker pull ${IMAGE_FULL}
                     docker run -d --name ges_stock_api --restart unless-stopped -p 8080:8088 ${IMAGE_FULL}
-                """
+               """
             }
         }
     }
 
     post {
-        success {
-            echo "Pipeline OK - image construite : ${IMAGE_FULL} !"
+        
+        always {
+            sh "docker rmi ${IMAGE_FULL} || true"
+            sh "docker image prune -f || true"
         }
+        
+        success {
+            echo "Pipeline OK - image construite et déployée : ${IMAGE_FULL} !"
+        }
+        
         failure {
             echo "Echec : Echec au stage : ${env.STAGE_NAME}."
         }
+        
     }
 }
