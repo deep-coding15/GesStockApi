@@ -1,4 +1,5 @@
 pipeline {
+    
     agent any
 
     environment {
@@ -35,7 +36,21 @@ pipeline {
             steps {
                 script {
                     echo "Construction de ${IMAGE_FULL}..."
-                    dockerImage = docker.build("${IMAGE_FULL}")
+                    def dockerImage = docker.build("${IMAGE_FULL}")
+                }
+            }
+        }
+
+        stage('Publication Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry(
+                        'https://index.docker.io/v1/', 
+                        'docker-hub-credentials') 
+                    {
+                        dockerImage.push()
+                        dockerImage.push('latest')
+                    }
                 }
             }
         }
