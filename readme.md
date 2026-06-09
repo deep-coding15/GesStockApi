@@ -2,8 +2,8 @@
 
 API REST de gestion de stock et de ventes — Spring Boot 3.2.5
 
-![CI](https://github.com/deep-coding15/GesStockApi/actions/workflows/ci.yml/badge.svg)
-![CD](https://github.com/deep-coding15/GesStockApi/actions/workflows/cd.yml/badge.svg) 
+![Pipeline Jenkins](https://img.shields.io/badge/pipeline-Jenkins-D24939?logo=jenkins&logoColor=white)
+![Docker Hub](https://img.shields.io/badge/image-Docker%20Hub-2496ED?logo=docker&logoColor=white)
 
 ---
 
@@ -146,10 +146,18 @@ Chaque modification de stock :
 
 ---
 
-## CI / CD
+## CI / CD — Jenkins
 
-- **CI** : build + tests Maven à chaque push
-- **CD** : déploiement Docker automatisé
+Le pipeline est entièrement géré par **Jenkins** via le `Jenkinsfile` à la racine du projet.
+
+| Stage | Description |
+|---|---|
+| **Clonage** | Clonage du dépôt et affichage de la branche |
+| **Tests unitaires** | `mvn test` (JUnit 5) — résultats publiés dans Jenkins |
+| **Build & Publication** | Construction de l'image Docker et push sur Docker Hub (`deepcoding15/ges_stock_api:<build>` + `latest`) |
+| **Déploiement** | Arrêt du conteneur existant, pull de la nouvelle image, redémarrage sur le port `8080` |
+
+> Le pipeline nettoie l'image locale après chaque exécution (`docker image prune`).
 
 ---
 
@@ -160,3 +168,4 @@ Chaque modification de stock :
 - Email : tsafackmerveillem@gmail.com
 - LinkedIn : [lydivine-merveille-magne-tsafack](https://www.linkedin.com/in/lydivine-merveille-magne-tsafack)
 - GitHub : [deep-coding15](https://github.com/deep-coding15)
+- Portfolio : [merveilletsafack.dev](http://merveilletsafack.dev/)
